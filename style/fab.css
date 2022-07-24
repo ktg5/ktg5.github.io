@@ -1,0 +1,83 @@
+.fab {
+    font-family: 'Font Awesome 5 Brands';
+    color: rgb(255, 255, 255);
+    transition: all .15s;
+}
+
+.fab:hover {
+    color: var(--accent);
+}
+
+.fab a {
+    text-decoration: none;
+}
+
+#fab-after-first {
+    margin-left: 50px;
+}
+
+#fab-selection {
+    color: black;
+}
+
+/* .fab.fa-twitch::after {
+    content: "";
+    background-color: #f00;
+    border-radius: 100%;
+    line-height: normal;
+    position: absolute;
+    height: 13px;
+    width: 13px;
+    right: 15px;
+    top: 96px;
+}
+
+.fab.fa-twitch::after {
+    -webkit-animation: fadeIn-fadeOut ease infinite 2s;
+    animation: fadeIn-fadeOut ease infinite 2s;
+} */
+
+
+@media (max-width: 555px) {
+    .fab {
+        font-size: 50px;
+    }
+}
+
+/* whiteToRed */
+@keyframes whiteToRed {
+    0% {color:white;}
+    50% {color:rgb(135, 70, 255);}
+    100% {color:white;}
+}
+    
+@-moz-keyframes whiteToRed {
+    0% {color:white;}
+    50% {color:rgb(135, 70, 255);}
+    100% {color:white;}
+}
+    
+@-webkit-keyframes whiteToRed {
+    0% {color:white;}
+    50% {color:rgb(135, 70, 255);}
+    100% {color:white;}
+}
+    
+@-o-keyframes whiteToRed {
+    0% {color:white;}
+    50% {color:rgb(135, 70, 255);}
+    100% {color:white;}
+}
+    
+@-ms-keyframes whiteToRed {
+    0% {color:white;}
+    50% {color:rgb(135, 70, 255);}
+    100% {color:white;}
+}
+
+/* resize */
+@media (max-width: 590px) {
+    .fab {
+        font-size: 35px;
+    }
+}

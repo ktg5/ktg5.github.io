@@ -1,0 +1,311 @@
+* {
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgb(20, 20, 20);
+}
+
+::-webkit-scrollbar {
+    background: rgb(20, 20, 20);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+:root {
+    --accent: rgb(73, 117, 255);
+    --d-accent: rgb(73, 146, 255);
+    --bg: black;
+    --bg-high: rgb(50, 50, 50);
+    /* --banner: repeating-linear-gradient(-45deg, var(--accent), var(--accent) 12px, var(--d-accent) 12px, var(--d-accent) 25px); */
+    --banner: rgb(0 0 0 / 25%);
+    --banner-filter: saturate(80%) blur(8px);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    -webkit-animation: fadeIn ease .5s;
+    animation: fadeIn ease .5s;
+    font-family: "Arial",sans-serif;
+    background-color: var(--bg);
+    color: white;
+    margin: 0;
+}
+
+
+.font-classical {
+    src: url('../fonts/AppleGaramond.ttf');
+    font-family: "Apple Garamond";
+}
+
+.font2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+.selected {
+    -webkit-animation: fadeIn-fadeOut ease 1s;
+    animation: fadeIn-fadeOut ease 1s;
+    animation-delay: .5s;
+}
+
+
+#top-follow #link_container {
+    backdrop-filter: saturate(80%) blur(5px);
+    background: rgb(0 0 0 / 50%);
+    margin-top: 35px;
+    position: fixed;
+    z-index: 1;
+}
+
+#top-follow #links {
+    text-align: center;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+#links #link-button {
+    font-size: 45px;
+    display: block;
+    color: white;
+}
+
+
+#text {
+    margin: auto;
+}
+
+#text a {
+    transition: background-color .25s;
+    border-bottom: 2px solid white;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 0px 5px;
+}
+
+#text a:hover {
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+
+#text #back-button {
+    transition: filter .25s;
+    border: none !important;
+    filter: brightness(0%);
+}
+
+#text #back-button:hover {
+    filter: brightness(100%);
+    background: none;
+}
+
+#text #back-button img {
+    width: 80px;
+}
+
+
+#text #part-1 {
+    background: url(http://dl.kt5company.com/img/ktg5/special1.png) no-repeat center fixed;
+    min-height: 100vh;
+    background-size: cover;
+    text-align: center;
+}
+
+#part-1 #logo {
+    -webkit-animation: moveIn cubic-bezier(.86,0,.07,1) 1s;
+    animation: moveIn cubic-bezier(.86,0,.07,1) 1s;
+    position: absolute;
+    margin: auto;
+    bottom: 60px;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+#part-1 #half-banner {
+    backdrop-filter: var(--banner-filter);
+    background: var(--banner);
+    text-align: center;
+    position: sticky;
+    font-size: 25px;
+    padding: 15px;
+    top: 100vh;
+}
+
+
+#text #part-2 {
+    min-height: calc(100vh - 80px);
+    background: rgb(0, 0, 0);
+    padding: 20px;
+}
+
+#part-2 #boxes {
+    grid-template-columns: auto auto;
+    width: fit-content;
+    display: grid;
+    margin: auto;
+}
+
+#part-2 .box {
+    border: 6px solid var(--bg-high);
+    border-radius: 15px;
+    padding: 0px 15px;
+    margin: 0px 10px;
+    margin-bottom: 20px;
+    height: 350px;
+    width: 440px;
+}
+
+#part-2 #block-header {
+    font-size: 50px;
+}
+
+#part-2 #block-header::before {
+    background-color: var(--accent);
+    pointer-events: none;
+    margin-top: 3.8rem;
+    position: absolute;
+    width: 5rem;
+    height: 3px;
+    content: '';
+}
+
+#part-2 #block-text {
+    margin-block-start: 1em;
+    font-size: 18px;
+}
+
+#part-2 #links {
+    text-align: center;
+}
+
+#part-2 #link-button {
+    border: 2px solid white;
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 2px 5px;
+    width: 80px;
+}
+
+#part-2 #link-button:hover {
+    color: rgb(120, 143, 245) !important;
+}
+
+
+#below {
+    backdrop-filter: var(--banner-filter);
+    background: var(--banner);
+    text-align: center;
+    padding: 10px;
+}
+
+
+/* keyframes */
+
+/* fadeIn */
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+/* moveIn */
+@keyframes moveIn {
+    0% {padding-top: 80px;}
+    100% {padding-top: 0;}
+}
+    
+@-moz-keyframes moveIn {
+    0% {padding-top: 50px;}
+    100% {padding-top: 0;}
+}
+    
+@-webkit-keyframes moveIn {
+    0% {padding-top: 50px;}
+    100% {padding-top: 0;}
+}
+    
+@-o-keyframes moveIn {
+    0% {padding-top: 50px;}
+    100% {padding-top: 0;}
+}
+    
+@-ms-keyframes moveIn {
+    0% {padding-top: 50px;}
+    100% {padding-top: 0;}
+}
+
+/* fadeIn-fadeOut */
+@keyframes fadeIn-fadeOut {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-moz-keyframes fadeIn-fadeOut {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-webkit-keyframes fadeIn-fadeOut {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-o-keyframes fadeIn-fadeOut {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+    
+@-ms-keyframes fadeIn-fadeOut {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+
+
+/* resize */
+@media (max-width: 1120px) {
+    #part-2 #boxes {
+        grid-template-columns: auto;
+    }
+}
+
+@media (max-width: 590px) {
+    #part-2 .box {
+        width: 300px;
+    }
+
+    #part-2 #block-text {
+        font-size: 16px;
+    }
+
+    #links #link-button {
+        font-size: 35px;
+        width: 50px;
+    }
+}
