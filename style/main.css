@@ -106,7 +106,7 @@ body {
 
 
 #text #part-1 {
-    background: url(http://dl.kt5company.com/img/ktg5/special1.png) no-repeat center fixed;
+    background: url(../img/special1.png) no-repeat center fixed;
     min-height: 100vh;
     background-size: cover;
     text-align: center;
