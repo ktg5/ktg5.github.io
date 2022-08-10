@@ -20,6 +20,16 @@
     --banner-filter: saturate(80%) blur(8px);
 }
 
+@font-face {
+    src: url(fonts/AppleGaramond.ttf);
+    font-family: "Apple Garamond";
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url(fonts/Quicksand-VariableFont_wght.ttf);
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -35,12 +45,11 @@ body {
 
 
 .font-classical {
-    src: url('../fonts/AppleGaramond.ttf');
     font-family: "Apple Garamond";
 }
 
 .font2 {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand'
 }
 
 
