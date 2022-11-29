@@ -43,6 +43,14 @@ body {
     margin: 0;
 }
 
+#enable-js {
+    position: absolute;
+    background: black;
+    z-index: 99;
+    font-size: 3em;
+    padding: 1em;
+}
+
 
 .font-classical {
     font-family: "Apple Garamond";
