@@ -31,42 +31,6 @@ body {
 }
 
 
-.font-classical {
-    font-family: "Apple Garamond";
-}
-
-.font2 {
-    font-family: 'Quicksand';
-}
-
-
-.selected {
-    -webkit-animation: fadeIn-fadeOut ease 1s;
-    animation: fadeIn-fadeOut ease 1s;
-    animation-delay: .5s;
-}
-
-
-#top-follow #link_container {
-    backdrop-filter: saturate(80%) blur(5px);
-    background: rgb(104 104 104 / 50%);
-    margin-top: 35px;
-    position: fixed;
-}
-
-#top-follow #links {
-    text-align: center;
-    padding: 10px;
-    padding-left: 20px;
-}
-
-#links #link-button {
-    font-size: 45px;
-    display: block;
-    color: white;
-}
-
-
 #text {
     font-family: monospace;
     font-size: large;
@@ -95,6 +59,7 @@ body {
 }
 
 #text #inside-window a {
+    display: contents;
     color: blue;
 }
 
@@ -111,11 +76,15 @@ body {
 
 #text #inside-window {
     background: url(../img/spaces/notepad-middle.png);
+    padding: 5px 10px;
     color: black;
 }
 
-#text #inside-window {
-    padding: 5px 10px;
+#inside-window img {
+    max-width: 25em;
+    max-height: 25em;
+    margin: auto;
+    display: block;
 }
 
 #text .icon-button {
