@@ -157,15 +157,50 @@ body {
     padding: 20px;
 }
 
+#random {
+    opacity: 0.3;
+    position: absolute;
+    max-width: 90rem;
+    margin: auto;
+    right: 0;
+    left: 0;
+}
+
+#random .left {
+    margin-top: 80px;
+    margin-left: 50px;
+}
+
+#random .right-box {
+    height: 12.5rem;
+}
+
+#random .right {
+    position: absolute;
+    margin-top: 80px;
+    width: 7rem;
+    right: 15px;
+}
+
+#random .soggy-cat {
+    margin-right: 0;
+}
+
+#random .t-spin {
+    width: 4rem;
+}
+
 #part-2 #boxes {
     grid-template-columns: auto auto;
     width: fit-content;
     display: grid;
     margin: auto;
+    position: sticky;
 }
 
 .box {
     border: 6px solid var(--bg-high);
+    background: rgb(0, 0, 0);
     border-radius: 15px;
     padding: 0px 15px;
     margin: 0px 10px;
