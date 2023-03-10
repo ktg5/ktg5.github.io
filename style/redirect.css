@@ -1,0 +1,23 @@
+#redirect-text{
+    position: relative;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-family: Quicksand;
+    letter-spacing: .25em;
+    white-space: nowrap;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto;
+    font-size: 2em;
+    top: 60vh;
+    animation: typewriter 1.5s steps(24) .75s 1 normal both, blinking-I 500ms steps(44) infinite normal;
+}
+
+@keyframes typewriter{
+    from{width: 0;}
+    to{width: 23.5em;}
+}
+
+@keyframes blinking-I{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+}
