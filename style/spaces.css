@@ -30,13 +30,16 @@ body {
     margin: 0;
 }
 
-
 #text {
     font-family: monospace;
     font-size: large;
-    min-height: calc(100vh - 54px);
-    max-width: 478px;
+    height: calc(100vh - 55px);
     padding: 10px;
+}
+
+#text.document-window {
+    max-width: 478px;
+    height: auto;
 }
 
 #text .icons-only {

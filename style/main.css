@@ -248,7 +248,6 @@ body {
 
 .box .block-image {
     display: inline-block;
-    position: absolute;
 }
 
 .box .block-image a {
