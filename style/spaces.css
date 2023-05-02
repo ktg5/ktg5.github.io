@@ -39,6 +39,7 @@ body {
 
 #text.document-window {
     max-width: 478px;
+    min-height: calc(100vh - 55px);
     height: auto;
 }
 
