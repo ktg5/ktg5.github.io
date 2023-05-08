@@ -20,7 +20,7 @@ body {
 
 
 #banner {
-    background: url(../img/special1.png) no-repeat center fixed;
+    background: url(../img/special1.png) no-repeat center;
     background-size: cover;
     padding: 10px;
 }
