@@ -1,0 +1,70 @@
+body {
+    background: rgb(32, 32, 32);
+}
+
+#containter {
+    max-width: 1000px;
+    margin: auto;
+}
+
+@font-face {
+    src: url(../downloads/SILVERGUN.otf);
+    font-family: "SILVERGUN";
+}
+
+.silvergun {
+    font-family: 'SILVERGUN';
+    font-size: 28px;
+    overflow: auto;
+}
+
+
+#banner {
+    background: url(../img/special1.png) no-repeat center fixed;
+    background-size: cover;
+    padding: 10px;
+}
+
+#banner img {
+    padding-left: 10px;
+    height: 80px;
+}
+
+
+#content {
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: black;
+    color: white;
+}
+
+#desc p {
+    margin: 0;
+}
+
+.big-quote {
+    font-size: 92px;
+    height: 56px;
+}
+    
+.big-quote.end {
+    position: relative;
+}
+
+#desc .source {
+    position: relative;
+    bottom: 35px;
+    left: 40px;
+}
+
+#content #download a {
+    font-size: 32px;
+    color: white;
+    transition: .15s;
+    padding: 0 5px;
+}
+
+#content #download a:hover {
+    background: white;
+    color: black;
+}

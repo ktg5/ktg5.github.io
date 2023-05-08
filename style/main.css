@@ -239,7 +239,7 @@ body {
     margin-bottom: 10px;
     text-align: center;
     padding: 2px 5px;
-    width: 80px;
+    min-width: 80px;
 }
 
 .box #link-button:hover {

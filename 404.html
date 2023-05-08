@@ -20,8 +20,7 @@
 
     <body>
         <div id="enable-js">
-            javascript is not enabled, please enable it for this website to work 100%.
-            there will hopefully be a non-js site in the future.
+            javascript is not enabled, links will not appear.
             <script>document.getElementById('enable-js').style = "display: none;"</script>
         </div>
         <div id="container">
@@ -29,16 +28,16 @@
                 <div id="link_container">
                     <nav id="links">
 
-                        <a href="https://youtube.com/@ktg5" id="link-button" target="_blank">
+                        <a href="redirect?=https://youtube.com/@ktg5" id="link-button">
                             <i class="fab fa-youtube" aria-hidden="true"></i>
                         </a>
-                        <a href="https://twitch.tv/qua5k" id="link-button" target="_blank">
+                        <a href="redirect?=https://twitch.tv/qua5k" id="link-button">
                             <i class="fab fa-twitch" aria-hidden="true"></i>
                         </a>
-                        <a href="https://twitter.com/_ktg5" id="link-button" target="_blank">
+                        <a href="redirect?=https://twitter.com/_ktg5" id="link-button">
                             <i class="fab fa-twitter" aria-hidden="true"></i>
                         </a>
-                        <a href="https://discord.gg/E4razfBNcE" id="link-button" target="_blank">
+                        <a href="redirect?=https://discord.gg/E4razfBNcE" id="link-button">
                             <i class="fab fa-discord" aria-hidden="true"></i>
                         </a>
 
@@ -96,20 +95,36 @@
                             <div id="block-header" class="font-classical">Links.</div>
 
                             <div id="block-text">
+                                you have JS not enabled, please enable it to see links.
+                            </div>
+                        </div>
+                        <script>
+                            document.getElementById(`links-box`).innerHTML = `
+                            <div id="block-header" class="font-classical">Links.</div>
+
+                            <div id="block-text">
                                 <nav id="links">
 
-                                    <a href="https://youtube.com/channel/UCGpSgtT8rxasUE17cVyAi7A" id="link-button" target="_blank">
+                                    <a href="redirect?=https://youtube.com/@ktg5" id="link-button">
                                         <i class="fab fa-youtube" aria-hidden="true"></i>
                                     </a>
-                                    <a href="https://twitch.tv/qua5k" id="link-button" target="_blank">
+                                    <a href="redirect?=https://twitch.tv/qua5k" id="link-button">
                                         <i class="fab fa-twitch" aria-hidden="true"></i>
                                     </a>
-                                    <a href="https://twitter.com/_ktg5" id="link-button" target="_blank">
+                                    <a href="redirect?=https://twitter.com/_ktg5" id="link-button">
                                         <i class="fab fa-twitter" aria-hidden="true"></i>
                                     </a>
-                                    <a href="https://discord.gg/E4razfBNcE" id="link-button" target="_blank">
+                                    <a href="redirect?=https://discord.gg/E4razfBNcE" id="link-button">
                                         <i class="fab fa-discord" aria-hidden="true"></i>
                                     </a>
+
+                                    <br>
+
+                                    <a href="silvergun.html" id="link-button" style="font-size: 16px;">
+                                        Silvergun font download
+                                    </a>
+
+                                    <br>
 
                                     <a href="spaces/index" id="back-button">
                                         <img src="https://ktg5.online/img/spaces/back.gif" alt="No angels.">
@@ -117,7 +132,8 @@
 
                                 </nav>
                             </div>
-                        </div>
+                            `
+                        </script>
 
                         <div id="specs-box" class="box">
                             <div id="block-header" class="font-classical">Specs.</div>
@@ -161,6 +177,12 @@
                                     <p>Meteos Online</p>
                                 </div>
 
+                                <div id="legacy" class="block-image">
+                                    <a href="http://legacy.ktg5.online/"><img src="https://ktg5.online/img/banner.png" alt="ktg5 Legacy image"></a>
+                                    <br>
+                                    <p>ktg5 Legacy</p>
+                                </div>
+
                             </div>
                         </div>
 
@@ -179,7 +201,7 @@
                                     <br>
                                     <br>
                                 </div>
-                                <li><a href="https://www.youtube.com/channel/UC4AhS0grTfUwspJ7iOFwY4g" target="_blank">A Normal Ladd</a></li>
+                                <li><a href="https://www.youtube.com/@anormalladd" target="_blank">A Normal Ladd</a></li>
                                 <div id="spacer">
                                     <br>
                                     <br>
