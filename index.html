@@ -49,7 +49,19 @@
 
             <div id="text">
                 <div id="part-1">
-                    <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="300px">
+                    <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="300">
+
+                    <script>
+                        // If it's my birthday, then replace the logo image.
+                        var d = new Date();
+                        var day = d.getDate();
+                        var month = d.getMonth() + 1;
+            
+                        if (month == 7 && day == 12) {
+                            document.getElementById('logo').src = 'img/logo-r1-birthday.png'
+                            document.getElementById('logo').height = '350'
+                        }
+                    </script>
                     
                     <div id="half-banner" class="font2">
                         <a href="#part-2">View more information below.</a>
@@ -65,12 +77,11 @@
                         <img class="geolyte left" src="img/memes/geolyte-dance.gif" alt="">
                     </div>
 
-                    <div id="boxes">
-                        <div id="about-box" class="box">
+                    <div id="content-container">
+                        <div id="content">
                             <div id="block-header" class="font-classical">About.</div>
-
-                            <div id="block-text">
-
+                        
+                            <div style="font-size: 18px;">
                                 My name is Kyle (aka ktg5, qua5k, dz), I'm 17 and I spend most of my time as an internet junky.
                                 <div id="spacer">
                                     <br>
@@ -87,135 +98,90 @@
                                     <br>
                                 </div>
                                 Thanks for visiting my site.
-
                             </div>
                         </div>
 
-                        <div id="links-box" class="box">
-                            <div id="block-header" class="font-classical">Links.</div>
+                        <div id="content">
+                            <div id="block-header" class="font-classical">My Puter.</div>
 
-                            <div id="block-text">
-                                you have JS not enabled, please enable it to see links.
-                            </div>
-                        </div>
-                        <script>
-                            document.getElementById(`links-box`).innerHTML = `
-                            <div id="block-header" class="font-classical">Links.</div>
-
-                            <div id="block-text">
-                                <nav id="links">
-
-                                    <a href="redirect?=https://youtube.com/@ktg5" id="link-button">
-                                        <i class="fab fa-youtube" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="redirect?=https://twitch.tv/ktg5_" id="link-button">
-                                        <i class="fab fa-twitch" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="redirect?=https://twitter.com/_ktg5" id="link-button">
-                                        <i class="fab fa-twitter" aria-hidden="true"></i>
-                                    </a>
-                                    <a href="redirect?=https://discord.gg/E4razfBNcE" id="link-button">
-                                        <i class="fab fa-discord" aria-hidden="true"></i>
-                                    </a>
-
-                                    <br>
-
-                                    <a href="silvergun.html" id="link-button" style="font-size: 16px;">
-                                        Silvergun font download
-                                    </a>
-
-                                    <br>
-
-                                    <a href="spaces/index" id="back-button">
-                                        <img src="https://ktg5.online/img/spaces/back.gif" alt="No angels.">
-                                    </a>
-
-                                </nav>
-                            </div>
-                            `
-                        </script>
-
-                        <div id="specs-box" class="box">
-                            <div id="block-header" class="font-classical">Specs.</div>
-
-                            <div id="block-text">
-
-                                <li>CPU - i5-12600K</li>
-                                <li>RAM - 32GB DDR4 [4x T-Force Delta RGB 8GB]</li>
-                                <li>GPU - ASUS Geforce RTX 3060 Ti 8GB</li>
-                                <li>MOBO - MSI MPG Z690 Edge</li>
-                                <li>OS drive - Samsung 870 EVO 500GB SSB</li>
-                                <li>Operating System - Windows 10 Pro 64-bit</li>
-                                <li>Games drive - WD_BLACK 1TB SN770 M.2 SSD</li>
-                                <li>Data drive - Westen Digital Blue 4TB (2015)</li>
-
+                            <div id="computer">
+                                <img class="pc-part leader" src="img/puter/case.png">
+                                <div class="hover">
+                                    <div class="regular">
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/cpu.png">
+                                            <p>Intel i5-12600K</p>
+                                        </div>
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/mobo.png">
+                                            <p>MSI MPG Z690 Edge</p>
+                                        </div>
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/ram.png">
+                                            <p>4x T-Force Delta RGB 8GB</p>
+                                        </div>
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/gpu.png">
+                                            <p>ASUS Geforce RTX 3060 Ti 8GB</p>
+                                        </div>
+                                    </div>
+                                    <div class="drives">
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/data drive.png">
+                                            <p>Westen Digital Blue 4TB (2015)</p>
+                                        </div>
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/games drive.png">
+                                            <p>WD_BLACK 1TB SN770 M.2 SSD</p>
+                                        </div>
+                                        <div class="part-contain">
+                                            <img class="pc-part" src="img/puter/os drive.png">
+                                            <p>Samsung 870 EVO 500GB SSB</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div id="accessories-box" class="box">
+                        <div id="content">
                             <div id="block-header" class="font-classical">Accessories.</div>
-
-                            <div id="block-text">
-
+                            
+                            <div style="font-size: 18px;">
                                 <li>Headphones 1 - Beyerdynamic DT 770</li>
                                 <li>Headphones 2 - Logitech G PRO</li>
                                 <li><a href="https://youtu.be/B270ManFXFI" target="_blank">Keyboard video</a></li>
                                 <li>Mouse - Razer Deathadder V3</li>
                                 <li>Monitor - LG 27GN800-B</li>
-
                             </div>
                         </div>
 
-                        <div id="alt-websites-box" class="box">
+                        <div id="content">
                             <div id="block-header" class="font-classical">Alt. Websites.</div>
 
-                            <div id="block-image-list">
+                            <div id="meteosonline" class="block-image">
+                                <a href="https://meteosonline.surge.sh"><img src="https://meteosonline.surge.sh/img/logos/meteos online 800x.png" alt="Meteos Online image"></a>
+                                <br>
+                                <p>Meteos Online</p>
+                            </div>
 
-                                <div id="meteosonline" class="block-image">
-                                    <a href="https://meteosonline.surge.sh"><img src="https://meteosonline.surge.sh/img/logos/meteos online 800x.png" alt="Meteos Online image"></a>
-                                    <br>
-                                    <p>Meteos Online</p>
-                                </div>
-
-                                <div id="legacy" class="block-image">
-                                    <a href="http://legacy.ktg5.online/"><img src="https://ktg5.online/img/banner.png" alt="ktg5 Legacy image"></a>
-                                    <br>
-                                    <p>ktg5 Legacy</p>
-                                </div>
-
+                            <div id="legacy" class="block-image">
+                                <a href="http://legacy.ktg5.online/"><img src="https://ktg5.online/img/banner.png" alt="ktg5 Legacy image"></a>
+                                <br>
+                                <p>ktg5 Legacy</p>
                             </div>
                         </div>
 
-                        <div id="greetz-box" class="box">
+                        <div id="content">
                             <div id="block-header" class="font-classical">Greetings to...</div>
 
-                            <div id="block-text">
-
-                                <li><a href="https://youtube.com/@shobuh" target="_blank">shobe</a></li>
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                <li><a href="https://twitch.tv/skppy_" target="_blank">Skippy</a></li>
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                <li><a href="https://www.youtube.com/@anormalladd" target="_blank">A Normal Ladd</a></li>
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                <li><a href="https://linktr.ee/toastedcherries" target="_blank">toastedcherries</a></li>
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                <li><a href="https://youtube.com/@zukomae" target="_blank">zukomae</a></li>
-
+                            <div style="font-size: 24px;">
+                                <a href="https://youtube.com/@shobuh" target="_blank">shobe</a>,
+                                <a href="https://twitch.tv/skppy_" target="_blank">Skippy</a>,
+                                <a href="https://www.youtube.com/@anormalladd" target="_blank">A Normal Ladd</a>,
+                                <a href="https://linktr.ee/toastedcherries" target="_blank">toastedcherries</a>,
+                                <a href="https://youtube.com/@zukomae" target="_blank">zukomae</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
