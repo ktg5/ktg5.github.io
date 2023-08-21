@@ -1,0 +1,59 @@
+#content #computer {
+    height: 41em;
+}
+
+#computer .hover {
+    position: relative;
+    bottom: 40em;
+}
+
+#computer .regular, #computer .drives {
+    width: fit-content;
+    margin: auto;
+}
+
+#computer .drives {
+    margin-top: 20em;
+}
+
+#computer .part-contain {
+    display: inline-block;
+}
+
+#computer .part-contain p {
+    opacity: 0;
+    user-select: none;
+    position: relative;
+    bottom: 4.5em;
+    max-width: 10em;
+    width: fit-content;
+    margin: auto;
+    transition: all .15s;
+}
+
+#computer .pc-part {
+    max-width: 9em;
+    max-height: 8em;
+    margin: 0 2em;
+}
+
+#computer .pc-part:where(:last-child):not(:where([class~=not-prose] *)) {
+    margin-right: 0;
+}
+
+#computer .part-contain:hover > .pc-part {
+    opacity: 0.5;
+}
+
+#computer .part-contain:hover > p {
+    opacity: 1;
+}
+
+#computer .pc-part.leader {
+    display: block;
+    max-width: 15em;
+    max-height: 100%;
+    padding: 10em 15em;
+    margin: auto;
+    position: relative;
+}
