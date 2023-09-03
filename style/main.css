@@ -108,13 +108,13 @@ body {
 }
 
 #text #back-button {
-    transition: filter .25s;
+    transition: all .25s;
     border: none !important;
-    filter: brightness(0%);
+    opacity: .05;
 }
 
 #text #back-button:hover {
-    filter: brightness(100%);
+    opacity: 1;
     background: none;
 }
 

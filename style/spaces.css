@@ -48,11 +48,11 @@ body {
     margin: auto;
 }
 
-#text p:where(:first-child):not(:where([class~=not-prose] *)) {
+#text p:where(:first-child) {
     margin-top: 0;
 }
 
-#text p:where(:last-child):not(:where([class~=not-prose] *)) {
+#text p:where(:last-child) {
     margin-bottom: 0;
 }
 
@@ -102,25 +102,23 @@ body {
     margin: 0;
 }
 
-#text #document.new-doc::after {
+#text #document.new-doc::before {
     content: "";
     background-color: rgb(255 242 0);
     border-radius: 100%;
     line-height: normal;
     position: absolute;
-    margin-top: -94px;
     margin-left: 62px;
     height: 13px;
     width: 13px;
 }
 
-#text #folder.new-doc::after {
+#text #folder.new-doc::before {
     content: "";
     background-color: rgb(255 242 0);
     border-radius: 100%;
     line-height: normal;
     position: absolute;
-    margin-top: -73px;
     margin-left: 62px;
     height: 13px;
     width: 13px;
