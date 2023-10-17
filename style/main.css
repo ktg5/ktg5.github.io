@@ -110,7 +110,7 @@ body {
 #text #back-button {
     transition: all .25s;
     border: none !important;
-    opacity: .05;
+    opacity: .025;
 }
 
 #text #back-button:hover {
@@ -242,8 +242,12 @@ body {
 #connected-content {
     display: grid;
     grid-template-columns: auto auto;
-    grid-gap: 10.4em;
-    width: fit-content;
+    grid-gap: 1em;
+    width: 100%;
+}
+
+#connected-content #content {
+    width: 24em;
 }
 
 #link-button:hover {
