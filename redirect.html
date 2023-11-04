@@ -7,29 +7,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=.9, autocorrect=off">
         <link rel="stylesheet" type="text/css" href="style/main.css">
         <link rel="stylesheet" type="text/css" href="style/redirect.css">
-        <style type="text/css">
-            #spacer {
-                font-size: 3px;
-            }
-
-            #text #part-1 {
-                background: rgb(23, 23, 23);
-            }
-
-            #part-1 #logo {
-                bottom: 0;
-            }
-        </style>
         <meta property="og:title" content="Ktg5's website.">
         <meta property="og:description" content="Home for everything ktg5.">
         <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
         <meta content="#4975FF" data-react-helmet="true" name="theme-color">
-        <script>document.head.innerHTML += `<meta http-equiv="refresh" content="4; url=${document.location.search.split(`?=`)[1]}">`</script>
+        <script>
+            if (document.location.search.split(`?=`)[1]) {
+                document.head.innerHTML += `<meta http-equiv="refresh" content="4; url=${document.location.search.split(`?=`)[1]}">`
+            }
+        </script>
     </head>
 
     <body>
         <div id="enable-js">
-            javascript is not enabled, links will not appear.
+            javascript is not enabled, redirect will not work.
             <script>document.getElementById('enable-js').style = "display: none;"</script>
         </div>
         <div id="container">
@@ -38,6 +29,11 @@
                     <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="200px">
 
                     <p id="redirect-text">Redirecting... Thanks for visiting.</p>
+                    <script>
+                        if (!document.location.search.split(`?=`)[1]) {
+                            document.getElementById('redirect-text').innerHTML = `This redirect link is broke! Fix now!`;
+                        }
+                    </script>
                 </div>
             </div>
         </div>

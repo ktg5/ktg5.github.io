@@ -4,6 +4,7 @@
         <title>ktg5.online</title>
         <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.gif">
         <script src="https://kit.fontawesome.com/8ab11290f8.js" crossorigin="anonymous"></script>
+        <script src="src/howler.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=.9, autocorrect=off">
         <link rel="stylesheet" type="text/css" href="style/main.css">
         <link rel="stylesheet" type="text/css" href="style/fab.css">
@@ -16,6 +17,10 @@
         <meta property="og:description" content="Home for everything ktg5.">
         <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
         <meta content="#4975FF" data-react-helmet="true" name="theme-color">
+
+        <!-- PEGGLE FUNNY -->
+        <script src="src/peggle-moment.js"></script>
+        <link rel="stylesheet" type="text/css" href="style/peggle.css">
     </head>
 
     <body>
@@ -85,7 +90,8 @@
                             <div id="block-header" class="font-classical">About.</div>
                         
                             <div style="font-size: 18px;">
-                                My name is Kyle (aka ktg5, qua5k, dz), I'm 18 and I spend most of my time as an internet junky.
+                                My name is Kyle, I go by the names of "ktg5", "qua5k" and "Frametrick".
+                                I'm 18 years of age, and I spend most of my time as an internet junky.
                                 <div id="spacer">
                                     <br>
                                     <br>
@@ -96,7 +102,7 @@
                                     <br>
                                     <br>
                                 </div>
-                                I also like coding, like making this website from raw HTML & CSS. I've also made some extensions
+                                I also like coding, like making this website from raw HTML & CSS, and have also made some extensions
                                 that change the look of some popular sites, such as my <a target="_blank" href="https://github.com/ktg5/PlayerTube">PlayerTube extension</a>,
                                 which makes YouTube's default video player turn into a more retro look.
                                 <div id="spacer">
@@ -114,6 +120,10 @@
                                 Thanks for visiting my site.
                             </div>
                         </div>
+
+                        <div id="peggle-combo" style="display: block; width: fit-content; margin: auto;"><div style="animation: none;">69 hits!</div></div>
+                        <img id="peg" src="img/memes/peg.png" alt="peggle peg no worky frick off" style="display: block; margin: auto;">
+                        <div id="peggle-ext-ball" style="display: block; width: fit-content; margin: auto;"><div style="animation: none;">extra ball!</div></div>
 
                         <div id="connected-content">
                             <div id="content">
@@ -136,15 +146,6 @@
                                 <div id="block-header" class="font-classical">Accessories.</div>
                                 
                                 <div style="font-size: 18px;">
-                                    <b>NOTE</b>: Buying everything in this list will not make you better than me!
-                                    If you're looking for just one thing, be my guest! But don't get everything I
-                                    have!
-                                    <br>
-                                    If you want to be better, play with what you have right now, and determine
-                                    what you believe is slowing you down and try something different. You can
-                                    (hopefully) always refund! 
-                                    <br>
-                                    <br>
                                     <li>Headphones 1 - Beyerdynamic DT 770</li>
                                     <li>Headphones 2 - Logitech G PRO (For games with terrible audio)</li>
                                     <li>Microphone - Audio-Technica AT2020 [Phantom-power]</li>
@@ -159,6 +160,12 @@
                                 </div>
                             </div>
                         </div>
+                        <b>NOTE</b>: Buying everything from those lists will not make you better than me!
+                        If you're looking for just one thing, be my guest! But don't get everything I
+                        have!
+                        <br>
+                        If you want to be better, play with what you have, and determine what you believe
+                        is slowing you down and try something different. You can (hopefully) always refund!
 
                         <div id="content">
                             <div id="block-header" class="font-classical">Alt. Websites.</div>
@@ -203,7 +210,7 @@
             <div id="below" class="font2">
                 &copy ktg5 2023
                 <script>
-                    var x = `&copy ktg5 2023 | ${document.lastModified}.`;
+                    var x = `&copy ktg5 2023 | Last edit: ${document.lastModified}.`;
                     document.getElementById("below").innerHTML = x;
                 </script>
             </div>

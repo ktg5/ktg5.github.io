@@ -141,13 +141,11 @@ body {
 }
 
 #part-1 #half-banner {
-    backdrop-filter: var(--banner-filter);
     background: linear-gradient(180deg, transparent, var(--banner));
     text-align: center;
     position: sticky;
     font-size: 25px;
     padding: 15px;
-    /* border-radius: 4em 4em 0 0; */
     top: 100vh;
 }
 

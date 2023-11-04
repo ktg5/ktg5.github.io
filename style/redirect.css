@@ -1,3 +1,20 @@
+body {
+    background: rgb(23, 23, 23);
+}
+
+#spacer {
+    font-size: 3px;
+}
+
+#text #part-1 {
+    width: fit-content;
+    margin: auto;
+}
+
+#part-1 #logo {
+    bottom: 0;
+}
+
 #redirect-text{
     position: relative;
     border-right: 2px solid rgba(255,255,255,.75);
@@ -14,7 +31,7 @@
 
 @keyframes typewriter{
     from{width: 0;}
-    to{width: 23.5em;}
+    to{width: 100%;}
 }
 
 @keyframes blinking-I{
