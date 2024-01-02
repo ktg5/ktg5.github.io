@@ -20,22 +20,18 @@
     color: black;
 }
 
-/* .fab.fa-twitch::after {
+.fab.fa-twitch::after {
     content: "";
+    opacity: 0;
     background-color: #f00;
     border-radius: 100%;
     line-height: normal;
     position: absolute;
-    height: 13px;
-    width: 13px;
+    height: 20px;
+    width: 20px;
     right: 15px;
-    top: 96px;
+    top: 90px;
 }
-
-.fab.fa-twitch::after {
-    -webkit-animation: fadeIn-fadeOut ease infinite 2s;
-    animation: fadeIn-fadeOut ease infinite 2s;
-} */
 
 
 @media (max-width: 555px) {
