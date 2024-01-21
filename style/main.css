@@ -78,6 +78,7 @@ body {
 }
 
 #top-follow #links {
+    border-top: 8px solid var(--accent);
     text-align: center;
     padding: 10px;
     padding-left: 20px;
