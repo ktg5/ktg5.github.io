@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SUPPORT KTG5</title>
+        <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.gif">
+        <script src="https://kit.fontawesome.com/8ab11290f8.js" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=.9, autocorrect=off">
+        <link rel="stylesheet" type="text/css" href="../style/download.css">
+        <link rel="stylesheet" type="text/css" href="../style/fab.css">
+        <style type="text/css">
+            #spacer {
+                font-size: 3px;
+            }
+
+            a.support-button {
+                display: block;
+                width: 9.9em;
+                padding: 12px;
+                border-radius: 20px;
+                margin: auto;
+                background: linear-gradient(
+                    90deg,
+                    rgba(47, 201, 226, 1) 0%,
+                    rgba(28, 127, 238, 1) 10%,
+                    rgba(95, 21, 242, 1) 20%,
+                    rgba(186, 12, 248, 1) 30%,
+                    rgba(251, 7, 217, 1) 40%,
+                    rgba(255, 0, 0, 1) 50%,
+                    rgba(251, 7, 217, 1) 60%,
+                    rgba(186, 12, 248, 1) 70%,
+                    rgba(95, 21, 242, 1) 80%,
+                    rgba(28, 127, 238, 1) 90%,
+                    rgba(47, 201, 226, 1) 100%
+                );
+                font-size: 48px;
+                font-weight: bold;
+                color: white;
+                -webkit-text-stroke-width: 2px;
+                -webkit-text-stroke-color: black;
+                text-decoration: none;
+                animation: moveBackground 5s linear infinite;
+                transition: all .15s;
+            }
+            a.support-button::after {
+                content: 'via Twitch subs';
+                display: block;
+                text-align: center;
+                font-size: 18px;
+                -webkit-text-stroke-width: 0;
+            }
+            a.support-button:hover {
+                filter: brightness(1.5);
+            }
+
+            @keyframes moveBackground {
+                0% {background-position: 0;}
+                100% {background-position: calc(9.9em + 12px);}
+            }
+        </style>
+        <meta property="og:title" content="SUPPORT KTG5.">
+        <meta property="og:description" content="Give a subscription to ktg5 and get awarded!">
+        <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
+        <meta content="#4975FF" data-react-helmet="true" name="theme-color">
+    </head>
+
+
+    <body>
+        <div id="containter">
+
+            <div id="banner">
+                <a href="https://ktg5.online"><img src="../img/logo-r1.png" alt="ktg5 logo"></a>
+            </div>
+
+            <div id="content">
+                <br>
+                <br>
+                <a class="support-button" href="https://www.twitch.tv/subs/ktg5_" target="_blank">SUBSCRIBE TODAY!</a>
+                <br>
+                <br>    
+
+                <h2>What do you get when supporting ktg5?</h2>
+                <li>Access to ktg5's list of Twitch emotes!</li>
+                <li>Special access to channels & roles on the Discord!</li>
+                <li>Acess to YouTube videos early!</li>
+                <li>... and many more in the future!</li>
+            </div>
+        </div>
+    </body>
+</html>
