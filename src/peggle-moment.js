@@ -44,8 +44,7 @@ window.onload = function () {
                 src: `../sounds/extraball${extBallCount}.ogg`,
                 volume: 0.7
             });
-
-            console.log(`extra ball #`, extBallCount);
+            
             extraball.play();
 
             var extBallElm = document.getElementById('peggle-ext-ball').childNodes[0]

@@ -2,6 +2,11 @@
     scrollbar-color: rgba(255, 255, 255, 0.2) rgb(20, 20, 20);
 }
 
+ul {
+    font-size: 10px;
+    margin: 0;
+}
+
 ::-webkit-scrollbar {
     background: rgb(20, 20, 20);
 }
@@ -258,8 +263,11 @@ body {
 }
 
 .block-image a {
+    display: flow;
+    width: max-content;
     background: none !important;
     border: 0 !important;
+    margin: auto;
 }
 
 .block-image img {
@@ -280,6 +288,8 @@ body {
     transition: all .25s;
     position: relative;
     width: fit-content;
+    max-width: 200px;
+    text-align: center;
     margin: auto;
     top: -2px;
 }
