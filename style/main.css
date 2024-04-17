@@ -16,8 +16,8 @@ ul {
 }
 
 :root {
-    --accent: rgb(73, 117, 255);
-    --d-accent: rgb(73, 146, 255);
+    --accent: rgb(130 160 255);
+    --d-accent: rgb(170 195 255);
     --bg: black;
     --bg-high: rgb(50, 50, 50);
     /* --banner: repeating-linear-gradient(-45deg, var(--accent), var(--accent) 12px, var(--d-accent) 12px, var(--d-accent) 25px); */
