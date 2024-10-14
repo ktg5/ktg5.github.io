@@ -49,12 +49,27 @@ body {
     margin: 0;
 }
 
+
 #enable-js {
     position: absolute;
     background: black;
     z-index: 99;
     font-size: 3em;
     padding: 1em;
+}
+
+
+#hoverhint {
+    display: none;
+    position: absolute;
+    cursor: none;
+    font-size: 16px;
+    font-family: sans-serif;
+    color: white;
+    background: black;
+    border: 6px solid black;
+    border-radius: 8px;
+    z-index: 100;
 }
 
 
@@ -93,6 +108,10 @@ body {
     font-size: 38px;
     display: block;
     color: white;
+}
+
+#links #link-button:hover .fab {
+    color: var(--accent);
 }
 
 

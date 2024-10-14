@@ -4,10 +4,6 @@
     transition: all .15s;
 }
 
-.fab:hover {
-    color: var(--accent);
-}
-
 .fab a {
     text-decoration: none;
 }
