@@ -7,7 +7,11 @@ window.addEventListener('load', (event) => {
         button.addEventListener('mouseover', (event) => {
             if (button.getAttribute('data-title')) {
                 hoverhint.innerHTML = button.getAttribute('data-title');
-                if (button.getAttribute('data-title-color')) hoverhint.style.color = button.getAttribute('data-title-color');
+                let titleColor = button.getAttribute('data-title-color');
+                if (titleColor) {
+                    if (titleColor === 'rainbow') hoverhint.style.animation = 'rainbow-colour 5s ease infinite';
+                    else hoverhint.style.color = titleColor;
+                }
                 else hoverhint.style.color = 'white';
                 hoverhint.style.display = 'block';
             }
@@ -15,6 +19,8 @@ window.addEventListener('load', (event) => {
 
         button.addEventListener('mouseout', (event) => {
             hoverhint.innerHTML = '';
+            hoverhint.style.color = '';
+            hoverhint.style.animation = '';
             hoverhint.style.display = 'none';
         });
     });

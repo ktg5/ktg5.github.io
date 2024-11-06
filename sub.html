@@ -2,61 +2,12 @@
 <html>
     <head>
         <title>SUPPORT KTG5</title>
-        <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.gif">
+        <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.png">
         <script src="https://kit.fontawesome.com/71d8e28e8e.js" crossorigin="anonymous"></script>
         <meta name="viewport" content="width=device-width, initial-scale=.9, autocorrect=off">
-        <link rel="stylesheet" type="text/css" href="../style/download.css">
-        <link rel="stylesheet" type="text/css" href="../style/fab.css">
-        <style type="text/css">
-            #spacer {
-                font-size: 3px;
-            }
+        <link rel="stylesheet" type="text/css" href="style/fab.css">
+        <link rel="stylesheet" href="style/sub.css">
 
-            a.support-button {
-                display: block;
-                width: 9.9em;
-                padding: 12px;
-                border-radius: 20px;
-                margin: auto;
-                background: linear-gradient(
-                    90deg,
-                    rgba(47, 201, 226, 1) 0%,
-                    rgba(28, 127, 238, 1) 10%,
-                    rgba(95, 21, 242, 1) 20%,
-                    rgba(186, 12, 248, 1) 30%,
-                    rgba(251, 7, 217, 1) 40%,
-                    rgba(255, 0, 0, 1) 50%,
-                    rgba(251, 7, 217, 1) 60%,
-                    rgba(186, 12, 248, 1) 70%,
-                    rgba(95, 21, 242, 1) 80%,
-                    rgba(28, 127, 238, 1) 90%,
-                    rgba(47, 201, 226, 1) 100%
-                );
-                font-size: 48px;
-                font-weight: bold;
-                color: white;
-                -webkit-text-stroke-width: 2px;
-                -webkit-text-stroke-color: black;
-                text-decoration: none;
-                animation: moveBackground 5s linear infinite;
-                transition: all .15s;
-            }
-            a.support-button::after {
-                content: 'via Twitch subs';
-                display: block;
-                text-align: center;
-                font-size: 18px;
-                -webkit-text-stroke-width: 0;
-            }
-            a.support-button:hover {
-                filter: brightness(1.5);
-            }
-
-            @keyframes moveBackground {
-                0% {background-position: 0;}
-                100% {background-position: calc(9.9em + 12px);}
-            }
-        </style>
         <meta name="description" content="Give a subscription to ktg5 and get awarded!">
         <meta property="og:title" content="SUPPORT KTG5.">
         <meta property="og:description" content="Give a subscription to ktg5 and get awarded!">
@@ -66,25 +17,64 @@
 
 
     <body>
-        <div id="containter">
+        <div id="container">
 
-            <div id="banner">
-                <a href="https://ktg5.online"><img src="../img/logo-r1.png" alt="ktg5 logo"></a>
+            <div id="side-one">
+                <img class="over-bg" src="img/sub/over bg.png">
+                <img class="bg" src="img/sub/bg.webp">
             </div>
 
-            <div id="content">
-                <br>
-                <br>
-                <a class="support-button" href="https://www.twitch.tv/subs/ktg5_" target="_blank">SUBSCRIBE TODAY!</a>
-                <br>
-                <br>    
+            <div id="side-two">
+                <div class="container">
+                    <div class="text" style="font-size: 2.5vh;line-height: 2.75vh;margin-top: 8em;">
+                        SUPPORT KTG5 FOR FREE WITH PRIME GAMING BY
+                    </div>
+                    <a href="https://www.twitch.tv/subs/ktg5_" class="button-container"><div class="button">
+                        <img class="bg" src="img/sub/bg.webp">
+                        <div class="txt"><i class="fa-solid fa-star" aria-hidden="true"></i> SUBSCRIBING</div>
+                    </div></a>
+                    <div class="text" style="font-size: 2vh;line-height: 2.5vh;">
+                        via Twitch
+                    </div>
+                    
+                    <div style="margin-bottom: 100px;"></div>
 
-                <h2>What do you get when supporting ktg5?</h2>
-                <li>Access to ktg5's list of Twitch emotes!</li>
-                <li>Special access to channels & roles on the Discord!</li>
-                <li>Acess to YouTube videos early!</li>
-                <li>... and many more in the future!</li>
+                    <div class="text" style="font-size: 2.5vh;line-height: 2.75vh;margin-bottom: 60px;">
+                        What do you get when you support ktg5?
+                    </div>
+                    <div class="things-container">
+                        <div class="thing">
+                            <div class="title">Twitch Badge & Emotes</div>
+                            <div class="content">
+                                <div class="img-container"><img src="img/sub/twitch.png"></div>
+                                <div class="txt">As subscribing to ktg5 on Twitch, you get access to A LOT of STUPID Twitch emotes and a special badge next to your name in chat.</div>
+                            </div>
+                        </div>
+                        <div class="thing">
+                            <div class="title">Ad-Free Twitch Viewing</div>
+                            <div class="content">
+                                <div class="img-container"><img src="img/sub/ads.png"></div>
+                                <div class="txt">As a part of Twitch's subscriptions, you get ad-free watching of all of ktg5's Twitch streams & VODs.</div>
+                            </div>
+                        </div>
+                        <div class="thing">
+                            <div class="title">Discord Roles & Early Videos</div>
+                            <div class="content">
+                                <div class="img-container"><img src="img/sub/discord.png"></div>
+                                <div class="txt">Access to special channels & roles on the Discord server.</div>
+                            </div>
+                        </div>
+                        <div class="thing">
+                            <div class="title">And more soon...</div>
+                            <div class="content">
+                                <div class="img-container"><img src="img/sub/soon.jpg"></div>
+                                <div class="txt">More features will be added over time as supporter amount grows, so consider subscribing!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </body>
 </html>

@@ -4,6 +4,7 @@
 
 ul {
     font-size: 10px;
+    padding-left: 30px;
     margin: 0;
 }
 
@@ -419,13 +420,31 @@ body {
     }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1000px) {
+    #content-container {
+        padding: 0 5em;
+    }
+    
     #connected-content {
         display: block;
     }
+
+    #connected-content #content {
+        width: auto;
+        margin: auto;
+    }
 }
 
-@media (max-width: 590px) {
+@media (max-width: 800px) {
+    #top-follow #links {
+        padding-right: 5px;
+    }
+
+    #links #link-button {
+        font-size: 30px;
+        width: 50px;
+    }
+    
     #part-2 .box {
         width: 300px;
     }
@@ -433,9 +452,26 @@ body {
     #part-2 #block-text {
         font-size: 16px;
     }
+}
 
-    #links #link-button {
-        font-size: 35px;
-        width: 50px;
+
+@keyframes rainbow-colour {
+    0% {
+        color: red;
+    }
+    20% {
+        color: yellow;
+    }
+    40% {
+        color: lime;
+    }
+    60% {
+        color: aqua;
+    }
+    80% {
+        color: magenta;
+    }
+    100% {
+        color: red;
     }
 }

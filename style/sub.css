@@ -1,0 +1,191 @@
+:root {
+    --side-one-width: 35vw;
+    --side-one-grid-height: 20vh;
+}
+
+body {
+    font-family: "NewRodinPro-EB";
+    background-color: #141414;
+    color: white;
+    margin: 0;
+}
+
+
+@font-face {
+    src: url(fonts/FOT-NewRodin\ Pro\ EB.otf);
+    font-family: "NewRodinPro-EB";
+}
+
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+
+#side-one {
+    display: flex;
+    position: relative;
+    width: var(--side-one-width);
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#side-one * {
+    position: absolute;
+    height: 100vh;
+}
+
+#side-one .over-bg {
+    z-index: 1;
+}
+
+
+#side-two {
+    width: calc(100% - var(--side-one-width));
+    background: #141414;
+    align-content: center;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+#side-two .container {
+    width: fit-content;
+    padding: 0 5vw;
+    margin: auto;
+}
+
+#side-two .button-container {
+    display: block;
+    width: fit-content;
+    color: white;
+    text-decoration: none;
+    margin: 1vh auto .5vh;
+}
+
+#side-two .button {
+    position: relative;
+    width: 34vh;
+    height: 4vh;
+    padding: .75vh;
+    font-size: 3.25vh;
+    line-height: 3.5vh;
+    border: .3vh solid white;
+    border-radius: 1vh;
+    overflow: hidden;
+}
+
+#side-two .button:before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: inset 0 0 20px 4px rgb(255 255 255 / 50%);
+    z-index: 2;
+    transition: all .25s;
+}
+
+#side-two .button:hover:before {
+    box-shadow: inset 0 0 20px 14px rgb(255 255 255 / 50%);
+}
+
+#side-two .button .txt {
+    position: relative;
+    z-index: 1;
+}
+
+#side-two .button .bg {
+    position: absolute;
+    top: -3.5vw;
+    left: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+
+.things-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1em;
+    margin-bottom: 6em;
+    justify-items: center;
+}
+
+.things-container .thing {
+    background: black;
+    padding: 1vw;
+    width: 25em;
+    height: 23em;
+    border-radius: 1vw;
+}
+
+.things-container .thing .title {
+    font-size: 1.45em;
+    line-height: 1.25em;
+    margin-bottom: .5em;
+}
+
+.thing .content {
+    height: 90%;
+    position: relative;
+    justify-items: center;
+}
+
+.thing .img-container {
+    position: relative;
+    margin-top: 20px;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.thing .img-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    object-fit: cover;
+}
+
+.thing .content .txt {
+    position: absolute;
+    line-height: 1.45em;
+    bottom: 1em;
+}
+
+
+@media (max-width: 1500px) {
+    .things-container {
+        grid-template-columns: auto;
+    }
+}
+
+@media (max-aspect-ratio: 1/1) {
+
+    #container {
+        display: grid;
+    }
+
+
+    #side-one {
+        width: 100%;
+        height: var(--side-one-grid-height);
+    }
+
+    #side-one * {
+        height: 150vw;
+        max-height: 1000px;
+    }
+
+
+    #side-two {
+        width: 100%;
+        height: calc(100vh - var(--side-one-grid-height));
+    }
+
+}
