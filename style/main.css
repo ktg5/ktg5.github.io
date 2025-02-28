@@ -27,8 +27,8 @@ ul {
 }
 
 @font-face {
-    src: url(fonts/AppleGaramond.ttf);
-    font-family: "Apple Garamond";
+    src: url(fonts/Neuzon.ttf);
+    font-family: "Neuzon";
 }
 
 @font-face {
@@ -74,8 +74,8 @@ body {
 }
 
 
-.font-classical {
-    font-family: "Apple Garamond";
+.font1 {
+    font-family: "Neuzon";
 }
 
 .font2 {
@@ -249,7 +249,7 @@ body {
 }
 
 #content #block-header {
-    font-size: 50px;
+    font-size: 46px;
     padding-bottom: 20px;
 }
 
