@@ -16,50 +16,21 @@
     color: black;
 }
 
-.fab.fa-twitch::after {
+.islive .fab.fa-twitch::after {
     content: "";
-    opacity: 0;
     background-color: #f00;
     border-radius: 100%;
     line-height: normal;
     position: absolute;
-    height: 20px;
-    width: 20px;
-    right: 15px;
-    top: 90px;
+    height: 15px;
+    width: 15px;
+    right: 0;
+    bottom: 5px;
+    animation-name: fadeIn-fadeOut;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
 }
 
 .fa-solid.fa-hand-holding-dollar {
     animation: rainbow-colour 5s infinite;
-}
-
-/* whiteToRed */
-@keyframes whiteToRed {
-    0% {color:white;}
-    50% {color:rgb(135, 70, 255);}
-    100% {color:white;}
-}
-    
-@-moz-keyframes whiteToRed {
-    0% {color:white;}
-    50% {color:rgb(135, 70, 255);}
-    100% {color:white;}
-}
-    
-@-webkit-keyframes whiteToRed {
-    0% {color:white;}
-    50% {color:rgb(135, 70, 255);}
-    100% {color:white;}
-}
-    
-@-o-keyframes whiteToRed {
-    0% {color:white;}
-    50% {color:rgb(135, 70, 255);}
-    100% {color:white;}
-}
-    
-@-ms-keyframes whiteToRed {
-    0% {color:white;}
-    50% {color:rgb(135, 70, 255);}
-    100% {color:white;}
 }

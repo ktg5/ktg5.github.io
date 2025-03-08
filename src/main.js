@@ -1,4 +1,4 @@
-window.addEventListener('load', (event) => {
+window.addEventListener('load', async (event) => {
     
     let linkButtons = document.querySelectorAll('#links a');
     let hoverhint = document.querySelector('#hoverhint');
@@ -44,4 +44,30 @@ window.addEventListener('load', (event) => {
         hoverhint.style.top = `${cursorY - 20 + window.scrollY}px`;
     }
 
+
+    let twitchButton = document.querySelector(`[data-title="Twitch"]`);
+    await fetch("https://gql.twitch.tv/gql", {
+        headers: {
+            "client-id": "kimne78kx3ncx6brgo4mv6wki5h1ko",
+        },
+        body: JSON.stringify({
+            "operationName": "StreamRefetchManager",
+            "variables": {
+                "channel": "ktg5_"
+            },
+            "extensions": {
+                "persistedQuery": {
+                    "version": 1,
+                    "sha256Hash": "ecdcb724b0559d49689e6a32795e6a43bba4b2071b5e762a4d1edf2bb42a6789"
+                }
+            }
+        }),
+        method: "POST"
+    }).then(async rawData => {
+        let data = await rawData.json();
+
+        if (data.errors) resolve({ errors: data.errors });
+        if (data.data.user.stream != null) twitchButton.classList.add('islive');
+        else twitchButton.classList.remove('islive');
+    });
 });
