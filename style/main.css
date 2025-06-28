@@ -478,6 +478,7 @@ label input:checked~.checkbox-container::after {
     position: absolute;
     background: rgb(16 18 17);
     align-items: anchor-center;
+    transform: rotateY(180deg);
     top: calc(-1 * var(--taskbar-size));
     left: 0;
     width: 100%;

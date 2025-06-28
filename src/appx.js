@@ -61,7 +61,7 @@ class Appx {
             if (stat == true) {
                 toggle();
                 appxDivs.taskbar.setAttribute('data-toggle', '');
-                if (!hintsData.titlebar) {
+                if (!mobileMode && !hintsData.titlebar) {
                     const hintName = 'titlebar';
                     toggleHint(hintName);
                     hintsData[hintName] = true;
@@ -194,7 +194,7 @@ class Appx {
 
             denyMouse(false);
 
-            if (!hintsData.titlebar) toggleHint('titlebar');
+            if (!mobileMode && !hintsData.titlebar) toggleHint('titlebar');
 
             fetch(elmntData.src).then(async rawData => {
                 let html = await rawData.text();
