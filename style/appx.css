@@ -1,0 +1,94 @@
+h1, h2, h3, h4, h5 {
+    font-family: "Segoe UI light";
+    font-weight: 100;
+}
+
+ul {
+    padding: 0 2rem;
+}
+
+
+.appx-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+#appx .block {
+    display: grid;
+    height: 100%;
+    font-family: "Segoe UI light";
+    font-weight: 100;
+    overflow: auto;
+}
+
+#appx .block .bg {
+    position: relative;
+    background: black;
+}
+
+#appx .block .bg img {
+    position: absolute;
+    height: 100%;
+    object-fit: cover;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#appx .block .content {
+    position: relative;
+    padding: 20px
+}
+
+#appx .block .content .text {
+    width: 95%;
+    height: fit-content;
+    margin: auto;
+    margin-left: 1em;
+    top: 0;
+    bottom: 0;
+}
+
+#appx .block .content .text p {
+    margin: .25em 0;
+}
+
+#appx .block .content .text p:first-child {
+    margin-top: 0;
+}
+
+#appx .block .content .text p:last-child {
+    margin-bottom: 0;
+}
+
+
+@media (max-aspect-ratio: 1/1) {
+    .app-container .scroll-content {
+        display: contents;
+        width: 100%;
+    }
+    
+    #appx .block {
+        display: flex;
+        flex-direction: column;
+        width: 100% !important;
+        height: fit-content;
+        min-height: 30vh;
+    }
+    
+    #appx .block .content {
+        min-height: 30vh;
+        height: auto;
+    }
+    
+    #appx .block .content .title {
+        margin-bottom: .5%;
+    }
+    
+    #appx .block .content .text {
+        position: relative;
+        width: 85vw;
+        margin: auto;
+    }
+}

@@ -1,281 +1,391 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <script>
+            // Meausre internet speed to cut down on request & shi
+            var slowMf = false, loadTime = 0;
+            const slowMfTime = 15;
+            var loadInt = setInterval(() => {
+                loadTime++
+            }, 100);
+        </script>
+
+        <link rel="dns-prefetch" href="https://ktg5.online">
+        <link rel="dns-prefetch" href="https://api.ktg5.online">
+        <link rel="dns-prefetch" href="https://i.ytimg.com">
+        <link rel="dns-prefetch" href="https://static-cdn.jtvnw.net">
+
         <title>ktg5.online</title>
         <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.png">
-        <meta name="viewport" content="width=device-width, initial-scale=.9, autocorrect=off">
+        <meta name="viewport" content="width=device-width, initial-scale=.8, autocorrect=off">
         <meta name="description" content="Home for everything ktg5.">
         <meta property="og:title" content="Ktg5's website.">
         <meta property="og:description" content="Home for everything ktg5.">
         <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
         <meta content="#4975FF" data-react-helmet="true" name="theme-color">
+        <meta charset="UTF-8">
 
         <link rel="stylesheet" type="text/css" href="style/main.css">
-        <link rel="stylesheet" type="text/css" href="style/fab.css">
-        <style type="text/css">
-            #spacer {
-                font-size: 3px;
-            }
-        </style>
 
-        <script src="https://kit.fontawesome.com/71d8e28e8e.js" crossorigin="anonymous"></script>
         <script src="src/howler.min.js"></script>
+        <script src="src/twitch.js"></script>
+        <script src="src/appx.js"></script>
         <script src="src/main.js"></script>
 
+        <script src="https://kit.fontawesome.com/71d8e28e8e.js" crossorigin="anonymous"></script>
+
         <!-- PEGGLE FUNNY -->
-        <script src="src/peggle-moment.js"></script>
-        <link rel="stylesheet" type="text/css" href="style/peggle.css">
+        <!-- <script src="src/peggle-moment.js"></script>
+        <link rel="stylesheet" type="text/css" href="style/peggle.css"> -->
     </head>
 
     <body>
         <div id="enable-js">
-            javascript is not enabled, links will not appear.
+            javascript is not enabled. any apps will not worky, links will.
             <script>document.getElementById('enable-js').style = "display: none;"</script>
         </div>
 
         <div id="hoverhint"></div>
 
-        <div id="container">
-            <div id="top-follow">
-                <div id="link_container">
-                    <nav id="links">
+        <div id="appx-container" data-hide>
+            <div id="appx-tile"></div>
 
-                        <a href="redirect?=https://youtube.com/@ktg5?sub_confirmation=1" id="link-button" data-title="YouTube" data-title-color="rgb(255 155 155)">
-                            <i class="fab fa-youtube" aria-hidden="true"></i>
-                        </a>
-                        <a href="redirect?=https://twitch.tv/ktg5_" id="link-button" data-title="Twitch" data-title-color="rgb(200 155 255)">
-                            <i class="fab fa-twitch" aria-hidden="true"></i>
-                        </a>
-                        <a href="redirect?=https://discord.gg/MHpFkSUZcy" id="link-button" data-title="Discord" data-title-color="rgb(155 175 255)">
-                            <i class="fab fa-discord" aria-hidden="true"></i>
-                        </a>
-                        <a href="redirect?=https://twitter.com/_ktg5" id="link-button" data-title="Twitter" data-title-color="rgb(155 255 255)">
-                            <i class="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="redirect?=https://github.com/ktg5" id="link-button" data-title="GitHub" data-title-color="rgb(175 175 155)">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                        </a>
-
-                        <div style="margin-top: 25px;"></div>
-
-                        <a href="sub" id="link-button" data-title="Subscribe" data-title-color="rainbow">
-                            <i class="fa-solid fa-hand-holding-dollar" aria-hidden="true"></i>
-                        </a>
-                        <a href="downloads/" id="link-button" data-title="Downloads">
-                            <i class="fa fa-download" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://tools.ktg5.online/" id="link-button" data-title="Tools">
-                            <i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>
-                        </a>
-
-                    </nav>
-                </div>
+            <div id="appx-preview">
+                <div class="item-logo"><img src="" alt=""></div>
             </div>
 
-            <div id="blocker"></div>
+            <div id="appx"></div>
+        </div>
+        <div id="appx-taskbar" data-toggle>
+            <div class="icon"><img src=""></div>
+            <div class="title"></div>
+            <div class="buttons">
+                <div class="button" data-button="close"><div class="icon">r</div></div>
+            </div>
 
-            <div id="text">
-                <div id="part-1">
-                    <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="300">
+            <div class="detector"></div>
+        </div>
 
-                    <script>
-                        // If it's my birthday, then replace the logo image.
-                        var d = new Date();
-                        var day = d.getDate();
-                        var month = d.getMonth() + 1;
-            
-                        if (month == 7 && day == 12) {
-                            document.getElementById('logo').src = 'img/logo-r1-birthday.png'
-                            document.getElementById('logo').height = '350'
-                        }
-                    </script>
-                    
-                    <div id="half-banner" class="font1">
-                        <a href="#part-2">View more information below.</a>
-                    </div>
-                </div>
+        <div id="start-container">
+            <script>document.querySelector('#start-container').style.display = 'none';</script>
+            <div id="deny-mouse"></div>
 
-                <div id="part-2">
-                    <div id="random">
-                        <img class="geolyte left" src="img/memes/geolyte-dance.gif" alt="">
-                    </div>
+            <div class="topbar">
+                <h1 class="topbar-title font1">Start</h1>
+            </div>
 
-                    <div id="content-container">
-                        <div id="content">
-                            <div id="block-header" class="font1">About.</div>
-                        
-                            <div style="font-size: 18px;">
-                                My name is Kyle, I go by the names of "ktg5", "dz3g" and "Frametrick".
-                                I'm 19 years of age, and I spend most of my time as an internet junky.
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                I mainly like playing video games, doing graphic design, talking with people, live streaming &
-                                making videos, drumming sometimes, and just being a person.
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                I'm also a coding nerd. I made this website without any website builders, just HTML & other shit, 
-                                I've also made browser extensions, such as my
-                                <a target="_blank" href="https://github.com/ktg5/PlayerTube">PlayerTube extension</a>, which
-                                makes YouTube's default video player turn into a more retro look. And recently I've been working
-                                on a new extension called,
-                                <a target="_blank" href="https://github.com/ktg5/OldTwitch">OldTwitch</a>, which swaps out
-                                Twitch's current website with it's older site by injecting HTML onto the page. It's still in it's
-                                development process and doesn't have a public release, YET, but hopefully sometime 2025.
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                Speaking of coding & such, for the stuff that isn't on my GitHub, I have a page for downloads!
-                                You can find everything I've made for free <a href="downloads/">here!</a>
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                Something on the "personal"-side, I was born with Albinism (known as being an albino) -- meaning
-                                my skin is thinner and more sensitive to sunlight than others. I also have a not so bad
-                                visual-impairment (able to drive), but a not so good speech-impairment. Plus I suck at spelling,
-                                lol.
-                                <div id="spacer">
-                                    <br>
-                                    <br>
-                                </div>
-                                Thanks for visiting my site.
-                            </div>
-                        </div>
+            <div class="groups-container">
+                <div class="groups">
 
-                        <div id="peggle-combo" style="display: block; width: fit-content; margin: auto;"><div style="animation: none;">69 hits!</div></div>
-                        <img id="peg" src="img/memes/peg.png" alt="peggle peg no worky frick off" style="display: block; margin: auto;">
-                        <div id="peggle-ext-ball" style="display: block; width: fit-content; margin: auto;"><div style="animation: none;">extra ball!</div></div>
-
-                        <div id="connected-content">
-                            <div id="content">
-                                <div id="block-header" class="font1">My Puter.</div>
+                    <div class="group-container">
+                        <h2 class="title font1">Welcome</h2>
     
-                                <ul style="font-size: 18px;">
-                                    <li>Case: Phanteks Enthoo Pro</li>
-                                    <li>CPU: Intel i5-12600K</li>
-                                    <li>CPU Cooler: NZXT Kraken Z63</li>
-                                    <li>MOBO: MSI MPG Z690 Edge</li>
-                                    <li>RAM: 4x T-Force Delta RGB 8GB</li>
-                                    <li>GPU: ZOTAC RTX 4070 Super 12GB</li>
-                                    <li>Data Drive: Westen Digital Blue 4TB WD40EZAZ [2015]</li>
-                                    <li>Games Drive: WD_BLACK 2TB SN850X NVMe SSD</li>
-                                    <li>OS Drive: WD_BLACK 1TB SN850 NVMe SSD</li>
-                                    <li>OS: Windows 11 IoT 24H2 LTSC 64-bit</li>
-                                </ul>
-                            </div>
+                        <div class="group">
     
-                            <div id="content">
-                                <div id="block-header" class="font1">Accessories.</div>
-                                
-                                <ul style="font-size: 18px;">
-                                    <li>Headphones 1 - Beyerdynamic DT 990</li>
-                                    <li>Microphone - Audio-Technica AT2020 [Phantom-power]</li>
-                                    <li>Audio Interface - MOTU M2</li>
-                                    <li>Capture Card - Elgato HD60 Pro</li>
-                                    <li>Mice - Pulsar X3 Mini</li>
-                                    <li>Mousepad - Artisan Hayate Otsu [MID Large]</li>
-                                    <li>Main Monitor - LG 27GN800-B</li>
-                                    <li>Second Monitor - BenQ GW2765</li>
-                                    <li>Discord / Chat Monitor - LG 24BP75Q-B</li>  
-                                </ul>
+                            <div class="item" data-item-id="ktg5" data-item-size="large" style="background-color: rgb(60, 50, 194);" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title">ktg5</div>
+
+                                    <div class="item-tile">
+                                        <div class="item-logo" style="padding-top: 8px; width: 65%"><img src="/img/logo-w1.png" alt="ktg5"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <a href="https://youtube.com/@ktg5?sub_confirmation=1" data-add-redirect class="item" data-item-id="youtube" data-item-size="wide" data-item-mobilesize="wide" style="background-color: #fafafa;" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title" style="opacity: 0">YouTube</div>
 
-                        <div id="content">
-                            <div id="block-header" class="font1">Alt. Websites.</div>
-
-                            <div id="other-sites">
-                                <div id="meteosonline" class="block-image">
-                                    <a href="https://meteosonline.com"><img src="https://meteosonline.com/img/logos/meteos online 800x.png" alt="Meteos Online image"></a>
-                                    <p>Meteos Online</p>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="logo" data-item-disabletitle>
+                                        <div class="item-logo" style="width: 65%"><img src="/img/tiles/youtube.svg" alt="YouTube"></div>
+                                    </div>
                                 </div>
-    
-                                <div id="legacy" class="block-image">
-                                    <a><img src="https://ktg5.online/img/banner.png" alt="ktg5 Legacy image"></a>
-                                    <p>ktg5 Legacy (in need of a new host)</p>
+                            </a>
+                            <a data-add-redirect class="item" data-item-id="twitch" data-item-size="large" data-item-mobilesize="wide" style="background-color: #4b367c;" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title" style="opacity: 0">Twitch</div>
+
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="logo" data-item-disabletitle>
+                                        <div class="item-logo" style="width: 75%"><img src="/img/tiles/twitch.png" alt="Twitch"></div>
+                                    </div>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="text">
+                                        <div class="item-data">
+                                            <h2>ktg5 is asleep...</h2>
+                                            <p class="desc1">Check their schedule to see when the next one is up</p>
+                                            <p class="desc2"></p>
+                                        </div>
+                                        <div class="item-image"><img src=""></div>
+                                    </div>
                                 </div>
+                            </a>
+                            <a href="https://x.com/_ktg5" data-add-redirect class="item" data-item-id="twitter" data-item-size="wide" style="
+                            background-color: #33ccff;
+                            background-image: url('/img/tiles/twitter-bg.gif');
+                            " tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-tile" data-scroll-delay="3" data-item-style="logo">
+                                        <div class="item-logo" style="width: 90%"><img src="/img/tiles/twitter.png" alt="Twitter"></div>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="item-group-m">
+                                <a href="https://discord.gg/MHpFkSUZcy" data-add-redirect class="item" data-item-id="discord" data-item-size="med" style="background-color: #7289da;" tabindex="0">
+                                    <div class="item-tile-container">
+                                        <div class="item-title">Discord</div>
 
-                                <br>
+                                        <div class="item-tile">
+                                            <div class="item-logo" style="height: 45%"><img src="/img/tiles/discord.png" alt="Discord"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="https://github.com/ktg5" data-add-redirect class="item" data-item-id="github" data-item-size="med" style="background-color: #242424;" tabindex="0">
+                                    <div class="item-tile-container">
+                                        <div class="item-title">GitHub</div>
 
-                                <a href="spaces/index" id="back-button">
-                                    <img src="https://ktg5.online/img/spaces/back.gif" alt="No angels.">
+                                        <div class="item-tile">
+                                            <div class="item-logo" style="height: 45%"><img src="/img/tiles/github.png" alt="GitHub"></div>
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
-                        </div>
+                            <a href="https://shop.ktg5.online/" class="item" data-item-id="store" data-item-size="large" style="background-color: #1db11d;" tabindex="0">
+                                <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                    <div class="item-title">shop.ktg5.online</div>
 
-                        <div id="content">
-                            <div id="block-header" class="font1">Greetings to...</div>
-
-                            <div style="font-size: 24px;">
-                                <a href="https://youtube.com/@shobuh" target="_blank">shobe</a>,
-                                <a href="https://youtube.com/@Skppydip" target="_blank">Skippy</a>,
-                                <a href="https://www.youtube.com/@anormalladd" target="_blank">A Normal Ladd</a>,
-                                <a href="https://www.youtube.com/@malatype" target="_blank">Malatype</a>,
-                                <a href="https://maple.nekoweb.org/" target="_blank">toastedcherries</a>
-                            </div>
+                                    <div class="item-tile" data-scroll-delay="3">
+                                        <div class="item-logo" style="height: 45%"><img src="/img/tiles/shop.png" alt="shop.ktg5.online"></div>
+                                    </div>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="image" data-title-shadow>
+                                        <div class="item-image"><img src="https://imgproxy.fourthwall.com/6H5MQyLJ5btNL09uYXMSJ2MD3LCELxYkac6RmfgcCEQ/w:900/sm:1/enc/AZnM3ZGTRkqk0lCc/g-0dTMw37HnIr7gK/XhRepD1x5jE3p1om/i_BA4Cwz2-zCXxkv/kGpIF7DQmrCNpBz8/_OXBSfRlaGNKrWz6/75D-03zKxOAFvu44/PlhtyFHCmcTl5jQJ/eftja4P-txzp0unV/5iWCBxGR70UIO2CJ/CAKeL8Hw7TNmW-Si/T7jOu__Vy6k5cbhD/7NpYwIhxICIG_3T4/q1QvnA" alt="shop.ktg5.online"></div>
+                                    </div>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="image" data-title-shadow>
+                                        <div class="item-image"><img src="https://imgproxy.fourthwall.com/W6D872qMB6nkhb0PZjyNf7aeTIEjXJCqwZ47uX3wG6c/w:720/sm:1/enc/m1Hyk8qNYPp3nXsR/GKME5D5jakbpanL4/KSq1cNmLbMM6NWP2/CTp2adqQb7cYtjSH/K4IVUrUaqp-V5l1W/hXJhmYiT9vVY13KQ/X8jCVYpNhdvTAYvU/Uw27ps4taekHzt3s/ivjj9RSu5jUUPkxg/6gVRrX6yd5PWG5oe/dbLFMxD9gEvRTgNE/eUdWKkS6uYzQNBht/qyVk0XzDUjNyH6jZ/m2xREA" alt="shop.ktg5.online"></div>
+                                    </div>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="image" data-title-shadow>
+                                        <div class="item-image"><img src="https://imgproxy.fourthwall.com/Vn7o2DCYspiNsOR0V82moFB7HBVpuzhcBV3rfCT_XiA/w:720/sm:1/enc/ylewHT6UAaYAvCod/L7q0lvhWwVhBk6QV/Upt-r78EAcc18o6n/5gpzIL0QZIS5Jyot/ip7itSYfdrVoF9ny/bxbNpgNeAnpdazJJ/Ia_Xs_YQSTSFKrpN/oU_9rcQZquWWRDcf/iAb2shhdqezm_yPE/wDktDuWN00abdZGH/IFtAZEEzAPQ9j724/lFmwinAvhpQiz_7i/eITViG82sCA0ww4a/Fy3rmQ" alt="shop.ktg5.online"></div>
+                                    </div>
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="image">
+                                        <div class="item-image"><img src="https://imgproxy.fourthwall.com/nWTLalmGDeA_EcOanqbA6r_4zc8LcXTILvonQVTXNiw/w:720/sm:1/enc/3rQLfaWZQlPWjs0c/hcpfdxMZEHsmPlsR/p8RZmuOGHpjsNNMq/_WHx4NpZDlKkjhkV/mrmyTGohUtx0bQQK/FyUnqhry7geGMSMa/xmU_7v34sixWxw8j/6-ZjTn9G3UNxtxEY/UhcqkNQljiq5f03b/xwKeew53T5lmj-W1/InJ1tJUGFUVEKDcx/KO12Uob6IB3vcfyB/NBYaZlaqALMgw7Oa/KN8Awg" alt="shop.ktg5.online"></div>
+                                    </div>
+                                </div>
+                            </a>
+    
                         </div>
                     </div>
+    
+                    <div class="group-container">
+                        <h2 class="title font1">Extras</h2>
+    
+                        <div class="group">
+    
+                            <div class="item" data-item-id="subscribe" data-item-size="large" style="background-color: rgb(50, 129, 194);" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title" style="opacity: 0;">Subscribe</div>
+
+                                    <div class="item-tile" data-item-style="logo" data-item-disabletitle>
+                                        <div class="item-logo" style="height: 55%;"><img src="/img/sub/logo.png" alt="Subscribe"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-group-m">
+                                <a href="/downloads/" class="item" data-item-id="downloads" data-item-size="med" style="background-color: rgb(91, 91, 91);" tabindex="0">
+                                    <div class="item-tile-container">
+                                        <div class="item-title">Downloads</div>
+
+                                        <div class="item-tile">
+                                            <div class="item-logo" style="height: 55%;"><img src="/img/downloads.png" alt="Downloads"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="https://tools.ktg5.online/" class="item" data-item-id="tools" data-item-size="med" style="background-color: rgb(91, 91, 91);" tabindex="0">
+                                    <div class="item-tile-container">
+                                        <div class="item-title">Tools</div>
+
+                                        <div class="item-tile">
+                                            <div class="item-logo" style="height: 55%;"><img src="/img/tools.png" alt="Tools"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item" data-item-id="patcat" data-item-size="wide" style="background-color: rgb(206, 84, 9);" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title">pat the cat</div>
+
+                                    <div class="item-tile">
+                                        <div class="item-logo"><img src="/img/tiles/patcat.png" alt="pat the cat"></div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                    <div class="group-container">
+                        <h2 class="title font1">Greetings to...</h2>
+    
+                        <div class="group">
+    
+                            <div class="item-group-m">
+                                <a href="https://youtube.com/@shobuh" class="item" data-item-id="greet.shobe" data-item-size="med" style="background-color: rgb(115, 50, 194);" tabindex="0">
+                                    <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                        <div class="item-title">shobuh</div>
+
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image">
+                                            <div class="item-image"><img src="/img/ppl/shob/2.png" alt="shobuh"></div>
+                                        </div>
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>   
+                                            <div class="item-image"><img src="/img/ppl/shob/1.jpg" alt="shobuh"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="https://youtube.com/@Skppydip" class="item" data-item-id="greet.skppy" data-item-size="med" style="background-color: rgb(187, 50, 194);" tabindex="0">
+                                    <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                        <div class="item-title">Skppy_</div>
+
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image">
+                                            <div class="item-image"><img src="/img/ppl/skpy/1.webp" alt="Skppy_"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item-group-m">
+                                <a href="https://www.youtube.com/@anormalladd" class="item" data-item-id="greet.ladd" data-item-size="med" style="background-color: rgb(194, 168, 50);" tabindex="0">
+                                    <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                        <div class="item-title">Ladd</div>
+
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image">
+                                            <div class="item-image"><img src="/img/ppl/ladd/1.png" alt="A Normal Ladd"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="https://www.youtube.com/@malatype" class="item" data-item-id="greet.mala" data-item-size="med" style="background-color: rgb(194, 93, 50);" tabindex="0">
+                                    <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                        <div class="item-title">Malatype</div>
+
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>
+                                            <div class="item-image"><img src="/img/ppl/mala/1.jpg" alt="Malatype"></div>
+                                        </div>
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>
+                                            <div class="item-image"><img src="/img/ppl/mala/2.jpg" alt="Malatype"></div>
+                                        </div>
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>
+                                            <div class="item-image"><img src="/img/ppl/mala/3.jpg" alt="Malatype"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item-group-m">
+                                <a href="https://maple.nekoweb.org/" class="item" data-item-id="greet.maple" data-item-size="med" style="background-color: rgb(50, 194, 156);" tabindex="0">
+                                    <div class="item-tile-container" data-scroll-atend="copyfirst">
+                                        <div class="item-title">maple</div>
+
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>
+                                            <div class="item-image"><img src="/img/ppl/mapl/1.jpg" alt="Maple"></div>
+                                        </div>
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image">
+                                            <div class="item-image"><img src="/img/ppl/mapl/2.jpg" alt="Maple"></div>
+                                        </div>
+                                        <div class="item-tile" data-scroll-delay="3" data-item-style="image" data-title-shadow>
+                                            <div class="item-image"><img src="/img/ppl/mapl/3.jpg" alt="Maple"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
+        <div id="help-notifs" style="opacity: 0;">
+            <div id="help-notif" data-notif="titlebar" data-hide>
+                <style>
+                    [data-notif="titlebar"][data-hide] {
+                        display: none !important;
+                    }
+
+                    [data-notif="titlebar"] {
+                        width: 14em !important;
+                        top: 0;
+                        bottom: unset !important;
+                        right: 0;
+                    }
+
+                    [data-notif="titlebar"] .content {
+                        display: block !important;
+                    }
+
+                    [data-notif="titlebar"] svg {
+                        animation: arrowFly 1s cubic-bezier(.25,0,0,1);
+                    }
+
+
+                    @keyframes arrowFly {
+                        0% {
+                            opacity: 0;
+                        }
+                        50% {
+                            top: 100px;
+                            left: 100px;
+                            opacity: 0;
+                        }
+                        100% {
+                            top: 0;
+                            left: 0;
+                            opacity: 1;
+                        }
+                    }
+                </style>
+
+                <div class="content" data-border>
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd;width: 60%;position: absolute;top: 0;left: 0;rotate: 90deg;" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 520 500">
+                        <g><path style="fill:#d7542e;/*! scale: 1; */" d="M 441.5,-0.5 C 442.167,-0.5 442.833,-0.5 443.5,-0.5C 468.833,25.5 494.5,51.1667 520.5,76.5C 520.5,77.8333 520.5,79.1667 520.5,80.5C 408.701,191.799 297.035,303.299 185.5,415C 274.169,415.167 362.835,415.667 451.5,416.5C 424.146,444.188 396.812,471.854 369.5,499.5C 246.167,499.5 122.833,499.5 -0.5,499.5C -0.5,387.833 -0.5,276.167 -0.5,164.5C 34.4791,129.854 69.4791,95.1878 104.5,60.5C 105.333,152.165 105.833,243.832 106,335.5C 218.035,223.632 329.868,111.632 441.5,-0.5 Z"></path></g>
+                    </svg>
+                    <p style="margin: 0;margin-top: 8em;">Move your mouse pointer to the top of the screen to get access to the titlebar.</p>
                 </div>
             </div>
 
-            <div id="blocker"></div>
-
-            <div id="below" class="font2">
-                &copy ktg5 2024
-                <script>
-                    var x = `&copy ktg5 ${new Date().getFullYear()} | Last edit: ${document.lastModified}.`;
-                    document.getElementById("below").innerHTML = x;
-                </script>
-            </div>
-
-            <script>
-                // Check to see if there is a element in href
-                if (document.location.href.includes("#")) {
-                    console.log(`Is href linking to element? '${document.location.href.includes("#")}'`)
-
-                    document.getElementById(document.location.href.split("#")[1]).className += " selected"
-                }
-            </script>
-
-            <!-- <script>
-                // Check if "ktg5_" is live
-
-                async function checkIfLive(username) {
-                    try {
-                        const response = await fetch(`https://twitch.tv/${username}`,
-                            {
-                                headers: {
-                                    'Access-Control-Allow-Origin':'*'
-                                }
-                            }
-                        );
-                        const sourceCode = await response.text();
-
-                        if (sourceCode.includes("isLiveBroadcast")) {
-                            document.body.innerHTML += `
-                            <style id="twitch-toggle">
-                                .fab.fa-twitch::after {
-                                    -webkit-animation: fadeIn-fadeOut ease infinite 2s;
-                                    animation: fadeIn-fadeOut ease infinite 2s;
-                                }
-                            </style>
-                            `
-                            console.log(`${username} is live`);
-                        } else {
-                            console.log(`${username} is not live`);
-                        }
-                    } catch (error) {
-                        console.log("Error occurred:", error);
+            <div id="help-notif" data-notif="navbar" data-hide>
+                <style>
+                    [data-notif="navbar"][data-hide] {
+                        bottom: -100% !important;
                     }
-                }
 
-                checkIfLive("ktg5_");
-            </script> -->
+                    [data-notif="navbar"] .right {
+                        width: 350px;
+                        padding-top: 4px;
+                        padding-left: 20px;
+                    }
+                </style>
+
+                <div class="content">
+                    <div class="left">
+                        <p>The nav bar is always available— just swipe up from the bottom of the the screen to show it.</p>
+                    </div>
+                    <div class="right">
+                        <img src="/img/hints/hint1.png" alt="A phone with a arrow in the middle going up, with a user's pointer finger at the bottom of the phone's screen">
+                    </div>
+                </div>
+                <div class="actions">
+                    <button data-hint-action="close-hint" data-hint-action-id="close" data-hint-tied="close">dismiss</button>
+                    <label data-hint-action="close-hint" data-hint-action-id="toggle" data-hint-tied="close" data-hint-toggle>
+                        <span class="checkbox-text">Don't show this again</span>
+                        <input type="checkbox">
+                        <span class="checkbox-container"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-buttons">
+            <div class="container">
+                <div class="button-group">
+                    <div class="mobile-button" data-mobbut="main">
+                        <div class="icon"><img src="/img/start.png"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
