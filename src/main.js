@@ -476,9 +476,11 @@ window.addEventListener('load', async () => {
             const distance = target - start;
             const startTime = performance.now();
         
-            // ease animations
-            function easeInOutQuad(t) {
-                return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+            // ease animation
+            function animation(t) {
+                return t < 0.5
+                    ? 8 * Math.pow(t, 4)
+                    : 1 - Math.pow(-2 * t + 2, 4) / 2;
             }
 
             let stopStepping = false;
@@ -494,7 +496,7 @@ window.addEventListener('load', async () => {
                 const elapsed = currentTime - startTime;
                 let t = Math.min(elapsed / duration, 1);
                 if (stopStepping) t = 1;
-                const easedProgress = easeInOutQuad(t);
+                const easedProgress = animation(t);
                 element.scrollTop = start + distance * easedProgress;
             
                 if (t < 1) {
@@ -564,7 +566,6 @@ window.addEventListener('load', async () => {
     // Date difference into text
     function calcDateDiffToTxt(date = new Date) {
         let txt;
-        console.log(date);
         let diffMs = date - currentDate;
         let diffSeconds = diffMs / 1000;
         let diffMinutes = diffSeconds / 60;
@@ -590,7 +591,6 @@ window.addEventListener('load', async () => {
                 txt = `${diffSeconds.toFixed(0)} second${diffSeconds.toFixed(0) == 1 ? "" : "s"}`;
             break;
         }
-        console.log(txt);
 
         return txt;
     }
@@ -696,11 +696,10 @@ window.addEventListener('load', async () => {
                     <div class="item-data" style="padding-top: 10px">
                         <h3>They Live!</h3>
                         <p class="desc1 one-line-text">${twitch.broadcastSettings.title}</p>
-                        <p class="desc2" one-line-text>${twitchData.stream.viewersCount} viewers</p>
+                        <p class="desc2" one-line-text>${twitch.stream.viewersCount} viewers</p>
                     </div>
                     <div class="item-image"><img src="${twitch.profileImageURL}" style="height: 140%;"></div>
                 `;
-                console.log(newTile, friendTile.querySelectorAll('.item-title')[0]);
                 friendTile.querySelector('.item-tile-container').insertBefore(newTile, friendTile.querySelectorAll('.item-tile')[1]);
             }
         }
@@ -725,7 +724,7 @@ window.addEventListener('load', async () => {
 
                 // We do everything in here
                 async function scrollTiles() {
-                    const scrollTime = 1000;
+                    const scrollTime = 1500;
                     let scrollCalc = itemContent.scrollTop + itemContent.clientHeight;
                     if (scrollCalc < 10) return;
                     // Check to see if we've hit the limit of the live tile
