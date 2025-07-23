@@ -561,27 +561,85 @@ window.addEventListener('load', async () => {
 
 
 
+    // Date difference into text
+    function calcDateDiffToTxt(date = new Date) {
+        let txt;
+        console.log(date);
+        let diffMs = date - currentDate;
+        let diffSeconds = diffMs / 1000;
+        let diffMinutes = diffSeconds / 60;
+        let diffHours = diffMinutes / 60;
+        let diffDays = diffHours / 24;
+
+        switch (true) {
+            case diffDays >= 1:
+                let calcHours = diffHours.toFixed(0) - (diffDays.toFixed(0) * 24);
+                txt = `${diffDays.toFixed(0)} day${diffDays.toFixed(0) == 1 ? "" : "s"}`;
+            break;
+
+            case diffHours >= 1:
+                let calcMins = diffMinutes.toFixed(0) - (diffHours.toFixed(0) * 60);
+                txt = `${diffHours.toFixed(0)} hour${diffHours.toFixed(0) == 1 ? "" : "s"}`;
+            break;
+
+            case diffMinutes >= 1:
+                txt = `${diffMinutes.toFixed(0)} minute${diffMinutes.toFixed(0) == 1 ? "" : "s"}`;
+            break;
+
+            case diffSeconds >= 1:
+                txt = `${diffSeconds.toFixed(0)} second${diffSeconds.toFixed(0) == 1 ? "" : "s"}`;
+            break;
+        }
+        console.log(txt);
+
+        return txt;
+    }
+
+
+
 
     // Fetches to services I'm gaming on lol
     if (!slowMf) {
-        // Get YouTube Information
-        const ytDataDiv = document.querySelector('[data-item-id="youtube"] .item-tile-container');
-        fetch("https://api.ktg5.online/latestYt", {
-            "body": null,
-            "method": "GET"
-        }).then(async rawData => {
-            const data = await rawData.json();
+        // Init YouTube tile
+        function initYTTile(data) {
+            let tileTitle = "Latest Video";
+            let desc2Txt = '';
+            switch (data.type) {
+                case 'premiere':
+                    tileTitle = "Next Video";
+                    desc2Txt = `Premieres in ${calcDateDiffToTxt(new Date(data.premiereTime))}`;
+                break;
             
+                default:
+                    desc2Txt = `${data.published} - ${data.views}`;
+                break;
+            }
+
             ytDataDiv.innerHTML += `
                 <div class="item-tile" data-scroll-delay="5" data-item-style="text">
                     <div class="item-data" style="padding-top: 10px">
-                        <h2>Latest Video</h2>
+                        <h2>${tileTitle}</h2>
                         <p class="desc1 one-line-text">${data.title}</p>
-                        <p class="desc2">${data.published} - ${data.views}</p>
+                        <p class="desc2">${desc2Txt}</p>
                     </div>
                     <div class="item-image"><img src="${data.thumbnails[0]}" style="height: 140%;"></div>
                 </div>
             `;
+        }
+
+        // Get YouTube Information
+        const ytDataDiv = document.querySelector('[data-item-id="youtube"] .item-tile-container');
+        fetch("https://api.ktg5.online/latestYt", {
+            "body": null,
+            "method": "POST"
+        }).then(async rawData => {
+            const data = await rawData.json();
+            
+            if (data.constructor == [].constructor) {
+                ytDataDiv.setAttribute("data-scroll-atend", "copyfirst");
+                data.forEach(subData => { initYTTile(subData) });
+            }
+            else initYTTile(data);
 
             ytDataDiv.style.display = '';
         });
@@ -611,34 +669,8 @@ window.addEventListener('load', async () => {
                 twitchTile.querySelector('.item-image img').src = twitchData.profileImageURL;
 
                 if (twitchData.schedule) {
-                    let nextStreamTxt = "";
-                    let nextStreamDate = new Date(twitchData.schedule.nextSegment.startAt);
-
-                    let diffMs = nextStreamDate - currentDate;
-                    let diffSeconds = diffMs / 1000;
-                    let diffMinutes = diffSeconds / 60;
-                    let diffHours = diffMinutes / 60;
-                    let diffDays = diffHours / 24;
-
-                    switch (true) {
-                        case diffDays >= 1:
-                            let calcHours = diffHours.toFixed(0) - (diffDays.toFixed(0) * 24);
-                            nextStreamTxt = `${diffDays.toFixed(0)} day${diffDays.toFixed(0) == 1 ? "" : "s"}`;
-                        break;
-
-                        case diffHours >= 1:
-                            let calcMins = diffMinutes.toFixed(0) - (diffHours.toFixed(0) * 60);
-                            nextStreamTxt = `${diffHours.toFixed(0)} hour${diffHours.toFixed(0) == 1 ? "" : "s"}`;
-                        break;
-
-                        case diffMinutes >= 1:
-                            nextStreamTxt = `${diffMinutes.toFixed(0)} minute${diffMinutes.toFixed(0) == 1 ? "" : "s"}`;
-                        break;
-
-                        case diffSeconds >= 1:
-                            nextStreamTxt = `${diffSeconds.toFixed(0)} second${diffSeconds.toFixed(0) == 1 ? "" : "s"}`;
-                        break;
-                    }
+                    const nextStreamDate = new Date(twitchData.schedule.nextSegment.startAt);
+                    const nextStreamTxt = calcDateDiffToTxt(nextStreamDate);
 
                     twitchTile.querySelector('.item-data .desc1').innerHTML = `Next stream in ${nextStreamTxt}`;
                 }
