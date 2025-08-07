@@ -644,7 +644,6 @@ window.addEventListener('load', async () => {
             ytDataDiv.style.display = '';
         });
 
-
         // Get Twitch Information
         const mainStream = "ktg5_"
         let twitchStreams = {"noclue_x86": {}, "ktg5_special": {}};
@@ -661,7 +660,6 @@ window.addEventListener('load', async () => {
                 twitchTile.querySelector('.item-data .desc1').innerHTML = `${twitchData.broadcastSettings.title}`;
                 twitchTile.querySelector('.item-data .desc2').innerHTML = `${twitchData.stream.viewersCount} viewers`;
                 twitchTile.querySelector('.item-image img').src = twitchData.profileImageURL;
-                return;
             } else if (key == mainStream) {
                 twitchTile.href = `/redirect?=https://twitch.tv/ktg5_`;
                 twitchTile.querySelector('.item-data .desc1').innerHTML = ``;

@@ -404,7 +404,7 @@ label input:checked~.checkbox-container::after {
     position: absolute;
     margin: auto;
     bottom: 0;
-    top: -10%;
+    top: -20%;
     right: 0;
     left: 0;
     width: auto;
