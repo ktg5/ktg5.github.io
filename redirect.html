@@ -12,9 +12,7 @@
         <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
         <meta content="#4975FF" data-react-helmet="true" name="theme-color">
         <script>
-            if (document.location.search.split(`?=`)[1]) {
-                document.head.innerHTML += `<meta http-equiv="refresh" content="4; url=${document.location.search.split(`?=`)[1]}">`
-            }
+            if (document.location.search.split(`?=`)[1]) document.head.innerHTML += `<meta http-equiv="refresh" content="4; url=${document.location.search.split(`?=`)[1]}">`;
         </script>
     </head>
 
@@ -24,18 +22,12 @@
             <script>document.getElementById('enable-js').style = "display: none;"</script>
         </div>
         <div id="container">
-            <div id="text">
-                <div id="part-1">
-                    <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="200px">
+            <img id="logo" src="https://ktg5.online/img/logo-r1.png" alt="No angels." height="200px">
 
-                    <p id="redirect-text">Redirecting... Thanks for visiting.</p>
-                    <script>
-                        if (!document.location.search.split(`?=`)[1]) {
-                            document.getElementById('redirect-text').innerHTML = `This redirect link is broke! Fix now!`;
-                        }
-                    </script>
-                </div>
-            </div>
+            <p id="redirect-text">Either this link is broken or Javascript isn't enabled!</p>
+            <script>
+                if (document.location.search.split(`?=`)[1]) document.getElementById('redirect-text').innerHTML = `Redirecting... Thanks for stopping by!`;
+            </script>
         </div>
     </body>
 </html>

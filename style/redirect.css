@@ -2,39 +2,43 @@ body {
     background: rgb(23, 23, 23);
 }
 
+#container {
+    animation: fadeIn ease .5s;
+}
+
 #spacer {
     font-size: 3px;
 }
 
-#text #part-1 {
-    width: fit-content;
-    margin: auto;
-}
-
-#part-1 #logo {
+#logo {
+    position: absolute;
+    top: 0;
     bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: moveIn cubic-bezier(.86,0,.07,1) 1s;
 }
 
-#redirect-text{
+#redirect-text {
     position: relative;
-    border-right: 2px solid rgba(255,255,255,.75);
-    font-family: Quicksand;
-    letter-spacing: .25em;
-    white-space: nowrap;
+    font-family: "Segoe UI Light";
     text-align: center;
     overflow: hidden;
     margin: 0 auto;
     font-size: 2em;
+    max-width: 80vw;
     top: 60vh;
-    animation: typewriter 1.5s steps(24) .75s 1 normal both, blinking-I 500ms steps(44) infinite normal;
 }
 
-@keyframes typewriter{
-    from{width: 0;}
-    to{width: 100%;}
+
+
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
 }
 
-@keyframes blinking-I{
-    from{border-right-color: rgba(255,255,255,.75);}
-    to{border-right-color: transparent;}
+@keyframes moveIn {
+    0% {padding-bottom: 10vh;}
+    100% {padding-bottom: 0;}
 }

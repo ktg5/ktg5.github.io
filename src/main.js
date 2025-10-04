@@ -5,6 +5,7 @@ hintsStore = 'ktg5-hints';
 const currentDate = new Date();
 
 
+// Viewport percent to pixels functions code spinnets I found like years ago lol
 function vh(percent) {
     var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     return (percent * h) / 100;
@@ -16,6 +17,7 @@ function vw(percent) {
 }
 
 
+// Used for when viewing >1:1 for that scrollbar on Win8 apps
 function makeScrollbar(wrapper) {
     if (!wrapper) {
         txt = 'makeScrollbar: bruv, you need a wrapper to pass thru!';
@@ -72,8 +74,8 @@ function makeScrollbar(wrapper) {
     let lastScroll = 0;
     wrapper.addEventListener('wheel', e => {
         if (mobileMode) return;
-        const amount = ((e.deltaY < 0) ? (scrollAmount * -1) : scrollAmount);
         const scrollL = wrapper.scrollLeft;
+        const amount = ((e.deltaY < 0) ? (scrollAmount * -1) : scrollAmount);
 
         let eq = ((scrollL % scrollAmount === 0) ? (scrollL + amount) : (lastScroll + amount));
         if (eq > maxScroll) eq = maxScroll;
@@ -136,15 +138,16 @@ function makeScrollbar(wrapper) {
     let followScroll = false;
     scrollbarBar.addEventListener('mousedown', e => {
         if (mobileMode) return;
-        followScroll = true;
+        followScroll = true; // START
     });
     document.addEventListener('mouseup', e => {
         if (mobileMode) return;
         scrollbarBar.style.transition = '';
-        followScroll = false;
+        followScroll = false; // nono
     });
     document.addEventListener('mousemove', e => {
         if (mobileMode) return;
+        // Just follow the cursor when mousedown, that simple
         if (followScroll == true) {
             let eq = wrapper.scrollLeft + e.movementX;
             scrollbarBar.style.transition = 'none';
@@ -246,13 +249,6 @@ const loadingFontCodes = {
     await: 10
 }
 class loadingDiv {
-    elmnt = null;
-    insertDiv = null;
-    size = 0;
-    interval = null;
-    currentCode = fontCodes.start;
-    loopedEnd = 0;
-
     constructor(insertDiv, size) {
         if (!insertDiv instanceof HTMLElement) return console.error('loadingDiv: "containerDiv" is not a HTMLElement');
         
@@ -264,7 +260,7 @@ class loadingDiv {
             this.size = Number(this.elmnt.style.getPropertyValue('--this-size').replace('px', ''));
         } else {
             if (!size) return console.error('loadingDiv: "size" is not a number');
-            if (!typeof size === 'number') return console.error('loadingDiv: "size" is not a number');
+            if (typeof size !== 'number') return console.error('loadingDiv: "size" is not a number');
             this.size = size;
 
             // Create loading elmnt
@@ -274,11 +270,12 @@ class loadingDiv {
             this.elmnt.innerHTML = this.currentCode;
             this.insertDiv.appendChild(this.elmnt);
 
-            // Make interval
+            // Interval for swappin the string charcode for the next one
             this.interval = setInterval(() => {
-                if (this.currentCode > fontCodes.end) if (this.loopedEnd >= 5) this.currentCode = fontCodes.start
-                else this.loopedEnd++;
-                else {
+                if (this.currentCode > loadingFontCodes.end) {
+                    if (this.loopedEnd >= 5) this.currentCode = loadingFontCodes.start
+                    else this.loopedEnd++;
+                } else {
                     this.loopedEnd = 0;
                     this.elmnt.innerHTML = String.fromCharCode(this.currentCode);
                     this.currentCode++;
@@ -306,7 +303,7 @@ window.addEventListener('load', async () => {
     // Load time related things
     clearInterval(loadInt);
     console.log('LOAD TIME:', loadTime);
-    if (loadTime >= slowMfTime) slowMf = true;
+    if (loadTime > slowMfTime) slowMf = true;
 
     // Show start
     document.querySelector('#start-container').style.display = '';
