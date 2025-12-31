@@ -608,7 +608,7 @@ window.addEventListener('load', async () => {
                 break;
             
                 default:
-                    desc2Txt = `${data.published} - ${data.views}`;
+                    desc2Txt = `${data.published}${typeof data.views == "string" ? ` - ${data.views}` : ""}`;
                 break;
             }
 
