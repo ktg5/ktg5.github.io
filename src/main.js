@@ -535,16 +535,6 @@ window.addEventListener('load', async () => {
     }, 500);
 
 
-    // Deny mouse actions for a second or just don't depending on viewing mode
-    function firstTileAnim() {
-        denyMouse(true);
-        setTimeout(() => {
-            denyMouse(false);
-        }, 2500);
-    }
-    firstTileAnim();
-
-
     // Add redirects to all [data-add-redirect]
     document.querySelectorAll('[data-add-redirect]').forEach(elmnt => {
         elmnt.href = `/redirect?=${elmnt.href}`;
@@ -557,6 +547,32 @@ window.addEventListener('load', async () => {
             currentAppx = new Appx(elmnt);
         });
     });
+
+
+
+    // Check is a appx is in the search args
+    const searchParams = new URLSearchParams(location.search);
+    if (
+        searchParams
+        && searchParams.size >= 1
+        && searchParams.get('appx')
+    ) {
+        // Find the appx on the home page & click it
+        setTimeout(() => {
+            const appxData = searchParams.get('appx');
+            const appxDiv = document.querySelector(`.groups .item[data-item-id="${appxData}"]`);
+            if (appxDiv) appxDiv.click();
+        }, 1500);
+    } else {
+        // Else, deny mouse actions for a second or just not depending on viewing mode
+        function firstTileAnim() {
+            denyMouse(true);
+            setTimeout(() => {
+                denyMouse(false);
+            }, 2500);
+        }
+        firstTileAnim();
+    }
 
 
 
