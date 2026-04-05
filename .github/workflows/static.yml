@@ -22,19 +22,20 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       # Bun/Vite stuff
       - name: Setup Bun environment
         uses: oven-sh/setup-bun@v2.2.0
-        with:
-          bun-version: "latest"
+        # with:
+        #   bun-version: "latest"
       - name: Install Node packages
         run: bun i
       - name: Run Build Script
         run: bun start
 
       # Default stuff
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Artifact
