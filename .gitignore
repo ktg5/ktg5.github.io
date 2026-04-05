@@ -1,3 +1,9 @@
 *.db
 .ignore/
 *.psd
+
+node_modules/
+stage/
+dist/
+bun.lock
+package-lock.json

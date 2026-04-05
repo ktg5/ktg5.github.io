@@ -146,4 +146,5 @@ class TwitchGql {
     }
 }
 
-var twitchgql = new TwitchGql(anonKey);
+
+export const twitchgql = new TwitchGql(anonKey);

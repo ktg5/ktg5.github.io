@@ -1,0 +1,5 @@
+{
+    "baseHtmlDir": "html",
+    "stagingHtmlDir": "stage",
+    "outDir": "dist"
+}
