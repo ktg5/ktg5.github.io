@@ -6,6 +6,7 @@ import { Howl } from 'howler';
 
 var
     bigTileSize: number | undefined,
+    // @ts-ignore
     currentAppx: Appx,
     mobileButtons: HTMLElement,
     hintsData: Record<string, boolean>,
