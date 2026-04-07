@@ -202,28 +202,28 @@ label {
         &:active {
             background: rgb(0 0 0 / 50%) !important;
         }
+    }
 
-        .scroll-fakebar__button {
-            width: 35px;
-        }
+    .scroll-fakebar__button {
+        width: 35px;
+    }
 
-        .scroll-fakebar__bar {
-            background: none !important;
-            margin: 1px;
-            width: 100%;
-            overflow: hidden;
+    .scroll-fakebar__bar {
+        background: none !important;
+        margin: 1px;
+        width: 100%;
+        overflow: hidden;
 
-            .scroll-fakebar__bar__scrubber {
-                position: relative;
-                min-width: 5%;
-                height: 100%;
-                background: #aeaeae;
-                left: 0;
-                transition: .1s left;
+        .scroll-fakebar__bar__scrubber {
+            position: relative;
+            min-width: 5%;
+            height: 100%;
+            background: #aeaeae;
+            left: 0;
+            transition: .1s left;
 
-                &:hover {
-                    background: #d3d3d3;
-                }
+            &:hover {
+                background: #d3d3d3;
             }
         }
     }
