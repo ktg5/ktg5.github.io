@@ -717,6 +717,7 @@ window.addEventListener('load', async () => {
             ytDataDiv.style.display = '';
         });
 
+
         // Get Twitch Information
         const twitchStreams = ['ktg5_', 'noclue_x86', 'ktg5_special'];
         const mainStream = twitchStreams[0];
@@ -784,99 +785,136 @@ window.addEventListener('load', async () => {
                 (friendTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, friendTile.querySelectorAll('.item-tile')[1]);
             }
         }
-    } else (document.querySelector('[data-item-id="twitch"] [data-item-style="text"]') as HTMLElement).remove();
+
+
+        // Get Twitter info
+        const twitterTile = document.querySelector('[data-item-id="twitter"]') as HTMLAreaElement;
+        await fetch("https://api.ktg5.online/latestTwit", {
+            method: "POST"
+        }).then(async (d) => {
+            const json = await d.json();
+
+            const newTile = document.createElement('div');
+            newTile.classList.add(`item-tile`);
+            newTile.setAttribute('data-scroll-delay', '5');
+            newTile.setAttribute('data-item-style', 'text');
+            newTile.innerHTML = `
+                <div class="item-data" style="padding-top: 10px">
+                    <h3>Latest Tweet</h3>
+                    <p class="desc1 one-line-text">${json.user.name} (${json.user.username})</p>
+                    ${json.text ? `<p class="desc2 one-line-text">${json.text}</p>` : ''}
+                    <p class="desc3 one-line-text">
+                        <span style="margin-right: 8px">💬 ${json.stats.replies}</span>
+                        <span style="margin-right: 8px">🔄 ${json.stats.retweets}</span> 
+                        <span>🩵 ${json.stats.likes}</span>
+                    </p>
+                </div>
+                <div class="item-bg" style="background-image: #94e4e8;"></div>
+            `;
+            (twitterTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, twitterTile.querySelectorAll('.item-tile')[1]);
+        });
+
+
+        // Continue to build tiles
+        buildTiles();
+    } else {
+        (document.querySelector('[data-item-id="twitch"] [data-item-style="text"]') as HTMLElement).remove();
+        buildTiles();
+    }
 
 
     // Check each tile container to see if it contains more than one tile,
     // then it's a live tile & we'll make it do the funny scroll.
-    setTimeout(async () => {
-        let liveTilesCount = 0;
-        for (let i = 0; i < itemContents.length; i++) {
-            const itemContent = itemContents[i];
+    function buildTiles() {
+        setTimeout(async () => {
+            let liveTilesCount = 0;
+            for (let i = 0; i < itemContents.length; i++) {
+                const itemContent = itemContents[i];
 
-            let itemTiles = refreshTilesList();
-            function refreshTilesList() {
-                return itemContent.querySelectorAll('.item-tile') as NodeListOf<HTMLElement>;
-            }
-
-            const countedItemContent = itemTiles.length;
-            if (countedItemContent > 1) {
-                // Is a live tile
-                itemContent.scrollTop = 0;
-
-                // We do everything in here
-                async function scrollTiles() {
-                    const scrollTime = 1500;
-                    let scrollCalc = itemContent.scrollTop + itemContent.clientHeight;
-                    if (scrollCalc < 10) return;
-                    // Check to see if we've hit the limit of the live tile
-                    if (itemContent.scrollTop == (itemContent.scrollHeight - itemContent.clientHeight)) {
-                        // Check if there's a custom action we want to do at the end
-                        const atEndValue = itemContent.getAttribute('data-scroll-atend');
-                        if (atEndValue) { switch (atEndValue) {
-                            case 'copyfirst':
-                                // Copy the first tile & put it at the end of the itemContent
-                                const firstTile = itemContent.querySelectorAll('.item-tile')[0];
-                                const firstTileCopy = firstTile.cloneNode() as HTMLElement;
-                                firstTileCopy.innerHTML = firstTile.innerHTML;
-                                itemContent.appendChild(firstTileCopy);
-                                refreshTilesList();
-                                setTimeout(() => {
-                                    itemContent.scrollTop = 0;
-                                    firstTileCopy.remove();
-                                    refreshTilesList();
-                                }, scrollTime + 50);
-                            break;
-                        // Else just make it go back to the top
-                        } } else scrollCalc = 0;
-                    }
-
-                    // Get tile that'll be scrolled into
-                    let scrolledTile;
-                    for (const child of itemTiles) {
-                        const childDiv = child as HTMLElement;
-                        if (childDiv.offsetTop <= scrollCalc) scrolledTile = childDiv;
-                    };
-                    // Do stuff lel
-                    if (scrolledTile) updateTile(scrolledTile);
-
-                    const animationSuccess = await scrollTileAnimation(itemContent, scrollCalc, scrollTime);
-                    if (!animationSuccess) {
-                        // Get data from the first tile & apply
-                        updateTile(itemTiles[0]);
-                    }
+                let itemTiles = refreshTilesList();
+                function refreshTilesList() {
+                    return itemContent.querySelectorAll('.item-tile') as NodeListOf<HTMLElement>;
                 }
 
-                setTimeout(() => {
-                    // Initial scroll
-                    if (itemContent.parentElement) if (!itemContent.parentElement.getAttribute('data-item-id')?.includes('greet.')) scrollTiles();
+                const countedItemContent = itemTiles.length;
+                if (countedItemContent > 1) {
+                    // Is a live tile
+                    itemContent.scrollTop = 0;
 
-                    // Check if we need to scroll soon
-                    let currentCount = 0;
-                    setInterval(() => {
-                        if (stopLiveTiles) return;
+                    // We do everything in here
+                    async function scrollTiles() {
+                        const scrollTime = 1500;
+                        let scrollCalc = itemContent.scrollTop + itemContent.clientHeight;
+                        if (scrollCalc < 10) return;
+                        // Check to see if we've hit the limit of the live tile
+                        if (itemContent.scrollTop == (itemContent.scrollHeight - itemContent.clientHeight)) {
+                            // Check if there's a custom action we want to do at the end
+                            const atEndValue = itemContent.getAttribute('data-scroll-atend');
+                            if (atEndValue) { switch (atEndValue) {
+                                case 'copyfirst':
+                                    // Copy the first tile & put it at the end of the itemContent
+                                    const firstTile = itemContent.querySelectorAll('.item-tile')[0];
+                                    const firstTileCopy = firstTile.cloneNode() as HTMLElement;
+                                    firstTileCopy.innerHTML = firstTile.innerHTML;
+                                    itemContent.appendChild(firstTileCopy);
+                                    refreshTilesList();
+                                    setTimeout(() => {
+                                        itemContent.scrollTop = 0;
+                                        firstTileCopy.remove();
+                                        refreshTilesList();
+                                    }, scrollTime + 50);
+                                break;
+                            // Else just make it go back to the top
+                            } } else scrollCalc = 0;
+                        }
 
-                        // Get currently shown tile
-                        let currentTile;
-                        for (const tile of itemTiles) { if (tile.offsetTop === itemContent.scrollTop) currentTile = tile; } 
-                        if (!currentTile) return;
-                        
-                        // Get scroll-delay & then do check for scrollingignign
-                        // IGN??????????????????????????? real
-                        let tileDelay = Number(currentTile.getAttribute('data-scroll-delay'));
-                        if (tileDelay == null) currentTile.setAttribute('data-scroll-delay', '5');
-                        // console.log(currentTile.parentElement.parentElement.getAttribute('data-item-id'), tileDelay, currentCount);
-                        if (currentCount >= tileDelay) {
-                            scrollTiles();
-                            currentCount = 0;
-                        } else currentCount++;
-                    }, 1000);
-                }, 1950 + (liveTilesCount * 350));
+                        // Get tile that'll be scrolled into
+                        let scrolledTile;
+                        for (const child of itemTiles) {
+                            const childDiv = child as HTMLElement;
+                            if (childDiv.offsetTop <= scrollCalc) scrolledTile = childDiv;
+                        };
+                        // Do stuff lel
+                        if (scrolledTile) updateTile(scrolledTile);
 
-                liveTilesCount++;
+                        const animationSuccess = await scrollTileAnimation(itemContent, scrollCalc, scrollTime);
+                        if (!animationSuccess) {
+                            // Get data from the first tile & apply
+                            updateTile(itemTiles[0]);
+                        }
+                    }
+
+                    setTimeout(() => {
+                        // Initial scroll
+                        if (itemContent.parentElement) if (!itemContent.parentElement.getAttribute('data-item-id')?.includes('greet.')) scrollTiles();
+
+                        // Check if we need to scroll soon
+                        let currentCount = 0;
+                        setInterval(() => {
+                            if (stopLiveTiles) return;
+
+                            // Get currently shown tile
+                            let currentTile;
+                            for (const tile of itemTiles) { if (tile.offsetTop === itemContent.scrollTop) currentTile = tile; } 
+                            if (!currentTile) return;
+                            
+                            // Get scroll-delay & then do check for scrollingignign
+                            // IGN??????????????????????????? real
+                            let tileDelay = Number(currentTile.getAttribute('data-scroll-delay'));
+                            if (tileDelay == null) currentTile.setAttribute('data-scroll-delay', '5');
+                            // console.log(currentTile.parentElement.parentElement.getAttribute('data-item-id'), tileDelay, currentCount);
+                            if (currentCount >= tileDelay) {
+                                scrollTiles();
+                                currentCount = 0;
+                            } else currentCount++;
+                        }, 1000);
+                    }, 1950 + (liveTilesCount * 350));
+
+                    liveTilesCount++;
+                }
             }
-        }
-    }, 50);
+        }, 50);
+    }
 
 });
 

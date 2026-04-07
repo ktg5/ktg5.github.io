@@ -1,0 +1,190 @@
+@use '_colors' as *;
+@use '_pxs' as *;
+@forward '_zindex';
+
+$transMs: 200ms;
+$animationMs: 500ms;
+
+
+#x360-pop-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    #x360-pop {
+        display: flex;
+        position: absolute;
+        background: gColor(popupBg);
+        inset: gPxs(popupTop) 0 0 0;
+        margin: auto;
+        border-radius: gPxs(popupHeight);
+        padding: gPxs(popupPadding);
+        width: fit-content;
+        height: gPxs(popupHeight);
+        align-items: center;
+        animation: enter ease $animationMs;
+
+        .icon {
+            position: relative;
+            border-radius: gPxs(popupHeight);
+            width: gPxs(popupHeight);
+            height: gPxs(popupHeight);
+
+            .player-pie {
+                position: relative;
+                border-radius: gPxs(popupHeight);
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+
+                &:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    box-shadow: inset 0 0 0 gPxs(iconBorderSize) gColor(iconBorder);
+                    border-radius: gPxs(popupHeight);
+                    width: 100%;
+                    height: 100%;
+                }
+
+                @for $i from 1 through 4 {
+                    .p-#{$i} {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        transform: rotate(($i - 1) * 90deg);
+
+                        &:before {
+                            content: '';
+                            display: block;
+                            position: absolute;
+                            background: gColor(iconPlayerInactive);
+                            width: 50%;
+                            height: 50%;
+                            transition: background $transMs;
+                        }
+
+                        &[active] {
+                            &:before {
+                                background: var(--accent);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .over-pie {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+
+                &:before,
+                &:after
+                {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    background: gColor(iconBorder);
+                    inset: 0;
+                    margin: auto;
+                    width: gPxs(iconBorderXSize);
+                    height: 100%;
+                }
+
+                &:after {
+                    transform: rotate(90deg);
+                }
+
+                .circle {
+                    position: absolute;
+                    background: gColor(iconBorder);
+                    inset: 0;
+                    margin: auto;
+                    border-radius: gPxs(popupHeight);
+                    width: gPxs(iconMiddleSize);
+                    height: gPxs(iconMiddleSize);
+                }
+            }
+
+            .icon-img {
+                position: absolute;
+                inset: 0;
+                margin: auto;
+                border-radius: gPxs(popupHeight);
+                width: gPxs(iconImgSize);
+                height: gPxs(iconImgSize);
+                overflow: hidden;
+
+                img {
+                    position: absolute;
+                    inset: 0;
+                    margin: auto;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+
+                    &[inactive] {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+
+
+        .txts {
+            position: relative;
+            margin-left: gPxs(txtMarginL);
+            margin-right: gPxs(txtMarginR);
+            height: 100%;
+            width: var(--txt-width);
+            overflow: hidden;
+            align-items: center;
+            animation: txtEnter ease $animationMs;
+            transition: width $animationMs;
+
+            .txt {
+                position: absolute;
+                inset: 0 auto 0 0;
+                margin: auto;
+                padding-bottom: 4px;
+                width: max-content;
+                height: min-content;
+                display: none;
+            }
+        }
+
+        @for $i from 0 through 9 {
+            .txts[data-txt-active="#{$i}"] {
+                .txt[data-txt-slot="#{$i}"] {
+                    display: inline;
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes txtEnter {
+    0% {
+        width: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    100% {
+        width: var(--txt-width);
+        margin-left: gPxs(txtMarginL);
+        margin-right: gPxs(txtMarginR);
+    }
+}

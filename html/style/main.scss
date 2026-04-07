@@ -1,11 +1,14 @@
+@use "./base/index.scss" as *;
+
+
 * {
     scrollbar-color: rgb(255 255 255 / 20%) rgb(0 0 0 / 20%);
     -webkit-user-select: none;
 }
 
 :root {
-    --bg: #00004a;
-    --accent: #2727a2;
+    --bg: #{gColor(defStartBg)};
+    --accent: #{gColor(defAccent)};
     --margleft: 4.5vw;
     --smol-tile: 120px;
     --big-tile: 248px;
@@ -438,7 +441,9 @@ label {
                 }
             }
 
-            .item-image {
+            .item-image,
+            .item-bg
+            {
                 position: absolute;
                 top: 0;
                 width: 100%;

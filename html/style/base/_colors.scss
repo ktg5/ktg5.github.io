@@ -1,0 +1,19 @@
+@use "sass:map";
+
+
+// map
+$colors: (
+    defStartBg: #00004a,
+    defAccent: #2727a2,
+
+    fakeBarBg: rgb(125 125 125 / 50%),
+);
+
+// get colors from the colors var
+@function gColor($key) {
+    // make sure the colors var has the key the stylesheet requested
+    @if map.has-key($colors, $key) {
+        @return map.get($colors, $key);
+    }
+    @error "Unknown color `#{$key}`. Available colors: #{map.keys($colors)}";
+}

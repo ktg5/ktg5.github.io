@@ -16,23 +16,23 @@
         <link rel="dns-prefetch" href="https://static-cdn.jtvnw.net">
 
         <title>ktg5.online</title>
-        <link rel="shortcut icon" type="image/png" href="https://ktg5.online/img/favicon.png">
+        <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
         <meta name="viewport" content="width=device-width, initial-scale=.8, autocorrect=off">
         <meta name="description" content="Home for everything ktg5.">
         <meta property="og:title" content="Ktg5's website.">
         <meta property="og:description" content="Home for everything ktg5.">
-        <meta property="og:image" content="https://ktg5.online/img/logo-r1.png">
+        <meta property="og:image" content="/img/logo-r1.png">
         <meta content="#4975FF" data-react-helmet="true" name="theme-color">
         <meta charset="UTF-8">
 
         <link rel="stylesheet" type="text/css" href="style/main.scss">
 
-        <script src="src/main.ts" type="module"></script>
+        <script type="module" src="src/main.ts"></script>
 
 
-        <!-- PEGGLE FUNNY -->
-        <!-- <script src="src/peggle-moment.js"></script>
-        <link rel="stylesheet" type="text/css" href="style/peggle.css"> -->
+        <!-- x360 achievement stuff -->
+        <link rel="stylesheet" type="text/css" href="modules/x360/style/index.scss">
+        <script type="module" src="modules/x360/index.ts"></script>
     </head>
 
     <body>
@@ -137,11 +137,20 @@
                             background-image: url('/img/tiles/twitter-bg.gif');
                             " tabindex="0">
                                 <div class="item-tile-container">
-                                    <div class="item-tile" data-scroll-delay="3" data-item-style="logo">
+                                    <div class="item-tile" data-scroll-delay="5" data-item-style="logo" data-item-disabletitle>
                                         <div class="item-logo" style="width: 90%"><img src="/img/tiles/twitter.png" alt="Twitter"></div>
                                     </div>
                                 </div>
                             </a>
+                            <div class="item" data-item-id="subscribe" data-item-size="wide" style="background-color: rgb(50, 129, 194);" tabindex="0">
+                                <div class="item-tile-container">
+                                    <div class="item-title" style="opacity: 0;">Subscribe</div>
+
+                                    <div class="item-tile" data-item-style="logo" data-item-disabletitle>
+                                        <div class="item-logo" style="height: 70%;"><img src="/img/sub/logo.png" alt="Subscribe"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <a href="https://shop.ktg5.online/" class="item" data-item-id="store" data-item-size="large" style="background-color: #1db11d;" tabindex="0">
                                 <div class="item-tile-container" data-scroll-atend="copyfirst">
                                     <div class="item-title">shop.ktg5.online</div>
@@ -163,15 +172,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <div class="item" data-item-id="subscribe" data-item-size="wide" style="background-color: rgb(50, 129, 194);" tabindex="0">
-                                <div class="item-tile-container">
-                                    <div class="item-title" style="opacity: 0;">Subscribe</div>
-
-                                    <div class="item-tile" data-item-style="logo" data-item-disabletitle>
-                                        <div class="item-logo" style="height: 70%;"><img src="/img/sub/logo.png" alt="Subscribe"></div>
-                                    </div>
-                                </div>
-                            </div>
     
                         </div>
                     </div>
@@ -218,7 +218,7 @@
                         <h2 class="title font1">Greetings to...</h2>
     
                         <div class="group">
-    
+                            
                             <div class="item-group-m">
                                 <a href="https://youtube.com/@shobuh" class="item" data-item-id="greet.shobe" data-item-size="med" style="background-color: rgb(115, 50, 194);" tabindex="0">
                                     <div class="item-tile-container" data-scroll-atend="copyfirst">
@@ -387,6 +387,8 @@
                 </div>
             </div>
         </div>
+
+        <div id="x360-pop-container"></div>
 
         <div id="mobile-buttons">
             <div class="container">

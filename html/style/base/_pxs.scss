@@ -1,0 +1,16 @@
+@use "sass:map";
+
+
+// map
+$pxs: (
+    
+);
+
+// get pxs from the pxs var
+@function gPxs($key) {
+    // make sure the pxs var has the key the stylesheet requested
+    @if map.has-key($pxs, $key) {
+        @return map.get($pxs, $key);
+    }
+    @error "Unknown color `#{$key}`. Available colors: #{map.keys($pxs)}";
+}

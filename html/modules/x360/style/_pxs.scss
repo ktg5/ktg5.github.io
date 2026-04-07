@@ -1,0 +1,26 @@
+@use "sass:map";
+
+
+// map
+$pxs: (
+    popupTop: 85%,
+    popupPadding: 4px,
+    popupHeight: 60px,
+
+    iconBorderSize: 4px,
+    iconBorderXSize: 8px,
+    iconMiddleSize: 75%,
+    iconImgSize: 65%,
+
+    txtMarginL: 10px,
+    txtMarginR: 32px,
+);
+
+// get pxs from the pxs var
+@function gPxs($key) {
+    // make sure the pxs var has the key the stylesheet requested
+    @if map.has-key($pxs, $key) {
+        @return map.get($pxs, $key);
+    }
+    @error "Unknown color `#{$key}`. Available colors: #{map.keys($pxs)}";
+}
