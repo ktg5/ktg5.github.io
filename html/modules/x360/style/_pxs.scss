@@ -3,17 +3,23 @@
 
 // map
 $pxs: (
+    blurSize: 6px,
+
     popupTop: 85%,
     popupPadding: 4px,
     popupHeight: 60px,
+    popupBorderBlur: 2px,
+    popupBorderSize: 2px,
 
     iconBorderSize: 4px,
     iconBorderXSize: 8px,
-    iconMiddleSize: 75%,
+    iconMiddleSize: 72.5%,
     iconImgSize: 65%,
 
     txtMarginL: 10px,
     txtMarginR: 32px,
+    txtSize: 20px,
+    txtLineHeight: 26px,
 );
 
 // get pxs from the pxs var

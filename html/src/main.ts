@@ -4,11 +4,11 @@ import { type getChannelData, twitchgql } from './twitch.js';
 import { Howl } from 'howler';
 
 
-export var
+var
     bigTileSize: number | undefined,
     currentAppx: Appx,
     mobileButtons: HTMLElement,
-    hintsData: Record<string, boolean> | undefined,
+    hintsData: Record<string, boolean>,
     stopLiveTiles = false,
     mobileMode = false;
 const hintsStore = 'ktg5-hints';
@@ -228,7 +228,7 @@ export function toggleHint(name: string) {
 }
 
 // Save to hints local storage
-export const saveToHints = () => { if (hintsData) saveToStorage(hintsStore, hintsData); };
+export const saveToHints = (hintsData: Record<string, boolean>) => { saveToStorage(hintsStore, hintsData); };
 
 
 // Global tile functions
@@ -479,7 +479,7 @@ window.addEventListener('load', async () => {
     if (hintsStoreStorage) hintsData = JSON.parse(hintsStoreStorage);
     if (!hintsData) {
         hintsData = {};
-        saveToHints();
+        saveToHints(hintsData);
     }
     // Actions & more init
     const allHints = document.querySelectorAll('#help-notif');
@@ -490,7 +490,7 @@ window.addEventListener('load', async () => {
         // If the hint is not in the hintsData
         if (!hintsData[hintName]) { 
             hintsData[hintName] = false;
-            saveToHints();
+            saveToHints(hintsData);
         }
 
         // Make action buttons worky
@@ -511,7 +511,7 @@ window.addEventListener('load', async () => {
                 function saveToTarget() {
                     if (!hintName || !hintsData) return;
                     hintsData[hintName] = !hintsData[hintName];
-                    saveToHints();
+                    saveToHints(hintsData);
                 }
 
                 // If there's a checkbox with the button
@@ -920,7 +920,10 @@ window.addEventListener('load', async () => {
 
 
 export default {
-    denyMouse, hintsData, mobileMode, saveToHints, bigTileSize,
+    denyMouse, mobileMode, saveToHints, bigTileSize,
+    getHintsData: () => {
+        return hintsData;
+    },
     setLiveTiles,
     toggleHint,
     toggleMobileButtons,

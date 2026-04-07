@@ -87,15 +87,8 @@ export class Appx {
 
                 toggle();
                 appxDivs.taskbar.setAttribute('data-toggle', '');
-                if (Main.hintsData) if (
-                    !Main.mobileMode
-                    && !Main.hintsData.titlebar
-                ) {
-                    const hintName = 'titlebar';
-                    Main.toggleHint(hintName);
-                    Main.hintsData[hintName] = true;
-                    Main.saveToHints();
-                }
+
+                document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
             } else if (stat === false) {
                 if (!isOverTaskbar()) {
                     setTimeout(() => {
@@ -145,6 +138,8 @@ export class Appx {
         this.elmnt = elmnt;
         if (elmntData) {
             this.data = elmntData;
+
+            let hintsData = Main.getHintsData();
 
 
             Main.denyMouse(true);
@@ -240,7 +235,15 @@ export class Appx {
 
                 Main.denyMouse(false);
 
-                if (Main.hintsData) if (!Main.mobileMode && !Main.hintsData.titlebar) Main.toggleHint('titlebar');
+                if (
+                    !Main.mobileMode
+                    && hintsData.titlebar !== true
+                ) {
+                    const hintName = 'titlebar';
+                    Main.toggleHint(hintName);
+                    hintsData[hintName] = true;
+                    Main.saveToHints(hintsData);
+                }
 
                 fetch(elmntData.src).then(async rawData => {
                     if (!appxDivs.app) return;

@@ -1,11 +1,11 @@
 @use '_colors' as *;
 @use '_pxs' as *;
 @forward '_zindex';
+@forward '_ms';
+@forward '_animation';
 
-$transMs: 200ms;
-$animationMs: 500ms;
 
-
+$popupBorder: inset 0 0 gPxs(popupBorderBlur) gPxs(popupBorderSize);
 #x360-pop-container {
     position: absolute;
     top: 0;
@@ -17,6 +17,7 @@ $animationMs: 500ms;
         display: flex;
         position: absolute;
         background: gColor(popupBg);
+        box-shadow: $popupBorder gColor(popupBorder);
         inset: gPxs(popupTop) 0 0 0;
         margin: auto;
         border-radius: gPxs(popupHeight);
@@ -24,7 +25,33 @@ $animationMs: 500ms;
         width: fit-content;
         height: gPxs(popupHeight);
         align-items: center;
-        animation: enter ease $animationMs;
+        animation: popupEnter linear var(--x360-animation-ms);
+
+        &[data-kill] {
+            animation: popupExit linear var(--x360-animation-ms);
+
+            .icon {
+                .player-pie {
+                    animation: blurInOut linear var(--x360-animation-ms);
+                }
+
+                .over-pie {
+                    animation: 
+                        fadeOut ease-in var(--x360-animation-ms),
+                        blurInOut ease-in var(--x360-animation-ms);
+                }
+            }
+
+            .txts {
+                margin-left: 0;
+                margin-right: 0;
+                animation: txtExit ease-out calc(var(--x360-animation-ms) / 2);
+
+                .txt {
+                    opacity: 0;
+                }
+            }
+        }
 
         .icon {
             position: relative;
@@ -32,12 +59,21 @@ $animationMs: 500ms;
             width: gPxs(popupHeight);
             height: gPxs(popupHeight);
 
+            &[animation] {
+                animation: icon ease var(--x360-animation-ms);
+
+                .icon-img {
+                    animation: iconImg ease calc(var(--x360-animation-ms) / 1.5);
+                }
+            }
+
             .player-pie {
                 position: relative;
                 border-radius: gPxs(popupHeight);
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
+                animation: blurIn ease-in var(--x360-animation-ms);
 
                 &:before {
                     content: '';
@@ -63,7 +99,7 @@ $animationMs: 500ms;
                             background: gColor(iconPlayerInactive);
                             width: 50%;
                             height: 50%;
-                            transition: background $transMs;
+                            transition: background var(--x360-trans-ms);
                         }
 
                         &[active] {
@@ -80,6 +116,9 @@ $animationMs: 500ms;
                 inset: 0;
                 width: 100%;
                 height: 100%;
+                animation: 
+                    fadeIn ease-in var(--x360-animation-ms),
+                    blurIn ease-in var(--x360-animation-ms);
 
                 &:before,
                 &:after
@@ -140,10 +179,12 @@ $animationMs: 500ms;
             margin-right: gPxs(txtMarginR);
             height: 100%;
             width: var(--txt-width);
+            font-size: gPxs(txtSize);
+            line-height: gPxs(txtLineHeight);
             overflow: hidden;
             align-items: center;
-            animation: txtEnter ease $animationMs;
-            transition: width $animationMs;
+            animation: txtEnter ease-out var(--x360-animation-ms);
+            transition: width var(--x360-animation-ms);
 
             .txt {
                 position: absolute;
@@ -152,39 +193,18 @@ $animationMs: 500ms;
                 padding-bottom: 4px;
                 width: max-content;
                 height: min-content;
-                display: none;
+                opacity: 0;
+                transition: opacity var(--x360-trans-ms);
             }
         }
 
         @for $i from 0 through 9 {
             .txts[data-txt-active="#{$i}"] {
                 .txt[data-txt-slot="#{$i}"] {
-                    display: inline;
+                    animation: fadeIn ease var(--x360-animation-ms);
+                    animation-delay: calc(var(--x360-animation-ms) / 2);
                 }
             }
         }
-    }
-}
-
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes txtEnter {
-    0% {
-        width: 0;
-        margin-left: 0;
-        margin-right: 0;
-    }
-    100% {
-        width: var(--txt-width);
-        margin-left: gPxs(txtMarginL);
-        margin-right: gPxs(txtMarginR);
     }
 }
