@@ -679,12 +679,6 @@ window.addEventListener('load', async () => {
                 break;
             
                 default:
-                    if (
-                        !data.published
-                        || !data.views
-                    ) {
-                        return console.error('either "data.published" or "data.views" is not defined for default type');
-                    }
                     desc2Txt = `${data.published}${typeof data.views == "string" ? ` - ${data.views}` : ""}`;
                 break;
             }
