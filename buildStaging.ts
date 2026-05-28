@@ -44,7 +44,8 @@ async function copyDir(sourceDir: string, newDir: string):Promise<void> {
             entry.name === 'node_modules' ||
             entry.name === 'build.js' ||
             entry.name === 'package-lock.json' ||
-            entry.name === 'package.json'
+            entry.name === 'package.json' ||
+            entry.name === '.ignore'
         ) continue;
 
         // Paths

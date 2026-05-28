@@ -9,7 +9,7 @@ body {
 
 
 @font-face {
-    src: url(fonts/FOT-NewRodin\ Pro\ EB.otf);
+    src: url(../fonts/FOT-NewRodin\ Pro\ EB.otf);
     font-family: "NewRodinPro-EB";
 }
 
@@ -24,6 +24,7 @@ body {
     #side-one {
         display: flex;
         position: relative;
+        background: rgb(45, 75, 190);
         width: var(--side-one-width);
         height: 100vh;
         justify-content: center;
@@ -62,6 +63,7 @@ body {
 
             .button {
                 position: relative;
+                background: rgb(45, 75, 190);
                 width: 34vh;
                 height: 4vh;
                 padding: .75vh;
@@ -157,31 +159,59 @@ body {
 }
 
 
+@media (max-width: 1700px) {
+    #container {
+        #side-one {
+            .over-bg {
+                border: 100vw solid black;
+                height: 70vh;
+            }
+        }
+    }
+}
+
 @media (max-width: 1500px) {
-    .things-container {
-        grid-template-columns: auto;
+    #container {
+        #side-two {
+            .things-container {
+                grid-template-columns: auto;
+            }
+        }
     }
 }
 
 @media (max-aspect-ratio: 1/1) {
     #container {
         display: grid;
-    }
+
+        #side-one {
+            width: 100%;
+            height: var(--side-one-grid-height);
+
+            * {
+                height: 150vw;
+                max-height: 1000px;
+            }
+        }
 
 
-    #side-one {
-        width: 100%;
-        height: var(--side-one-grid-height);
+        #side-two {
+            width: 100%;
+            height: calc(100vh - var(--side-one-grid-height));
 
-        * {
-            height: 150vw;
-            max-height: 1000px;
+            .things-container {
+                grid-template-columns: auto auto;
+            }
         }
     }
+}
 
-
-    #side-two {
-        width: 100%;
-        height: calc(100vh - var(--side-one-grid-height));
+@media (max-width: 950px) {
+    #container {
+        #side-two {
+            .things-container {
+                grid-template-columns: auto;
+            }
+        }
     }
 }

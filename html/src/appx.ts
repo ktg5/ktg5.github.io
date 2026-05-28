@@ -1,3 +1,4 @@
+import { Howl } from "howler";
 import Main from "./main";
 
 
@@ -29,17 +30,6 @@ var appxDivs = {
     taskButtons: null as HTMLElement | null,
 };
 
-function appxLoad (appx: Appx) {
-    if (
-        appxDivs.app
-        && appxDivs.app.getAttribute('src') != 'about:blank'
-    ) {
-        appxDivs.app.style.display = 'block';
-
-        // else make the taskbar disappear after a second
-        if (isOverTaskbar() != true) appx.toggleTaskbar(false);
-    }
-}
 
 // check to see if cursor is over taskbar
 function isOverTaskbar() {
@@ -50,6 +40,70 @@ function isOverTaskbar() {
 
     const elem = document.elementFromPoint(x, y);
     return appxDivs.taskbar.contains(elem);
+}
+
+/**
+ * preload assets with 
+ */
+function preloadAppx() {
+    function preloadAsset(src: string, type: string) {
+        return new Promise<any>(async (resolve, reject) => {
+            switch (type) {
+                case 'HTMLImageElement':
+                    const img = new Image();
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = src;
+                break;
+
+                case 'HTMLAudioElement':
+                    new Howl({
+                        src: src,
+                        preload: true,
+                        autoplay: false,
+                        onload: resolve
+                    });
+                break;
+
+                case 'HTMLFontElement':
+                    const font = new FontFace('', `url("${src}")`);
+                    await font.load();
+                    resolve(null);
+                break;
+            
+                default:
+                    alert(`error happened when trying to load a preload, check console. if you're a viewer, please just close the app.`)
+                    reject(`unknown type: ${type}`);
+                break;
+            }
+        });
+    }
+
+
+    return new Promise<Object[] | null>(async (resolve) => {
+        if (!appxDivs.app) return resolve(null);
+
+        const preloadDiv = appxDivs.app.querySelector('appx-preload') as HTMLElement;
+        if (!preloadDiv) return resolve(null);
+        let elmnts = [];
+        let promises = [];
+
+        for (let i = 0; i < preloadDiv.children.length; i++) {
+            const div = preloadDiv.children[i] as HTMLElement;
+            if (div.getAttribute('src') === null) alert(`an appx preload element did not have the "src" attribute. fix it motherfucker.`);
+            else {
+                let data = {
+                    src: div.getAttribute('src') as string,
+                    type: div.constructor.name
+                }
+                elmnts.push(data);
+                promises.push(preloadAsset(data.src, div.constructor.name));
+            }
+        }
+
+        await Promise.all(promises);
+        resolve(elmnts);
+    });
 }
 
 
@@ -63,10 +117,12 @@ type Tile = {
 
 
 export class Appx {
-    elmnt: HTMLElement | undefined;
+    private elmnt: HTMLElement | undefined;
     data: Tile | undefined;
-    taskbarLock = false;
+    taskbarLock: boolean = false;
     taskbarTimeout: number | undefined;
+
+    private previewLoading = new Main.LoadingDiv(appxDivs.preview as HTMLElement, { hidden: true });
 
 
     async toggleTaskbar (stat: boolean) {
@@ -229,6 +285,8 @@ export class Appx {
                 startContainer.style.animation = `none`;
                 startContainer.style.display = "none";
 
+                this.previewLoading.show();
+
                 (document.querySelector('.groups') as HTMLElement).style.animation = '';
 
                 (document.querySelector<HTMLElement>('.topbar .topbar-title') as HTMLElement).style.animation = '.5s linear fadeIn';
@@ -251,11 +309,14 @@ export class Appx {
                     let html = await rawData.text();
                     appxDivs.app.innerHTML = html;
 
-                    appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(elmnt => {
+                    appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(async elmnt => {
                         if (!elmnt) return;
+                        if (elmnt.src.endsWith('@vite/client')) return elmnt.remove();
+
                         const newElmnt = document.createElement('script');
-                        newElmnt.src = elmnt.src;
+                        newElmnt.src = `${elmnt.src}?t=${Date.now()}`;
                         newElmnt.innerHTML = elmnt.innerHTML;
+                        newElmnt.type = 'module';
                         if (elmnt.parentNode) elmnt.parentNode.insertBefore(newElmnt, elmnt);
                         elmnt.remove();
                     });
@@ -264,7 +325,19 @@ export class Appx {
                         if (appxDivs.app) appxDivs.app.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
                     }, 50);
 
-                    appxLoad(this);
+                    await preloadAppx();
+                    appxDivs.app.querySelector('appx-preload')?.remove();
+
+                    if (
+                        appxDivs.app
+                        && appxDivs.app.getAttribute('src') != 'about:blank'
+                    ) {
+                        appxDivs.app.style.display = 'block';
+                        this.previewLoading.kill();
+
+                        // else make the taskbar disappear after a second
+                        if (isOverTaskbar() != true) this.toggleTaskbar(false);
+                    }
                 });
             }, animationMs);
 
@@ -300,7 +373,7 @@ export class Appx {
             if (appxDivs.taskIcon) appxDivs.taskIcon.src = '';
             if (appxDivs.taskTitle) appxDivs.taskTitle.innerHTML = '';
             if (appxDivs.taskButtons) appxDivs.taskButtons.removeEventListener('click', this.closeButton);
-            (document.querySelector('#appx-preview .item-logo img') as HTMLImageElement).src = '';
+            (appxDivs.preview?.querySelector('#appx-preview .item-logo img') as HTMLImageElement).src = '';
             if (appxDivs.app) {
                 appxDivs.app.innerHTML = '';
                 appxDivs.app.style.display = '';

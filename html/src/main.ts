@@ -272,53 +272,94 @@ const loadingFontCodes = {
     end: 0xE0cb,
     await: 10
 }
-export class loadingDiv {
-    insertDiv: HTMLElement;
-    elmnt: HTMLElement | undefined;
-    size: number | undefined;
-    currentCode: number | undefined;
-    interval: number | undefined;
-    loopedEnd = 0;
+type LoadingDivData = {
+    hidden?: boolean
+    size?: number,
+};
+class LoadingDiv {
+    private insertDiv: HTMLElement;
+    private elmnt: HTMLElement | undefined;
+    private size: number | undefined;
+    private hidden: boolean = false;
+    private currentCode: number | undefined;
+    private interval: number | undefined;
+    private loopedEnd = 0;
 
-    constructor(insertDiv: HTMLElement, size: number) {
+    constructor(insertDiv: HTMLElement, data?: LoadingDivData) {
         this.insertDiv = insertDiv;
         let possibleLoading = insertDiv.querySelector('.loading-gif') as HTMLElement;
         if (possibleLoading) {
             // Get information from current loading gif in insertDiv
             this.elmnt = possibleLoading;
-            this.size = Number(this.elmnt.style.getPropertyValue('--this-size').replace('px', ''));
-        } else if (this.elmnt !== undefined) {
-            this.size = size;
+        } else {
+            if (data) {
+                this.size = data.size ? data.size : 0;
+                this.hidden = data.hidden ? data.hidden : false;
+            }
 
             // Create loading elmnt
             this.elmnt = document.createElement('div');
             this.elmnt.classList.add('loading-gif');
-            this.elmnt.style.setProperty('--this-size', `${this.size}px`);
+            this.elmnt.style.setProperty('--this-size', `${this.size ? this.size : 28}px`);
+            if (this.hidden === true) this.elmnt.style.opacity = '0';
             this.insertDiv.appendChild(this.elmnt);
 
-            // Interval for swappin the string charcode for the next one
-            this.interval = setInterval(() => {
-                if (
-                    this.currentCode !== undefined
-                    && this.currentCode > loadingFontCodes.end
-                ) {
-                    if (this.loopedEnd >= 5) this.currentCode = loadingFontCodes.start
-                    else this.loopedEnd++;
-                } else {
-                    if (
-                        !this.elmnt
-                        || !this.currentCode
-                    ) return;
-
-                    this.loopedEnd = 0;
-                    this.elmnt.innerHTML = String.fromCharCode(this.currentCode);
-                    this.currentCode++;
-                }
-            }, 30);
+            if (this.hidden === false) {
+                const appendCheck = setInterval(() => {
+                    if (this.insertDiv.contains(this.elmnt as Node)) {
+                        this.show();
+                        clearInterval(appendCheck);
+                    }
+                }, 10);
+            }
         }
     }
 
-    async kill() {
+    private start() {
+        this.currentCode = 0;
+        this.interval = setInterval(() => {
+            if (
+                this.currentCode !== undefined
+                && this.currentCode > loadingFontCodes.end
+            ) {
+                if (this.loopedEnd >= 5) this.currentCode = loadingFontCodes.start
+                else this.loopedEnd++;
+            } else {
+                if (!this.elmnt) return;
+                if (!this.currentCode) this.currentCode = loadingFontCodes.start;
+
+                this.loopedEnd = 0;
+                this.elmnt.innerHTML = String.fromCharCode(this.currentCode);
+                this.currentCode++;
+            }
+        }, 30);
+    }
+
+    private stop() {
+        clearInterval(this.interval);
+    }
+
+
+    /**
+     * stops & hides the loading icon
+     */
+    public hide() {
+        if (!this.elmnt) return;
+
+        this.stop();
+        this.elmnt.style.opacity = '0';
+        this.currentCode = undefined;
+    }
+
+    public show() {
+        if (!this.elmnt) return;
+
+        this.start();
+        this.elmnt.style.opacity = '1';
+    }
+
+
+    public async kill() {
         clearInterval(this.interval);
         if (this.elmnt) this.elmnt.remove();
     }
@@ -722,24 +763,29 @@ window.addEventListener('load', async () => {
 
             // Set to twitch live tile
             const twitchTile = document.querySelector('[data-item-id="twitch"]') as HTMLAreaElement;
-            if (twitchTile)
-            if (twitchData.live) {
-                twitchTile.href = `/redirect?=${twitchData.profileURL}`;
-                (twitchTile.querySelector('.item-data h2') as HTMLElement).innerHTML = `${twitchData.displayName} is live!`;
-                (twitchTile.querySelector('.item-data .desc1') as HTMLElement).innerHTML = `${twitchData.broadcastSettings.title}`;
-                (twitchTile.querySelector('.item-data .desc2') as HTMLElement).innerHTML = `${twitchData.stream.viewersCount} viewers`;
-                (twitchTile.querySelector('.item-image img') as HTMLImageElement).src = twitchData.profileImageURL;
-            } else if (key == mainStream) {
-                twitchTile.href = `/redirect?=${twitchData.profileURL}`;
-                (twitchTile.querySelector('.item-data .desc1') as HTMLElement).innerHTML = ``;
-                (twitchTile.querySelector('.item-data .desc2') as HTMLElement).innerHTML = ``;
-                (twitchTile.querySelector('.item-image img') as HTMLImageElement).src = twitchData.profileImageURL;
+            if (twitchTile) {
+                const desc1Div = twitchTile.querySelector('.item-data .desc1') as HTMLElement;
+                const desc2Div = twitchTile.querySelector('.item-data .desc2') as HTMLElement;
 
-                if (twitchData.schedule) {
-                    const nextStreamDate = new Date(twitchData.schedule.nextSegment.startAt);
-                    const nextStreamTxt = calcDateDiffToTxt(nextStreamDate);
+                if (twitchData.live) {
+                    twitchTile.href = `/redirect?=${twitchData.profileURL}`;
+                    (twitchTile.querySelector('.item-image img') as HTMLImageElement).src = twitchData.profileImageURL;
+                    (twitchTile.querySelector('.item-data h2') as HTMLElement).innerHTML = `${twitchData.displayName} is live!`;
+                    desc1Div.innerHTML = `${twitchData.broadcastSettings.title}`;
+                    desc1Div.classList.add('one-line-text');
+                    desc2Div.innerHTML = `${twitchData.stream.viewersCount} viewers`;
+                } else if (key == mainStream) {
+                    twitchTile.href = `/redirect?=${twitchData.profileURL}`;
+                    (twitchTile.querySelector('.item-image img') as HTMLImageElement).src = twitchData.profileImageURL;
+                    desc1Div.innerHTML = ``;
+                    desc2Div.innerHTML = ``;
 
-                    (twitchTile.querySelector('.item-data .desc1') as HTMLElement).innerHTML = `Next stream in ${nextStreamTxt}`;
+                    if (twitchData.schedule) {
+                        const nextStreamDate = new Date(twitchData.schedule.nextSegment.startAt);
+                        const nextStreamTxt = calcDateDiffToTxt(nextStreamDate);
+
+                        desc1Div.innerHTML = `Next stream in ${nextStreamTxt}`;
+                    }
                 }
             }
         }
@@ -923,5 +969,6 @@ export default {
     toggleHint,
     toggleMobileButtons,
     makeScrollbar,
-    clearTileScroll
+    clearTileScroll,
+    LoadingDiv
 };

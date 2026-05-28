@@ -1,3 +1,23 @@
-<div class="app-container">
-    <h2 style="margin: 40px">this is not finished yet lmao</h2>
+<script type="module" src="/html/src/patcat.ts"></script>
+<link rel="stylesheet" href="/html/css/patcat.scss">
+
+
+<appx-preload style="display: none;">
+    <img src="/img/cat/kai-0.png">
+    <img src="/img/cat/kai-1.png">
+
+    <audio src="/sounds/patcat/kai-prr.ogg"></audio>
+</appx-preload>
+
+
+<div class="appx-container">
+    <div class="menu">
+        <div class="button settings"><img src="/img/cat/settings.png" alt="settings"></div>
+        <div class="button swap-cat"><img src="/img/cat/swap.png" alt="swap cat"></div>
+    </div>
+    <div class="stats">
+        <div class="score">pat score: <span class="count">0</span></div>
+        <div class="combo">current pat combo score: <span class="count">0</span></div>
+    </div>
+    <img class="cat" src="/img/cat/kai-0.png" alt="if this doesn't load, you're fucked. reload the page please!">
 </div>

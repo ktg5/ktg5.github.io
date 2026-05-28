@@ -1,0 +1,81 @@
+img {
+    image-rendering: crisp-edges;
+}
+
+
+@font-face {
+    src: url('/style/fonts/Quicksand-VariableFont_wght.ttf');
+    font-family: 'Quicksand';
+}
+
+
+.appx-container {
+    width: 100vw;
+    height: 100vw;
+    font-family: 'Quicksand';
+
+    .menu,
+    .stats,
+    .cat
+    {
+        position: absolute;
+        width: fit-content;
+        height: fit-content;
+    }
+
+    .menu {
+        inset: 0;
+        right: unset;
+        margin: auto;
+        margin-left: 8px;
+        background: rgb(70, 65, 100);
+        z-index: 1;
+
+        .button {
+            aspect-ratio: 1/1;
+            width: 4vw;
+            min-width: 48px;
+            background: transparent;
+            transition: background .25s;
+
+            &:hover {
+                background: #fff;
+
+                img {
+                    filter: brightness(0);
+                }
+            }
+
+            img {
+                width: 100%;
+                object-fit: contain;
+                filter: brightness(1);
+                transition: filter .25s;
+            }
+        }
+    }
+
+    .stats {
+        left: 0;
+        right: 0;
+        bottom: 15vh;
+        margin: auto;
+        text-align: center;
+        font-weight: bold;
+        font-size: clamp(12px, 6cqw, 4vh);
+        user-select: none;
+        z-index: 1;
+
+        .combo {
+            font-size: clamp(12px, 4cqw, 3vh);
+        }
+    }
+
+    .cat {
+        inset: 0;
+        margin: auto;
+        width: 30vw;
+        max-width: 60vh;
+        min-width: 360px;
+    }
+}

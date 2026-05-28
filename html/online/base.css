@@ -2,27 +2,7 @@
 
 @font-face {
     font-family: 'Regular';
-    src: url('../fonts/FOT-RodinNTLG\ Pro\ DB.otf');
-}
-
-@font-face {
-    font-family: 'Bold';
-    src: url('../fonts/FOT-Rodin\ Pro\ B.otf');
-}
-
-@font-face {
-    font-family: 'TitleBold';
-    src: url('../fonts/continuum-bold.ttf');
-}
-
-@font-face {
-    font-family: 'TitleMed';
-    src: url('../fonts/continuum-medium.ttf');
-}
-
-@font-face {
-    font-family: 'Display';
-    src: url('../fonts/digital-7\ \(mono\).ttf');
+    src: url('../style/fonts/FOT-NewRodin\ Pro\ EB.otf');
 }
 
 
@@ -52,8 +32,4 @@
 
 body {
     font-family: 'Regular';
-}
-
-strong {
-    font-family: 'Bold';
 }
