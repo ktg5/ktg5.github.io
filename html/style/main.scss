@@ -138,7 +138,6 @@ label {
 #enable-js {
     position: absolute;
     background: black;
-    z-index: 99;
     padding: 1em;
 }
 
@@ -153,7 +152,6 @@ label {
     background: black;
     border: 6px solid black;
     border-radius: 8px;
-    z-index: 100;
 }
 
 
@@ -173,7 +171,7 @@ label {
 
 .scroll-wrapper {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     overflow-x: hidden;
 
     .scroll-content {
@@ -192,7 +190,6 @@ label {
     height: 18px;
     overflow: hidden;
     user-select: none;
-    z-index: 1000;
 
     * {
         &:hover {
@@ -247,8 +244,7 @@ label {
         display: none;
         position: absolute;
         width: 100vw;
-        height: 100vh;
-        z-index: 100;
+        height: 100dvh;
     }
 
     .topbar {
@@ -380,7 +376,6 @@ label {
             width: fit-content;
             height: fit-content;
             user-select: none;
-            z-index: 5;
             transition: .5s opacity;
 
             &[data-shadow] {
@@ -395,7 +390,6 @@ label {
 
             * {
                 position: relative;
-                z-index: 1;
             }
 
             &[data-item-style="logo"] {
@@ -452,7 +446,6 @@ label {
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
-                z-index: 0 !important;
 
                 &:after {
                     content: '';
@@ -461,7 +454,6 @@ label {
                     height: 100%;
                     background: rgb(0 0 0 / 75%);
                     top: 0;
-                    z-index: 1;
                 }
 
                 img {
@@ -482,7 +474,6 @@ label {
     left: 0;
     width: 100vw;
     height: 100dvh;
-    z-index: 10;
     transform-style: preserve-3d;
     transform: rotateY(180deg);
 
@@ -505,7 +496,6 @@ label {
         width: 100%;
         height: var(--taskbar-size);
         user-select: none;
-        z-index: 15;
         transition: .25s top ease-out;
 
         &[data-toggle] {
@@ -600,10 +590,6 @@ label {
         user-select: none;
         overflow: hidden;
         opacity: 0;
-
-        .item {
-            z-index: 10;
-        }
     }
 
     #appx-preview {
@@ -618,7 +604,6 @@ label {
         background: grey;
         background-color: var(--appx-color);
         user-select: none;
-        z-index: 10;
         opacity: 1;
         transition: .25s opacity;
 
@@ -657,8 +642,8 @@ label {
         left: 0;
         width: 100%;
         height: 100%;
+        overflow: hidden;
         transform: rotateY(180deg);
-        z-index: 10;
         animation: .15s linear fadeIn;
     }
 }
@@ -669,7 +654,6 @@ label {
     width: 100vw;
     height: 100dvh;
     top: 0;
-    z-index: 1001;
     pointer-events: none;
 
     #help-notif {
@@ -722,11 +706,14 @@ label {
     display: none;
     position: absolute;
     width: 100%;
-    height: var(--mobile-buttons-height);
-    top: calc(100% - var(--mobile-buttons-height) - var(--mobile-buttons-before-height));
+    height: calc(var(--mobile-buttons-height) + var(--mobile-buttons-before-height));
     bottom: 0;
-    z-index: 1000;
-    transition: .5s cubic-bezier(0, 0, 0.1, 1) all;
+    overflow: hidden;
+    transition: height .5s cubic-bezier(0, 0, 0.1, 1);
+
+    &[data-hide] {
+        height: var(--mobile-buttons-before-height);
+    }
 
     &:before {
         content: '';
@@ -736,7 +723,7 @@ label {
 
     .container {
         background: #000;
-        height: 100%;
+        height: var(--mobile-buttons-height);
     }
 
     .button-group {
@@ -885,10 +872,6 @@ label {
 
     #mobile-buttons {
         display: block;
-
-        &[data-hide] {
-            top: calc(100% - var(--mobile-buttons-before-height));
-        }
     }
 }
 

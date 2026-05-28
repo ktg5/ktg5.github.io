@@ -1,0 +1,78 @@
+#enable-js {
+    z-index: 99;
+}
+
+
+#hoverhint {
+    z-index: 100;
+}
+
+
+#scroll-fakebar {
+    z-index: 1000;
+}
+
+
+#start-container {
+    #deny-mouse {
+        z-index: 100;
+    }
+}
+
+
+.item {
+    .item-tile-container {
+        .item-title {
+            z-index: 5;
+        }
+
+        .item-tile {
+            * {
+                z-index: 1;
+            }
+
+            .item-image,
+            .item-bg
+            {
+                z-index: 0 !important;
+
+                &:after {
+                    z-index: 1;
+                }
+            }
+        }
+    }
+}
+
+
+#mobile-buttons {
+    z-index: 1000;
+}
+
+
+#appx-container {
+    z-index: 10;
+
+    #appx-taskbar {
+        z-index: 15;
+    }
+
+    #appx-tile {
+        .item {
+            z-index: 10;
+        }
+    }
+
+    #appx-preview {
+        z-index: 10;
+    }
+
+    #appx {
+        z-index: 10;
+    }
+}
+
+
+#help-notifs {
+    z-index: 1001;
+}

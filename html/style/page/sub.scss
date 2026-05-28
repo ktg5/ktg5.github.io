@@ -9,31 +9,31 @@ body {
 
 
 @font-face {
-    src: url(../fonts/FOT-NewRodin\ Pro\ EB.otf);
-    font-family: "NewRodinPro-EB";
+    src: url(../fonts/Montserrat.ttf);
+    font-family: "Regular";
 }
 
 
 #container {
-    font-family: "NewRodinPro-EB";
+    font-family: "Regular";
     background-color: #141414;
     color: white;
     display: flex;
-    height: 100vh;
+    height: 100dvh;
 
     #side-one {
         display: flex;
         position: relative;
         background: rgb(45, 75, 190);
         width: var(--side-one-width);
-        height: 100vh;
+        height: 100dvh;
         justify-content: center;
         align-items: center;
         overflow: hidden;
 
         * {
             position: absolute;
-            height: 100vh;
+            height: 100dvh;
         }
 
         .over-bg {
@@ -91,7 +91,11 @@ body {
                 }
 
                 .txt {
-                    position: relative;
+                    position: absolute;
+                    inset: 0;
+                    margin: auto;
+                    height: fit-content;
+                    font-weight: bold;
                     z-index: 1;
                 }
 
@@ -121,6 +125,7 @@ body {
 
                 .title {
                     font-size: 1.45em;
+                    font-weight: bold;
                     line-height: 1.25em;
                     margin-bottom: .5em;
                 }
@@ -187,6 +192,7 @@ body {
         #side-one {
             width: 100%;
             height: var(--side-one-grid-height);
+            margin-bottom: 1em;
 
             * {
                 height: 150vw;
@@ -197,7 +203,7 @@ body {
 
         #side-two {
             width: 100%;
-            height: calc(100vh - var(--side-one-grid-height));
+            height: calc(100dvh - var(--side-one-grid-height));
 
             .things-container {
                 grid-template-columns: auto auto;
@@ -209,8 +215,10 @@ body {
 @media (max-width: 950px) {
     #container {
         #side-two {
-            .things-container {
-                grid-template-columns: auto;
+            .container {
+                .things-container {
+                    grid-template-columns: auto;
+                }
             }
         }
     }

@@ -144,7 +144,7 @@ export class Appx {
                 toggle();
                 appxDivs.taskbar.setAttribute('data-toggle', '');
 
-                document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
+                if (Main.mobileMode) document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
             } else if (stat === false) {
                 if (!isOverTaskbar()) {
                     setTimeout(() => {

@@ -9,10 +9,6 @@ ul {
 
 
 #appx-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-
     #appx .block {
         display: grid;
         height: 100%;
@@ -69,9 +65,10 @@ ul {
             width: 100%;
         }
 
-        #appx .block {
+        .block {
             display: flex;
             flex-direction: column;
+            height: unset !important;
             width: 100% !important;
             height: fit-content;
             min-height: 30vh;

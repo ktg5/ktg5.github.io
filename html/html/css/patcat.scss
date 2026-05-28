@@ -4,7 +4,7 @@ img {
 
 
 @font-face {
-    src: url('/style/fonts/Quicksand-VariableFont_wght.ttf');
+    src: url('/style/fonts/Quicksand.ttf');
     font-family: 'Quicksand';
 }
 
@@ -77,5 +77,6 @@ img {
         width: 30vw;
         max-width: 60vh;
         min-width: 360px;
+        height: auto;
     }
 }
