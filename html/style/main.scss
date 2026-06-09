@@ -9,14 +9,9 @@
 :root {
     --bg: #{gColor(defStartBg)};
     --accent: #{gColor(defAccent)};
-    --margleft: 4.5vw;
-    --smol-tile: 120px;
-    --big-tile: 248px;
-    --taskbar-size: 30px;
-    --buttons-resize: 16px;
-    --fakebar-bg: rgb(125 125 125 / 50%);
-    --mobile-buttons-height: 7vh;
-    --mobile-buttons-before-height: 5vh;
+    --smol-tile: #{gPxs(tileSize0)};
+    --big-tile: #{gPxs(tileSize1)};
+    --taskbar-size: #{gPxs(taskbarSize)};
 }
 
 @font-face {
@@ -46,7 +41,7 @@ html {
 body {
     font-family: "Segoe UI" !important;
     background: var(--bg) !important;
-    /* background-image: url(/img/ref.png); */
+    // background-image: url(/img/ref.png);
     background-size: cover !important;
     color: white !important;
     width: 100vw !important;
@@ -66,7 +61,7 @@ h1, h2, h3, h4, h5 {
 button {
     background: transparent;
     color: white;
-    font-size: 20px;
+    font-size: gPxs(btnText);
     text-transform: lowercase;
     border: 0.2em solid white;
     padding: .25em 1em;
@@ -105,8 +100,8 @@ label {
         position: absolute;
         top: 0;
         left: 0;
-        height: 25px;
-        width: 25px;
+        height: gPxs(checkboxSize);
+        width: gPxs(checkboxSize);
         background-color: transparent;
         border: 0.2em solid white;
 
@@ -184,7 +179,7 @@ label {
 .scroll-fakebar {
     display: flex;
     position: absolute;
-    background: var(--fakebar-bg);
+    background: gColor(fakeBarBg);
     bottom: 0;
     width: 100%;
     height: 18px;
@@ -193,16 +188,16 @@ label {
 
     * {
         &:hover {
-            background: #aeaeae
+            background: #aaa;
         }
 
         &:active {
-            background: rgb(0 0 0 / 50%) !important;
+            background: gColor(fakeBarActiveBg) !important;
         }
     }
 
     .scroll-fakebar__button {
-        width: 35px;
+        width: gPxs(fakeBarBtnSize);
     }
 
     .scroll-fakebar__bar {
@@ -231,7 +226,6 @@ label {
     width: 100%;
     height: 100%;
     position: relative;
-    animation: 2.5s slide-in cubic-bezier(0, 0, 0.25, 1);
     user-select: none;
 
     img {
@@ -248,15 +242,51 @@ label {
     }
 
     .topbar {
+        $topAni: cubic-bezier(0, 0, 0.15, 1);
         position: absolute;
-        top: 40px;
-        margin-left: var(--margleft);
+        top: gPxs(topbarTop);
+        margin: 0 gPxs(startMargin);
+        width: calc(100% - (#{gPxs(startMargin)} * 2));
 
         .topbar-title {
             position: relative;
             width: fit-content;
             font-size: 56px;
-            animation: 2s toptitle-slide-in cubic-bezier(0, 0, 0.15, 1);
+            animation: topbar-slide-delay 2.5s $topAni;
+        }
+
+        .user {
+            display: flex;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            gap: 8px;
+            margin: auto;
+            margin-left: auto;
+            text-align: center;
+            align-items: center;
+            animation: topbar-fadein .5s $topAni;
+
+            .name {
+                height: fit-content;
+                font-size: 28px;
+                margin-bottom: 4px;
+                font-weight: 500 !important;
+            }
+
+            .icon {
+                $size: 42px;
+                background: grey;
+                width: $size;
+                height: $size;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
         }
     }
 
@@ -265,6 +295,7 @@ label {
         width: 100vw;
         height: 100%;
         overflow: hidden;
+        animation: 2.5s slide-in cubic-bezier(0, 0, 0.25, 1);
 
         .groups {
             display: flex;
@@ -273,7 +304,7 @@ label {
             max-height: 805px;
             height: 70vh;
             margin: auto;
-            margin-left: calc(var(--margleft) + .175vw);
+            margin-left: calc(#{gPxs(startMargin)} + .175vw);
             top: 5%;
             bottom: 0;
 
@@ -370,16 +401,19 @@ label {
 
         .item-title {
             position: absolute;
-            left: 18px;
-            bottom: 6px;
+            padding: 0 gPxs(tileTitlePadding);
+            bottom: gPxs(tileTitleBottom);
             font-size: 14px;
-            width: fit-content;
+            width: calc(100% - (#{gPxs(tileTitlePadding)} * 2));
             height: fit-content;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             user-select: none;
-            transition: .5s opacity;
+            transition: .5s opacity, .5s text-shadow;
 
             &[data-shadow] {
-                text-shadow: 0px 0px 5px rgb(0 0 0);
+                text-shadow: 0px 0px 4px rgb(0 0 0);
             }
         }
 
@@ -415,6 +449,12 @@ label {
                 left: 0;
                 width: auto;
                 height: auto;
+
+                img {
+                    -webkit-user-drag: none;
+                    pointer-events: none;
+                    user-drag: none;
+                }
             }
 
             .item-data {
@@ -562,9 +602,9 @@ label {
                     right: 0;
                     left: 0;
                     top: 0;
-                    width: calc(var(--taskbar-size) - var(--buttons-resize));
-                    height: calc(var(--taskbar-size) - var(--buttons-resize));
-                    font-size: calc(var(--taskbar-size) - var(--buttons-resize));
+                    width: calc(var(--taskbar-size) - #{gPxs(taskbarBtnIconOffset)});
+                    height: calc(var(--taskbar-size) - #{gPxs(taskbarBtnIconOffset)});
+                    font-size: calc(var(--taskbar-size) - #{gPxs(taskbarBtnIconOffset)});
                 }
             }
         }
@@ -706,24 +746,24 @@ label {
     display: none;
     position: absolute;
     width: 100%;
-    height: calc(var(--mobile-buttons-height) + var(--mobile-buttons-before-height));
+    height: calc(#{gPxs(mobileBtnSize)} + #{gPxs(mobileBtnBeforeSize)});
     bottom: 0;
     overflow: hidden;
     transition: height .5s cubic-bezier(0, 0, 0.1, 1);
 
     &[data-hide] {
-        height: var(--mobile-buttons-before-height);
+        height: gPxs(mobileBtnBeforeSize);
     }
 
     &:before {
         content: '';
         display: block;
-        height: var(--mobile-buttons-before-height);
+        height: gPxs(mobileBtnBeforeSize);
     }
 
     .container {
         background: #000;
-        height: var(--mobile-buttons-height);
+        height: gPxs(mobileBtnSize);
     }
 
     .button-group {
@@ -773,7 +813,7 @@ label {
 /* Mobile Mode */
 [data-mobile] {
     --tile-gap: 2vw;
-    --smol-tile: 30.1vw;
+    --smol-tile: #{gPxs(tileSize0-mobile)};
 
     .scroll-fakebar {
         display: none;
@@ -805,7 +845,7 @@ label {
                 gap: var(--tile-gap);
                 width: calc(100vw - (var(--tile-gap) * 2));
                 height: fit-content;
-                margin-bottom: calc(var(--mobile-buttons-height) + 8vh);
+                margin-bottom: calc(#{gPxs(mobileBtnSize)} + 8vh);
                 max-height: none;
             }
 
@@ -819,7 +859,7 @@ label {
                 }
 
                 &:last-child {
-                    padding-bottom: var(--mobile-buttons-height);
+                    padding-bottom: gPxs(mobileBtnSize);
                 }
 
                 .group {
@@ -922,8 +962,18 @@ label {
     100% { scale: 1 }
 }
 
-/* toptitle-slide-in */
-@keyframes toptitle-slide-in {
+/* topbar-fadein */
+@keyframes topbar-fadein {
+    0% {
+        filter: opacity(0);
+    }
+    100% {
+        filter: opacity(1);
+    }
+}
+
+/* topbar-slide-delay */
+@keyframes topbar-slide-delay {
     0% {
         left: 80px;
         filter: opacity(0);

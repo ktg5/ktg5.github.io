@@ -145,6 +145,15 @@ export class Appx {
                 appxDivs.taskbar.setAttribute('data-toggle', '');
 
                 if (Main.mobileMode) document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
+
+                // hide titlebar hint on hover
+                let hintsData = Main.getHintsData();
+                let hintName = 'titlebar';
+                if (hintsData[hintName] === false) {
+                    Main.toggleHint(hintName, false);
+                    hintsData[hintName] = true;
+                    Main.saveToHints(hintsData);
+                }
             } else if (stat === false) {
                 if (!isOverTaskbar()) {
                     setTimeout(() => {
@@ -296,18 +305,16 @@ export class Appx {
                 if (
                     !Main.mobileMode
                     && hintsData.titlebar !== true
-                ) {
-                    const hintName = 'titlebar';
-                    Main.toggleHint(hintName);
-                    hintsData[hintName] = true;
-                    Main.saveToHints(hintsData);
-                }
+                ) Main.toggleHint('titlebar');
 
                 fetch(elmntData.src).then(async rawData => {
                     if (!appxDivs.app) return;
 
                     let html = await rawData.text();
                     appxDivs.app.innerHTML = html;
+
+                    await preloadAppx();
+                    appxDivs.app.querySelector('appx-preload')?.remove();
 
                     appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(async elmnt => {
                         if (!elmnt) return;
@@ -324,9 +331,6 @@ export class Appx {
                     setTimeout(() => {
                         if (appxDivs.app) appxDivs.app.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
                     }, 50);
-
-                    await preloadAppx();
-                    appxDivs.app.querySelector('appx-preload')?.remove();
 
                     if (
                         appxDivs.app
@@ -388,6 +392,7 @@ export class Appx {
             if (this.elmnt) this.elmnt.style.opacity = '';
             setTimeout(() => {
                 (document.querySelector('#start-container') as HTMLElement).style.display = '';
+                (document.querySelector('.topbar') as HTMLElement).style.animation = 'none';
                 (document.querySelector('.groups') as HTMLElement).style.animation = `${(animationMs / 1000) * 2}s cubic-bezier(0, 0, 0.15, 1) light-slide-in`;
 
                 // more animation

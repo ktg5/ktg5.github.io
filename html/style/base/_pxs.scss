@@ -3,7 +3,29 @@
 
 // map
 $pxs: (
+    btnText: 20px,
+    checkboxSize: 25px,
+
+
+    startMargin: 4.5vw,
+
+    topbarTop: 40px,
+
+    tileSize0: 120px,
+    tileSize1: 248px,
+    tileSize0-mobile: 30.1vw,
+    tileTitlePadding: 18px,
+    tileTitleBottom: 6px,
+
+    taskbarSize: 30px,
+    taskbarBtnIconOffset: 16px,
+
+
+    fakeBarBtnSize: 35px,
+
     
+    mobileBtnSize: 7vh,
+    mobileBtnBeforeSize: 5vh,
 );
 
 // get pxs from the pxs var

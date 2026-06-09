@@ -223,9 +223,15 @@ export function saveToStorage(item: string, data: object) {
 
 
 // Toggle specific hint
-export function toggleHint(name: string) {
-    const targetHint = document.querySelector(`[data-notif="${name}"]`);
-    if (targetHint) targetHint.toggleAttribute('data-hide');
+export function toggleHint(name: string, force?: boolean) {
+    console.log(name);
+    const targetHint = document.querySelector(`[data-notif="${name}"]`) as HTMLElement;
+    if (targetHint) {
+        if (force !== undefined) {
+            if (force === false) targetHint.setAttribute('data-hide', '');
+            else targetHint.removeAttribute('data-hide');
+        } else targetHint.toggleAttribute('data-hide');
+    }
 }
 
 // Save to hints local storage
@@ -608,7 +614,7 @@ window.addEventListener('load', async () => {
                 }
             }
             requestAnimationFrame(step);
-        })
+        });
     }
 
 
@@ -638,19 +644,6 @@ window.addEventListener('load', async () => {
     }, 500);
 
 
-    // Add redirects to all [data-add-redirect]
-    (document.querySelectorAll('[data-add-redirect]') as NodeListOf<HTMLAreaElement>).forEach(elmnt => {
-        elmnt.href = `/redirect?=${elmnt.href}`;
-    });
-
-
-    // Tile click (action & animation)
-    (document.querySelectorAll('#start-container .item') as NodeListOf<HTMLElement>).forEach(elmnt => {
-        if (elmnt.nodeName == "DIV") elmnt.addEventListener('click', () => currentAppx = new Appx(elmnt));
-    });
-
-
-
     // Check is a appx is in the search args
     const searchParams = new URLSearchParams(location.search);
     if (
@@ -668,6 +661,17 @@ window.addEventListener('load', async () => {
     // Else, deny mouse actions for a second or just not depending on viewing mode
     firstTileAnim();
 
+
+    // Add redirects to all [data-add-redirect]
+    (document.querySelectorAll('[data-add-redirect]') as NodeListOf<HTMLAreaElement>).forEach(elmnt => {
+        elmnt.href = `/redirect?=${elmnt.href}`;
+    });
+
+    // Tile click (action & animation)
+    (document.querySelectorAll('#start-container .item') as NodeListOf<HTMLElement>).forEach(elmnt => {
+        elmnt.draggable = false;
+        if (elmnt.nodeName == "DIV") elmnt.addEventListener('click', () => currentAppx = new Appx(elmnt));
+    });
 
 
     // Date difference into text
@@ -704,9 +708,26 @@ window.addEventListener('load', async () => {
 
 
 
+    // Friend stuff
+    // Mostly just Twitch stuff atm, but might add more in the future
+    type FriendData = {
+        twitch_user?: string;
+        twitch?: getChannelData;
+    };
+    const friendsData: Record<string, FriendData> = {
+        shobe: { twitch_user: "shobuh" },
+        skppy: { twitch_user: "skppy_" },
+        mala: { twitch_user: "malatyp3" },
+        ladd: { twitch_user: "anormalladd" },
+        chris: { twitch_user: "chrisovertheree" }
+    };
+
+
 
     // Fetches to services I'm gaming on lol
+    // Plus friend stuff too
     if (!window.slowMf) {
+        // ktg5 socials
         // Init YouTube tile
         type YTTileData = { type: string, title: string, thumbnails: string[], published?: string, views?: string, premiereTime?: number };
         function initYTTile(data: YTTileData) {
@@ -753,7 +774,6 @@ window.addEventListener('load', async () => {
             ytDataDiv.style.display = '';
         });
 
-
         // Get Twitch Information
         const twitchStreams = ['ktg5_', 'noclue_x86', 'ktg5_special'];
         const mainStream = twitchStreams[0];
@@ -790,44 +810,6 @@ window.addEventListener('load', async () => {
             }
         }
 
-        // Get friend's Twitch info
-        type FriendData = {
-            greetId: string;
-            twitch?: getChannelData; // optional for now
-        };
-        const friendsData: Record<string, FriendData> = {
-            shobuh: { greetId: "shobe" },
-            skppy_: { greetId: "skppy" },
-            malatyp3: { greetId: "mala" },
-            anormalladd: { greetId: "ladd" },
-        };
-        for (const key in friendsData) {
-            const k = key as keyof typeof friendsData; // assert the key is valid
-            const twitch = await twitchgql.getChannel(k);
-            friendsData[k] = { ...friendsData[k], twitch };
-            let friendData = friendsData[key];
-
-            // Set to twitch live tile
-            const friendTile = document.querySelector(`[data-item-id="greet.${friendData.greetId}"]`) as HTMLAreaElement;
-            if (twitch.live) {
-                friendTile.href = `/redirect?=${twitch.profileURL}`;
-                const newTile = document.createElement('div');
-                newTile.classList.add(`item-tile`);
-                newTile.setAttribute('data-scroll-delay', '5');
-                newTile.setAttribute('data-item-style', 'text');
-                newTile.innerHTML = `
-                    <div class="item-data" style="padding-top: 10px">
-                        <h3>They Live!</h3>
-                        <p class="desc1 one-line-text">${twitch.broadcastSettings.title}</p>
-                        <p class="desc2" one-line-text>${twitch.stream.viewersCount} viewers</p>
-                    </div>
-                    <div class="item-image"><img src="${twitch.profileImageURL}" style="height: 140%;"></div>
-                `;
-                (friendTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, friendTile.querySelectorAll('.item-tile')[1]);
-            }
-        }
-
-
         // Get Twitter info
         const twitterTile = document.querySelector('[data-item-id="twitter"]') as HTMLAreaElement;
         await fetch("https://api.ktg5.online/latestTwit", {
@@ -847,7 +829,7 @@ window.addEventListener('load', async () => {
                     <p class="desc3 one-line-text">
                         <span style="margin-right: 8px">💬 ${json.stats.replies}</span>
                         <span style="margin-right: 8px">🔄 ${json.stats.retweets}</span> 
-                        <span>🩵 ${json.stats.likes}</span>
+                        <span>💙 ${json.stats.likes}</span>
                     </p>
                 </div>
                 <div class="item-bg" style="background-image: #94e4e8;"></div>
@@ -856,12 +838,39 @@ window.addEventListener('load', async () => {
         });
 
 
-        // Continue to build tiles
-        buildTiles();
+        // Friends socials
+        // Get friend's Twitch info
+        for (const key in friendsData) {
+            const k = key as keyof typeof friendsData;  // key which is used for html element stuff
+            const d = friendsData[k];                   // data which has the twitch stuff & other things
+            if (!d.twitch_user) continue;               // ignore this silly fuck if they don't got twitch
+
+            const twitch = await twitchgql.getChannel(d.twitch_user);
+            friendsData[k].twitch = twitch;
+
+            // Set to twitch live tile
+            const friendTile = document.querySelector(`[data-item-id="greet.${k}"]`) as HTMLAreaElement;
+            if (twitch.live) {
+                friendTile.href = `/redirect?=${twitch.profileURL}`;
+                const newTile = document.createElement('div');
+                newTile.classList.add(`item-tile`);
+                newTile.setAttribute('data-scroll-delay', '5');
+                newTile.setAttribute('data-item-style', 'text');
+                newTile.innerHTML = `
+                    <div class="item-data" style="padding-top: 10px">
+                        <h3>They Live!</h3>
+                        <p class="desc1 one-line-text">${twitch.broadcastSettings.title}</p>
+                        <p class="desc2" one-line-text>${twitch.stream.viewersCount} viewers</p>
+                    </div>
+                    <div class="item-image"><img src="${twitch.profileImageURL}" style="height: 140%;"></div>
+                `;
+                (friendTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, friendTile.querySelectorAll('.item-tile')[1]);
+            }
+        }
     } else {
         (document.querySelector('[data-item-id="twitch"] [data-item-style="text"]') as HTMLElement).remove();
-        buildTiles();
     }
+    buildTiles();
 
 
     // Check each tile container to see if it contains more than one tile,
