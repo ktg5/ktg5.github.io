@@ -291,7 +291,7 @@ export class Appx {
                 });
 
                 const startContainer = document.querySelector('#start-container') as HTMLElement;
-                startContainer.style.animation = `none`;
+                (startContainer.querySelector('.groups-container') as HTMLElement).style.animation = `none`;
                 startContainer.style.display = "none";
 
                 this.previewLoading.show();
