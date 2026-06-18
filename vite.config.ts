@@ -5,6 +5,7 @@ import fs from 'fs';
 import config from "./config.json";
 
 import { buildStaging } from "./buildStaging";
+import { addFinal } from './addFinal';
 import { rmStaging } from './rmStaging';
 
 
@@ -43,6 +44,7 @@ await buildStaging();
 switch (process.env.NODE_ENV) {
     case "production":
         process.on('exit', () => {
+            addFinal();
             rmStaging();
             // process.exit(0);
         });

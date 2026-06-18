@@ -23,8 +23,8 @@ let score = 0;
 let combo = 0;
 
 
-let stopPrrTimeout: number;
-let prrVolumeInt: number;
+let stopPrrTimeout: NodeJS.Timeout;
+let prrVolumeInt: NodeJS.Timeout;
 
 // change image depending on mouse enter & leave
 ['mouseenter', 'touchstart'].forEach((ename) => {
@@ -39,7 +39,6 @@ let prrVolumeInt: number;
         comboCount.textContent = '0';
 
         stopPrrTimeout = setTimeout(() => {
-            let firstChange = false;
             prrVolumeInt = setInterval(() => {
                 if (catPrrs[currentCat].volume() <= 0) {
                     clearInterval(prrVolumeInt);

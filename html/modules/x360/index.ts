@@ -28,19 +28,23 @@ type x360AlertData = {
 }
 
 
+// @ts-ignore
 let transMs: number;
 let animationMs: number;
 
 const killMs = 6000;
 const txtRefreshMs = 5000;
+// @ts-ignore
 const iconRefreshMs = 1000;
 
 
+// @ts-ignore
 let alertQueue: x360Alert[] = [];
 
 export class x360Alert {
     private alertDiv = (document.createElement('div') as HTMLElement);
     private txtChangeInt: NodeJS.Timeout | undefined;
+    // @ts-ignore
     private autoKill: NodeJS.Timeout | undefined;
     public data: x360AlertData;
     public container: HTMLElement;

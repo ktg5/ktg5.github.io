@@ -120,7 +120,7 @@ export class Appx {
     private elmnt: HTMLElement | undefined;
     data: Tile | undefined;
     taskbarLock: boolean = false;
-    taskbarTimeout: number | undefined;
+    taskbarTimeout: NodeJS.Timeout | undefined;
 
     private previewLoading = new Main.LoadingDiv(appxDivs.preview as HTMLElement, { hidden: true });
 

@@ -288,7 +288,7 @@ class LoadingDiv {
     private size: number | undefined;
     private hidden: boolean = false;
     private currentCode: number | undefined;
-    private interval: number | undefined;
+    private interval: NodeJS.Timeout | undefined;
     private loopedEnd = 0;
 
     constructor(insertDiv: HTMLElement, data?: LoadingDivData) {
