@@ -817,6 +817,8 @@ window.addEventListener('load', async () => {
         }).then(async (d) => {
             const json = await d.json();
 
+            if (json.err) return;
+
             const newTile = document.createElement('div');
             newTile.classList.add(`item-tile`);
             newTile.setAttribute('data-scroll-delay', '5');
