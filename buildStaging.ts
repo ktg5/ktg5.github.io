@@ -32,7 +32,7 @@ async function copyFileStream(src: string, dest: string) {
 async function copyDir(sourceDir: string, newDir: string):Promise<void> {
     // Get dirs in the project folder.
     var dirs = fs.readdirSync(sourceDir, { withFileTypes: true });
-    fs.mkdirSync(newDir);
+    if (!fs.existsSync(newDir)) fs.mkdirSync(newDir);
     
     // now we finna do something with all of these dirs
     for (let entry of dirs) {
@@ -110,8 +110,8 @@ export async function buildStaging():Promise<void> {
         
         
         // copy current html folder
-        console.log(`🔃 copying current "${config.baseHtmlDir}" folder to a "${config.stagingHtmlDir}" for Vite to compile...`);
         if (fs.existsSync(config.stagingHtmlDir)) rmStaging();
+        console.log(`🔃 copying current "${config.baseHtmlDir}" folder to a "${config.stagingHtmlDir}" for Vite to compile...`);
         copyDir(config.baseHtmlDir, config.stagingHtmlDir).then(async () => {
             console.log('✅ copy complete!');
         
