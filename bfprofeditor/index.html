@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=.8">
+        <title>Document</title>
+
+
+      <script type="module" crossorigin src="/src/index.js"></script>
+      <link rel="stylesheet" crossorigin href="/style/index.css">
+    </head>
+
+
+    <body>
+        <div id="sidenav" hide>
+            <div class="menu-category-container">
+                <div class="menu-category">
+                    <div class="menu-category-title">Upload & Save</div>
+                    <div class="menu-btn">
+                        <input type="file" id="prof-upload" class="display" accept="*">
+                    </div>
+                    <button id="prof-save" class="menu-btn">
+                        <div class="display">
+                            <span class="title">Save...</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="menu-category-spliter"></div>
+                <div class="menu-category">
+                    <button class="menu-btn" btn-action="about">
+                        <div class="display">
+                            <span class="title">About</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="topbar">
+            <div class="menu-category-container">
+                <div class="menu-category">
+                    <button class="menu-btn" btn-action="sidenav">
+                        <div class="display">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                        </div>
+                    </button>
+
+                    <div class="menu-logo-container">
+                        <div class="menu-logo">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                            <span class="title">BFPROFEditor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="menu-category-container" align="center">
+                <div class="menu-category">
+                    <button class="menu-btn" btn-action="prof-colors">
+                        <div class="display">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                            <span class="text">Colors</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="menu-category-container" align="right">
+                <div class="menu-category">
+                    <button class="menu-btn" btn-action="about">
+                        <div class="display">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="popups"></div>
+
+
+        <div class="content-container">
+            <div id="content">
+
+            </div>
+        </div>
+    </body>
+</html>
