@@ -1,0 +1,1 @@
+import"../modulepreload-polyfill.js";console.log(`this is ktg5 appx script speakin'.`);
