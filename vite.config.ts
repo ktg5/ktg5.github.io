@@ -77,7 +77,25 @@ export default defineConfig({
         watch: null,
 
         rollupOptions: {
-            input: getHtmlEntries(path.resolve(__dirname, rootDir))
+            input: getHtmlEntries(path.resolve(__dirname, rootDir)),
+            output: {
+                entryFileNames: 'src/[name].js',
+                chunkFileNames: 'src/[name].js',
+                assetFileNames: (asset) => {
+                    switch (true) {
+                        case asset.names[0].endsWith('.css'):
+                        return 'style/[name][extname]';
+
+                        case asset.names[0].endsWith('.png'):
+                        case asset.names[0].endsWith('.jpg'):
+                        case asset.names[0].endsWith('.gif'):
+                        return 'img/[name][extname]';
+                    
+                        default:
+                        return 'assets/[name][extname]';
+                    }
+                },
+            },
         }
     }
 });
