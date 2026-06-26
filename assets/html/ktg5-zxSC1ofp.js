@@ -1,1 +1,0 @@
-import"../modulepreload-polyfill-Dezn_h7o.js";console.log(`this is ktg5 appx script speakin'.`);
