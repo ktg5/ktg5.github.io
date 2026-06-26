@@ -1,0 +1,3 @@
+[submodule "html/bfprofeditor"]
+	path = html/bfprofeditor
+	url = https://github.com/ktg5/bfprofeditor
