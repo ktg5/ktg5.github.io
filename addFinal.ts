@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import config from "./config.json";
+// import { moveDirs } from './buildStaging';
 
 
 function checkDistfromHtml(targetDir: string) {
@@ -30,6 +31,7 @@ function checkDistfromHtml(targetDir: string) {
         }
     });
 }
+
 
 export function addFinal() {
     checkDistfromHtml('downloads');
