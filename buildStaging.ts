@@ -68,10 +68,8 @@ export async function copyDir(sourceDir: string, newDir: string):Promise<void> {
 }
 
 export async function moveDirs(ogdir: string, dist: string) {
-    console.log(fs.readdirSync(config.stagingHtmlDir));
     ogdir = `${config.stagingHtmlDir}/${ogdir}`;
     dist = `${config.stagingHtmlDir}/${dist}`;
-    console.log(fs.readdirSync(dist));
 
     const ogExists = fs.existsSync(ogdir);
     if (!ogExists) {
