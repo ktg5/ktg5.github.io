@@ -254,7 +254,7 @@ export class Appx {
                 appxDivs.taskIcon.src = appxLogo;
             }
             if (appxDivs.taskTitle) {
-                appxDivs.taskTitle.innerHTML = elmntData.title ? elmntData.title : (appxItem.querySelector('.item-title') as HTMLElement).textContent;
+                appxDivs.taskTitle.innerHTML = elmntData.title ? elmntData.title : ((appxItem.querySelector('.item-title') as HTMLElement).textContent as string);
             }
 
             // make mobile buttons disappear
@@ -364,13 +364,13 @@ export class Appx {
                     let fetchPromises: Promise<Response>[] = [];
                     fetchPromisesStrings.forEach((string) => fetchPromises.push(demand(string)));
                     await Promise.all(fetchPromises);
-                    
-                    window.dispatchEvent(new Event("load"));
-                    document.dispatchEvent(new Event("DOMContentLoaded"));
 
 
                     setTimeout(() => {
                         if (appxDivs.app) appxDivs.app.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
+
+                        window.dispatchEvent(new Event("load"));
+                        document.dispatchEvent(new Event("DOMContentLoaded"));
                     }, 50);
 
                     if (
