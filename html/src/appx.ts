@@ -99,6 +99,9 @@ type Tile = {
     title?: string,
     icon: string,
     src: string,
+    /**
+     * only used in vite dev server lel
+     */
     root?: string,
     logo?: string
 }
@@ -195,7 +198,13 @@ export class Appx {
             let hintsData = Main.getHintsData();
 
 
-            if (elmntData.root !== undefined) appxRoot = elmntData.root;
+            // use appx root only if in dev mode
+            // 
+            // bfprofeditor is becoming a good example of something that feels seperate than 
+            // the whole site and also works by just going to it's actual url.
+            if (import.meta.env.DEV) {
+                if (elmntData.root !== undefined) appxRoot = elmntData.root;
+            } else elmntData.root = undefined;           
 
 
             Main.denyMouse(true);

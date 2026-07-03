@@ -375,7 +375,7 @@ class LoadingDiv {
 
 // handle appx & non-appx fetches
 export const demand = window.fetch;
-window.fetch = async (...args): Promise<Response> => {
+if (import.meta.env.DEV) window.fetch = async (...args): Promise<Response> => {
     return new Promise<Response>(async (res, rej) => {
         try {
             let ogRes = await demand(...args);
