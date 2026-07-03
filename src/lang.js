@@ -1,0 +1,1 @@
+var e=[`en`,`pirate`],t={i:e};export{t as default,e as i};

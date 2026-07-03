@@ -1,0 +1,1 @@
+var e=`English`,t=100,n={displayName:e,progress:100};export{n as default,e as displayName,t as progress};
