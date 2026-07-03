@@ -1,23 +1,10 @@
 import { Howl } from "howler";
-import Main from "./main";
+import Main, { demand } from "./main";
+import Tile, { type TileKeys } from '../tiles';
 
 
-const tiles = {
-    'ktg5': {
-        logoPrevSize: '20%',
-        icon: "/img/tiles/icons/ktg5.webp",
-        src: "html/ktg5.html",
-    },
-    'subscribe': {
-        icon: "/img/tiles/icons/sub.webp",
-        src: "/sub.html"
-    },
-    'patcat': {
-        icon: "/img/tiles/icons/patcat.webp",
-        src: "html/patcat.html"
-    }
-};
-type TileKeys = keyof typeof tiles;
+export let appxRoot = '';
+
 
 var appxDivs = {
     container: null as HTMLElement | null,
@@ -112,6 +99,7 @@ type Tile = {
     title?: string,
     icon: string,
     src: string,
+    root?: string,
     logo?: string
 }
 
@@ -189,11 +177,11 @@ export class Appx {
         }
         let elmntData: Tile | undefined;
         if (elmntID) {
-            for (const key in tiles) {
-                if (Object.prototype.hasOwnProperty.call(tiles, key)) {
+            for (const key in Tile.tiles) {
+                if (Object.prototype.hasOwnProperty.call(Tile.tiles, key)) {
                     const tileKey = key as TileKeys;
                     if (tileKey === elmntID) {
-                        elmntData = tiles[tileKey];
+                        elmntData = Tile.tiles[tileKey];
                     }
                 }
             }
@@ -205,6 +193,9 @@ export class Appx {
             this.data = elmntData;
 
             let hintsData = Main.getHintsData();
+
+
+            if (elmntData.root !== undefined) appxRoot = elmntData.root;
 
 
             Main.denyMouse(true);
@@ -307,7 +298,11 @@ export class Appx {
                     && hintsData.titlebar !== true
                 ) Main.toggleHint('titlebar');
 
-                fetch(elmntData.src).then(async rawData => {
+                demand(elmntData.src, {
+                    headers: {
+                        "appx": "true"
+                    }
+                }).then(async rawData => {
                     if (!appxDivs.app) return;
 
                     let html = await rawData.text();
@@ -316,17 +311,54 @@ export class Appx {
                     await preloadAppx();
                     appxDivs.app.querySelector('appx-preload')?.remove();
 
-                    appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(async elmnt => {
+
+                    // repair links
+                    let fetchPromisesStrings: string[] = [];
+                    // js/ts
+                    appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(async (elmnt) => {
                         if (!elmnt) return;
                         if (elmnt.src.endsWith('@vite/client')) return elmnt.remove();
 
                         const newElmnt = document.createElement('script');
-                        newElmnt.src = `${elmnt.src}?t=${Date.now()}`;
+                        let newSrc = `${elmnt.src}?t=${Date.now()}`;
+                        if (elmntData.root) newSrc = `${elmntData.root}/${newSrc.replace(`${location.origin}/`, '')}`;
+                        fetchPromisesStrings.push(newSrc);
+                        newElmnt.src = newSrc;
                         newElmnt.innerHTML = elmnt.innerHTML;
                         newElmnt.type = 'module';
                         if (elmnt.parentNode) elmnt.parentNode.insertBefore(newElmnt, elmnt);
                         elmnt.remove();
                     });
+
+                    // links
+                    appxDivs.app.querySelectorAll<HTMLLinkElement>('link').forEach(async (elmnt) => {
+                        if (!elmnt) return;
+                        if (
+                            !elmnt.href
+                            || elmnt.href === ''
+                        ) return;
+
+                        const newElmnt = document.createElement('link');
+                        let newHref = `${elmnt.href}?t=${Date.now()}`;
+                        if (elmntData.root) {
+                            newHref = `${elmntData.root}/${newHref.replace(`${location.origin}/`, '')}`;
+                        }
+                        fetchPromisesStrings.push(newHref);
+                        newElmnt.href = newHref;
+                        newElmnt.rel = elmnt.rel;
+                        newElmnt.type = elmnt.type;
+                        if (elmnt.parentNode) elmnt.parentNode.insertBefore(newElmnt, elmnt);
+                        elmnt.remove();
+                    });
+
+                    // fetch all before sending events
+                    let fetchPromises: Promise<Response>[] = [];
+                    fetchPromisesStrings.forEach((string) => fetchPromises.push(demand(string)));
+                    await Promise.all(fetchPromises);
+                    
+                    window.dispatchEvent(new Event("load"));
+                    document.dispatchEvent(new Event("DOMContentLoaded"));
+
 
                     setTimeout(() => {
                         if (appxDivs.app) appxDivs.app.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
@@ -364,6 +396,8 @@ export class Appx {
         const animationMs = 250;
         Main.denyMouse(true);
         if (appxDivs.taskbar) appxDivs.taskbar.removeAttribute('data-toggle');
+
+        appxRoot = '';
 
         // play animation
         if (appxDivs.container) appxDivs.container.style.animation = `${animationMs / 1000}s cubic-bezier(0, 0, 0.25, 1) jump-out`;

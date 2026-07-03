@@ -35,4 +35,5 @@ function checkDistfromHtml(targetDir: string) {
 
 export function addFinal() {
     checkDistfromHtml('downloads');
+    fs.copyFileSync('CNAME', `${config.outDir}/CNAME`);
 }

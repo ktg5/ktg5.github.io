@@ -1,4 +1,4 @@
-import { Appx } from './appx';
+import { Appx, appxRoot } from './appx';
 import { type getChannelData, twitchgql } from './twitch.js';
 // @ts-ignore
 import { Howl } from 'howler';
@@ -12,6 +12,7 @@ var
     hintsData: Record<string, boolean>,
     stopLiveTiles = false,
     mobileMode = false;
+let alreadyInited = false;
 const hintsStore = 'ktg5-hints';
 // var scrollbars = {};
 const currentDate = new Date();
@@ -372,6 +373,47 @@ class LoadingDiv {
 }
 
 
+// handle appx & non-appx fetches
+export const demand = window.fetch;
+window.fetch = async (...args): Promise<Response> => {
+    return new Promise<Response>(async (res, rej) => {
+        try {
+            let ogRes = await demand(...args);
+
+
+            async function newUrlRes() {
+                if (appxRoot !== '') {
+                    // make new URL using the hostname, appxroot, and args
+                    const ogUrl = args[0].toString();
+                    const newUrl = new URL(`${location.origin}/${appxRoot}/${ogUrl}`);
+
+                    if (ogUrl.startsWith(appxRoot)) return ogRes;
+                    
+                    return await demand(newUrl);
+                } else return ogRes;
+            }
+
+
+            // check if request is coming from main site or appx
+            const url = new URL(ogRes.url);
+            if (
+                url.hostname !== 'api.ktg5.online'
+                && !url.hostname.endsWith('twitch.tv')
+            ) {
+                const headers = args[1]?.headers;
+                if (headers !== undefined) {
+                    if ((headers as any).appx === undefined) res(await newUrlRes());
+                    else res(ogRes);
+                } else res(await newUrlRes());
+            } else res(ogRes);
+        } catch (err) {
+            console.log("Fetch failed:", err);
+            rej(err);
+        }
+    });
+};
+
+
 // LOADINGINGIGNIGNIG
 declare global {
     interface Window {
@@ -382,6 +424,10 @@ declare global {
     }
 }
 window.addEventListener('load', async () => {
+
+    if (alreadyInited === true) return;
+    alreadyInited = true;
+
 
     // Birthday stuff
     if (currentDate.getMonth() === 6 && currentDate.getDate() === 12) (document.querySelector('[data-item-id="ktg5"] .item-logo img') as HTMLImageElement).src = '/img/logo-w1-birthday.png';
@@ -759,7 +805,7 @@ window.addEventListener('load', async () => {
 
         // Get YouTube Information
         const ytDataDiv = document.querySelector('[data-item-id="youtube"] .item-tile-container') as HTMLElement;
-        fetch("https://api.ktg5.online/latestYt", {
+        demand("https://api.ktg5.online/latestYt", {
             "body": null,
             "method": "POST"
         }).then(async rawData => {
@@ -812,7 +858,7 @@ window.addEventListener('load', async () => {
 
         // Get Twitter info
         const twitterTile = document.querySelector('[data-item-id="twitter"]') as HTMLAreaElement;
-        await fetch("https://api.ktg5.online/latestTwit", {
+        await demand("https://api.ktg5.online/latestTwit", {
             method: "POST"
         }).then(async (d) => {
             const json = await d.json();
