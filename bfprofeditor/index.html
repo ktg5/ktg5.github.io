@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=.8">
-        <title>Document</title>
+        <title>BFPROFEditor</title>
 
 
       <script type="module" crossorigin src="/src/bfprofeditor/index.js"></script>
@@ -20,14 +20,18 @@
                     <div class="menu-btn">
                         <input type="file" id="prof-upload" class="display" accept="*">
                     </div>
-                    <button id="prof-save" class="menu-btn">
+                    <button class="menu-btn" btn-action="profsave">
                         <div class="display">
                             <span class="title">Save...</span>
                         </div>
                     </button>
                 </div>
-                <div class="menu-category-spliter"></div>
                 <div class="menu-category">
+                    <button class="menu-btn" btn-action="lang">
+                        <div class="display">
+                            <span class="title">Language</span>
+                        </div>
+                    </button>
                     <button class="menu-btn" btn-action="about">
                         <div class="display">
                             <span class="title">About</span>
@@ -75,6 +79,13 @@
 
             <div class="menu-category-container" align="right">
                 <div class="menu-category">
+                    <button class="menu-btn" btn-action="lang">
+                        <div class="display">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                        </div>
+                    </button>
                     <button class="menu-btn" btn-action="about">
                         <div class="display">
                             <div class="img-container">
@@ -92,7 +103,19 @@
 
         <div class="content-container">
             <div id="content">
-
+                <div class="menu-category">
+                    <button class="menu-btn">
+                        <div class="display">
+                            <div class="img-container">
+                                <img src="" class="icon">
+                            </div>
+                            <span class="text">Colors</span>
+                        </div>
+                        <div class="value">
+                            <input type="checkbox" name="" id="">
+                        </div>
+                    </button>
+                </div>
             </div>
         </div>
     </body>
