@@ -3,6 +3,8 @@ import { type getChannelData, twitchgql } from './twitch.js';
 // @ts-ignore
 import { Howl } from 'howler';
 
+import bdayLogo from '/img/logo-w1-birthday.png';
+
 
 var
     bigTileSize: number | undefined,
@@ -430,7 +432,7 @@ window.addEventListener('load', async () => {
 
 
     // Birthday stuff
-    if (currentDate.getMonth() === 6 && currentDate.getDate() === 12) (document.querySelector('[data-item-id="ktg5"] .item-logo img') as HTMLImageElement).src = '/img/logo-w1-birthday.png';
+    if (currentDate.getMonth() === 6 && currentDate.getDate() === 12) (document.querySelector('[data-item-id="ktg5"] .item-logo img') as HTMLImageElement).src = bdayLogo;
 
 
     // Load time related things
