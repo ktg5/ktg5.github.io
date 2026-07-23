@@ -43,6 +43,7 @@ export async function copyDir(sourceDir: string, newDir: string):Promise<void> {
             entry.name === '.github' ||
             entry.name === 'psds' ||
             entry.name === 'node_modules' ||
+            entry.name === 'dist' ||
             entry.name === 'build.js' ||
             entry.name === 'package-lock.json' ||
             entry.name === 'package.json' ||
