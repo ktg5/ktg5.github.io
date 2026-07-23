@@ -59,33 +59,36 @@ ul {
 }
 
 
-@media (max-aspect-ratio: 1/1) {
-    .app-container {
-        .scroll-content {
-            display: contents;
-            width: 100%;
-        }
-
-        .block {
-            display: flex;
-            flex-direction: column;
-            height: unset !important;
-            width: 100% !important;
-            height: fit-content;
-            min-height: 30vh;
-
-            .content {
-                min-height: 30vh;
-                height: auto;
-
-                .title {
-                    margin-bottom: .5%;
+[data-mobile="true"] {
+    #appx-container {
+        #appx {
+            .app-container {
+                .scroll-content {
+                    display: contents;
+                    width: 100%;
+                    // flex-direction: column;
                 }
 
-                .text {
-                    position: relative;
-                    width: 85vw;
-                    margin: auto;
+                .block {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100% !important;
+                    height: fit-content;
+                    min-height: 30vh;
+
+                    .content {
+                        height: auto;
+
+                        .title {
+                            margin-bottom: .5%;
+                        }
+
+                        .text {
+                            position: relative;
+                            width: 85vw;
+                            margin: auto;
+                        }
+                    }
                 }
             }
         }

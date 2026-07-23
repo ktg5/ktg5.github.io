@@ -6,8 +6,7 @@ import { Howl } from 'howler';
 import bdayLogo from '/img/logo-w1-birthday.png';
 
 
-var
-    bigTileSize: number | undefined,
+var bigTileSize: number | undefined,
     // @ts-ignore
     currentAppx: Appx,
     mobileButtons: HTMLElement,
@@ -227,7 +226,6 @@ export function saveToStorage(item: string, data: object) {
 
 // Toggle specific hint
 export function toggleHint(name: string, force?: boolean) {
-    console.log(name);
     const targetHint = document.querySelector(`[data-notif="${name}"]`) as HTMLElement;
     if (targetHint) {
         if (force !== undefined) {
@@ -414,6 +412,12 @@ if (import.meta.env.DEV) window.fetch = async (...args): Promise<Response> => {
         }
     });
 };
+
+
+function pushHistory(url: URL) {
+    history.pushState({}, '', url);
+    history.replaceState({}, '', url);
+}
 
 
 // LOADINGINGIGNIGNIG
@@ -1020,14 +1024,18 @@ window.addEventListener('load', async () => {
 
 
 export default {
-    denyMouse, mobileMode, saveToHints, bigTileSize,
+    denyMouse, saveToHints, bigTileSize,
     getHintsData: () => {
         return hintsData;
+    },
+    mobileMode: () => {
+        return mobileMode;
     },
     setLiveTiles,
     toggleHint,
     toggleMobileButtons,
     makeScrollbar,
     clearTileScroll,
-    LoadingDiv
+    LoadingDiv,
+    pushHistory
 };

@@ -135,7 +135,7 @@ export class Appx {
                 toggle();
                 appxDivs.taskbar.setAttribute('data-toggle', '');
 
-                if (Main.mobileMode) document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
+                if (Main.mobileMode()) document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
 
                 // hide titlebar hint on hover
                 let hintsData = Main.getHintsData();
@@ -194,7 +194,6 @@ export class Appx {
         this.elmnt = elmnt;
         if (elmntData) {
             this.data = elmntData;
-
             let hintsData = Main.getHintsData();
 
 
@@ -221,6 +220,11 @@ export class Appx {
             // set data into appx-container
             Main.setLiveTiles(true);
             const appxLogo = elmntData.logo ? elmntData.logo : (appxItem.querySelector('.item-logo img') as HTMLImageElement).src;
+
+            // set search param in url
+            const url = new URL(window.location.toString());
+            url.searchParams.set('appx', elmntID as string);
+            Main.pushHistory(url);
 
 
             // get tile size & pos & set to appx container
@@ -302,8 +306,9 @@ export class Appx {
 
                 Main.denyMouse(false);
 
+                console.log(Main.mobileMode());
                 if (
-                    !Main.mobileMode
+                    !Main.mobileMode()
                     && hintsData.titlebar !== true
                 ) Main.toggleHint('titlebar');
 
@@ -395,6 +400,10 @@ export class Appx {
             if (appxDivs.taskbar) (appxDivs.taskbar.querySelector('.detector') as HTMLElement).addEventListener('mouseenter', () => {
                 this.toggleTaskbar(true);
             });
+        } else {
+            const txt = `appx.ts: no 'elmntData' for "${elmntID}"`;
+            alert(txt);
+            throw new Error(txt);
         }
     }
 
@@ -402,11 +411,18 @@ export class Appx {
     closeButton = () => { this.kill(); }
 
     async kill () {
+        const elmntID = this.elmnt?.getAttribute('data-item-id');        
         const animationMs = 250;
         Main.denyMouse(true);
+
         if (appxDivs.taskbar) appxDivs.taskbar.removeAttribute('data-toggle');
 
         appxRoot = '';
+
+        // remove search param in url
+        const url = new URL(window.location.toString());
+        url.searchParams.delete('appx');
+        Main.pushHistory(url);
 
         // play animation
         if (appxDivs.container) appxDivs.container.style.animation = `${animationMs / 1000}s cubic-bezier(0, 0, 0.25, 1) jump-out`;
