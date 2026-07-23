@@ -1,1 +1,0 @@
-var e=`Pirate Talk`,t=0,n={displayName:e,progress:0};export{n as default,e as displayName,t as progress};

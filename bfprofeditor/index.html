@@ -8,6 +8,7 @@
 
       <script type="module" crossorigin src="/src/bfprofeditor/index.js"></script>
       <link rel="modulepreload" crossorigin href="/src/modulepreload-polyfill.js">
+      <link rel="modulepreload" crossorigin href="/src/preload-helper.js">
       <link rel="stylesheet" crossorigin href="/style/index.css">
     </head>
 
@@ -16,25 +17,28 @@
         <div id="sidenav" hide>
             <div class="menu-category-container">
                 <div class="menu-category">
-                    <div class="menu-category-title">Upload & Save</div>
-                    <div class="menu-btn">
-                        <input type="file" id="prof-upload" class="display" accept="*">
-                    </div>
-                    <button class="menu-btn" btn-action="profsave">
+                    <div class="menu-category-title" i18n="sidenav.upload._title"></div>
+                    <button class="menu-btn" btn-action="prof-load">
+                        <div class="display" i18n="sidenav.upload.browse"></div>
+                        <div class="value">
+                            <input type="file" id="prof-upload" accept="*">
+                        </div>
+                    </button>
+                    <button class="menu-btn" btn-action="prof-save">
                         <div class="display">
-                            <span class="title">Save...</span>
+                            <span class="title" i18n="sidenav.upload.save"></span>
                         </div>
                     </button>
                 </div>
                 <div class="menu-category">
                     <button class="menu-btn" btn-action="lang">
                         <div class="display">
-                            <span class="title">Language</span>
+                            <span class="title" i18n="lang"></span>
                         </div>
                     </button>
                     <button class="menu-btn" btn-action="about">
                         <div class="display">
-                            <span class="title">About</span>
+                            <span class="title" i18n="about"></span>
                         </div>
                     </button>
                 </div>
@@ -58,7 +62,7 @@
                             <div class="img-container">
                                 <img src="" class="icon">
                             </div>
-                            <span class="title">BFPROFEditor</span>
+                            <span class="title">bfprofeditor</span>
                         </div>
                     </div>
                 </div>
@@ -66,12 +70,14 @@
             
             <div class="menu-category-container" align="center">
                 <div class="menu-category">
-                    <button class="menu-btn" btn-action="prof-colors">
+                    <button class="menu-btn" btn-action="tabchange" tabindex="0">
                         <div class="display">
-                            <div class="img-container">
-                                <img src="" class="icon">
-                            </div>
-                            <span class="text">Colors</span>
+                            <span class="text" i18n="6.tabs.color"></span>
+                        </div>
+                    </button>
+                    <button class="menu-btn" btn-action="tabchange" tabindex="1">
+                        <div class="display">
+                            <span class="text">Second</span>
                         </div>
                     </button>
                 </div>
@@ -98,25 +104,62 @@
         </div>
 
 
-        <div id="popups"></div>
-
-
-        <div class="content-container">
-            <div id="content">
-                <div class="menu-category">
-                    <button class="menu-btn">
-                        <div class="display">
-                            <div class="img-container">
-                                <img src="" class="icon">
+        <div id="content">
+            <tab tabindex="0" active>
+                <div id="tab-content">
+                    <div class="menu-category">
+                        <button class="menu-btn" type="toggle">
+                            <div class="display">
+                                <span class="text">Toggle Input</span>
                             </div>
-                            <span class="text">Colors</span>
-                        </div>
-                        <div class="value">
-                            <input type="checkbox" name="" id="">
-                        </div>
-                    </button>
+                            <div class="value">
+                                <span class="toggle-alt"></span>
+                                <input type="checkbox">
+                            </div>
+                        </button>
+
+                        <button class="menu-btn" type="range">
+                            <div class="display">
+                                <span class="text">Range Input</span>
+                            </div>
+                            <div class="value">
+                                <input type="number">
+                                <input type="range" max="100" min="0" value="63">
+                            </div>
+                        </button>
+
+                        <button class="menu-btn" type="number">
+                            <div class="display">
+                                <span class="text">Number Input</span>
+                            </div>
+                            <div class="value">
+                                <input type="number" max="100" min="0" value="32">
+                                <div class="btn-group">
+                                    <div class="up" data-action="inc"></div>
+                                    <div class="dn" data-action="dec"></div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button class="menu-btn" type="color">
+                            <div class="display">
+                                <span class="text">Color Input</span>
+                            </div>
+                            <div class="value">
+                                <input type="color">
+                            </div>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </tab>
+
+            <tab tabindex="1">
+                <div id="tab-content">
+                    <p>this is the second tab</p>
+                </div>
+            </tab>
         </div>
+
+
     </body>
 </html>

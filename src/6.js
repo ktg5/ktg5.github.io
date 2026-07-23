@@ -1,0 +1,1 @@
+var e={tabs:{color:`Color`}};export{e as default};
