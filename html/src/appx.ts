@@ -411,7 +411,6 @@ export class Appx {
     closeButton = () => { this.kill(); }
 
     async kill () {
-        const elmntID = this.elmnt?.getAttribute('data-item-id');        
         const animationMs = 250;
         Main.denyMouse(true);
 
