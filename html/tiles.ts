@@ -14,7 +14,8 @@ const tiles = {
     'bfprofeditor': {
         icon: '',
         src: '/bfprofeditor/index.html',
-        root: 'bfprofeditor'
+        root: 'bfprofeditor',
+        iframe: true
     },
     'patcat': {
         icon: "/img/tiles/icons/patcat.webp",

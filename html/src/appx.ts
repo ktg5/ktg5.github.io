@@ -30,9 +30,10 @@ function isOverTaskbar() {
 }
 
 /**
- * preload assets with 
+ * find the `appx-preload` of a appx document and preload the detected inputs
+ * @param doc the appx document parsed using `DOMParser().parseFromString()`
  */
-function preloadAppx() {
+function preloadAppx(doc: Document) {
     function preloadAsset(src: string, type: string) {
         return new Promise<any>(async (resolve, reject) => {
             switch (type) {
@@ -68,9 +69,7 @@ function preloadAppx() {
 
 
     return new Promise<Object[] | null>(async (resolve) => {
-        if (!appxDivs.app) return resolve(null);
-
-        const preloadDiv = appxDivs.app.querySelector('appx-preload') as HTMLElement;
+        const preloadDiv = doc.querySelector('appx-preload') as HTMLElement;
         if (!preloadDiv) return resolve(null);
         let elmnts = [];
         let promises = [];
@@ -99,11 +98,17 @@ type Tile = {
     title?: string,
     icon: string,
     src: string,
+    logo?: string,
+    /**
+     * setting this to `true` will make the appx render in a iframe and in return, loss to direct access
+     * of somethings on the main site easily but allowing other sites to load. recommended if the page
+     * you're trying to make an appx wasn't developed for the site.
+     */
+    iframe?: boolean,
     /**
      * only used in vite dev server lel
      */
     root?: string,
-    logo?: string
 }
 
 
@@ -178,13 +183,13 @@ export class Appx {
             console.error(txt);
             alert(txt);
         }
-        let elmntData: Tile | undefined;
+        let tile: Tile | undefined;
         if (elmntID) {
             for (const key in Tile.tiles) {
                 if (Object.prototype.hasOwnProperty.call(Tile.tiles, key)) {
                     const tileKey = key as TileKeys;
                     if (tileKey === elmntID) {
-                        elmntData = Tile.tiles[tileKey];
+                        tile = Tile.tiles[tileKey];
                     }
                 }
             }
@@ -192,8 +197,8 @@ export class Appx {
 
 
         this.elmnt = elmnt;
-        if (elmntData) {
-            this.data = elmntData;
+        if (tile) {
+            this.data = tile;
             let hintsData = Main.getHintsData();
 
 
@@ -202,8 +207,8 @@ export class Appx {
             // bfprofeditor is becoming a good example of something that feels seperate than 
             // the whole site and also works by just going to it's actual url.
             if (import.meta.env.DEV) {
-                if (elmntData.root !== undefined) appxRoot = elmntData.root;
-            } else elmntData.root = undefined;           
+                if (tile.root !== undefined) appxRoot = tile.root;
+            } else tile.root = undefined;           
 
 
             Main.denyMouse(true);
@@ -219,7 +224,7 @@ export class Appx {
 
             // set data into appx-container
             Main.setLiveTiles(true);
-            const appxLogo = elmntData.logo ? elmntData.logo : (appxItem.querySelector('.item-logo img') as HTMLImageElement).src;
+            const appxLogo = tile.logo ? tile.logo : (appxItem.querySelector('.item-logo img') as HTMLImageElement).src;
 
             // set search param in url
             const url = new URL(window.location.toString());
@@ -247,7 +252,7 @@ export class Appx {
             if (appxDivs.preview) {
                 const previewLogo = appxDivs.preview.querySelector('.item-logo img') as HTMLImageElement;
                 previewLogo.src = appxLogo;
-                if (previewLogo.parentElement) previewLogo.parentElement.style.height = elmntData.logoPrevSize ? elmntData.logoPrevSize : '20%';
+                if (previewLogo.parentElement) previewLogo.parentElement.style.height = tile.logoPrevSize ? tile.logoPrevSize : '20%';
 
                 appxDivs.preview.style.animation = `${animationMs / 1000}s linear tile-flip-sub1`;
             }
@@ -258,7 +263,7 @@ export class Appx {
                 appxDivs.taskIcon.src = appxLogo;
             }
             if (appxDivs.taskTitle) {
-                appxDivs.taskTitle.innerHTML = elmntData.title ? elmntData.title : ((appxItem.querySelector('.item-title') as HTMLElement).textContent as string);
+                appxDivs.taskTitle.innerHTML = tile.title ? tile.title : ((appxItem.querySelector('.item-title') as HTMLElement).textContent as string);
             }
 
             // make mobile buttons disappear
@@ -306,89 +311,149 @@ export class Appx {
 
                 Main.denyMouse(false);
 
-                console.log(Main.mobileMode());
                 if (
                     !Main.mobileMode()
                     && hintsData.titlebar !== true
                 ) Main.toggleHint('titlebar');
 
-                demand(elmntData.src, {
-                    headers: {
-                        "appx": "true"
-                    }
-                }).then(async rawData => {
-                    if (!appxDivs.app) return;
+                
+                const displayAppx = () => {
+                    if (!appxDivs.app) return console.error(`couldn't find app element!!`);
 
-                    let html = await rawData.text();
-                    appxDivs.app.innerHTML = html;
+                    appxDivs.app.style.display = 'block';
+                    this.previewLoading.kill();
 
-                    await preloadAppx();
-                    appxDivs.app.querySelector('appx-preload')?.remove();
+                    // else make the taskbar disappear after a second
+                    if (isOverTaskbar() != true) this.toggleTaskbar(false);
+                }
 
+                if (tile.iframe === true) {
+                    if (!appxDivs.app) return console.error(`couldn't find app element!!`);
 
-                    // repair links
-                    let fetchPromisesStrings: string[] = [];
-                    // js/ts
-                    appxDivs.app.querySelectorAll<HTMLScriptElement>('script').forEach(async (elmnt) => {
-                        if (!elmnt) return;
-                        if (elmnt.src.endsWith('@vite/client')) return elmnt.remove();
+                    appxDivs.app.insertAdjacentHTML('afterbegin', `
+<iframe src="${tile.src}"
+style="
+border: none;
+width: 100%;
+height: 100%;
+"
+></iframe>
+                    `);
 
-                        const newElmnt = document.createElement('script');
-                        let newSrc = `${elmnt.src}?t=${Date.now()}`;
-                        if (elmntData.root) newSrc = `${elmntData.root}/${newSrc.replace(`${location.origin}/`, '')}`;
-                        fetchPromisesStrings.push(newSrc);
-                        newElmnt.src = newSrc;
-                        newElmnt.innerHTML = elmnt.innerHTML;
-                        newElmnt.type = 'module';
-                        if (elmnt.parentNode) elmnt.parentNode.insertBefore(newElmnt, elmnt);
-                        elmnt.remove();
-                    });
-
-                    // links
-                    appxDivs.app.querySelectorAll<HTMLLinkElement>('link').forEach(async (elmnt) => {
-                        if (!elmnt) return;
-                        if (
-                            !elmnt.href
-                            || elmnt.href === ''
-                        ) return;
-
-                        const newElmnt = document.createElement('link');
-                        let newHref = `${elmnt.href}?t=${Date.now()}`;
-                        if (elmntData.root) {
-                            newHref = `${elmntData.root}/${newHref.replace(`${location.origin}/`, '')}`;
+                    displayAppx();
+                } else {
+                    demand(tile.src, {
+                        headers: {
+                            "appx": "true"
                         }
-                        fetchPromisesStrings.push(newHref);
-                        newElmnt.href = newHref;
-                        newElmnt.rel = elmnt.rel;
-                        newElmnt.type = elmnt.type;
-                        if (elmnt.parentNode) elmnt.parentNode.insertBefore(newElmnt, elmnt);
-                        elmnt.remove();
+                    }).then(async rawData => {
+                        if (!appxDivs.app) return console.error(`couldn't find app element!!`);
+
+                        const parser = new DOMParser;
+                        const appxDoc = parser.parseFromString(await rawData.text(), 'text/html');
+
+                        await preloadAppx(appxDoc);
+                        appxDoc.querySelector('appx-preload')?.remove();
+
+                        // build mainline appx
+                        const appxHead = document.createElement('div');
+                        appxHead.classList.add('appx-head');
+                        const appxBody = document.createElement('div');
+                        appxBody.classList.add('appx-body');
+                        appxDivs.app?.appendChild(appxHead);
+                        appxDivs.app?.appendChild(appxBody);
+
+
+                        // insert
+                        const insertToAppx = (elmnt: HTMLElement) => {
+                            switch (elmnt.tagName) {
+                                case 'LINK':
+                                case 'SCRIPT':
+                                    appxHead.insertAdjacentElement('beforeend', elmnt);
+                                break;
+
+                                case 'META':
+                                case 'TITLE':
+                                break;
+                            
+                                default:
+                                    appxBody.insertAdjacentElement('beforeend', elmnt);
+                                break;
+                            }
+                        };
+                        let insertElmnts = [
+                            ...appxDoc.head.childNodes,
+                            ...appxDoc.body.childNodes
+                        ];
+                        insertElmnts.forEach((elmnt: ChildNode | HTMLElement) => {
+                            if (elmnt instanceof HTMLElement) insertToAppx(elmnt as HTMLElement);
+                        });
+
+
+                        // repair links
+                        let fetchPromisesStrings: string[] = [];
+                        // js/ts
+                        appxHead.querySelectorAll<HTMLScriptElement>('script').forEach(async (elmnt) => {
+                            if (!elmnt) return;
+                            if (elmnt.src.endsWith('@vite/client')) return elmnt.remove();
+                            if (elmnt.hasAttribute('repaired')) return;
+                            if (elmnt.parentNode === null) return console.error('one of the script elements doesn\'t have a parentNode?...');
+
+                            const newElmnt = document.createElement('script');
+                            let newSrc = `${elmnt.src}?t=${Date.now()}`;
+                            if (tile.root) newSrc = `${tile.root}/${newSrc.replace(`${location.origin}/`, '')}`;
+                            fetchPromisesStrings.push(newSrc);
+                            newElmnt.src = newSrc;
+                            newElmnt.innerHTML = elmnt.innerHTML;
+                            newElmnt.type = 'module';
+                            newElmnt.setAttribute('repaired', '');
+                            elmnt.parentNode.insertBefore(newElmnt, elmnt);
+                            elmnt.remove();
+                        });
+
+                        // links
+                        appxHead.querySelectorAll<HTMLLinkElement>('link').forEach(async (elmnt) => {
+                            if (!elmnt) return;
+                            if (
+                                !elmnt.href
+                                || elmnt.href === ''
+                            ) return;
+                            if (elmnt.hasAttribute('repaired')) return;
+                            if (elmnt.parentNode === null) return console.error('one of the script elements doesn\'t have a parentNode?...');
+
+                            const newElmnt = document.createElement('link');
+                            let newHref = `${elmnt.href}?t=${Date.now()}`;
+                            if (tile.root) {
+                                newHref = `${tile.root}/${newHref.replace(`${location.origin}/`, '')}`;
+                            }
+                            fetchPromisesStrings.push(newHref);
+                            newElmnt.href = newHref;
+                            newElmnt.rel = elmnt.rel;
+                            newElmnt.type = elmnt.type;
+                            newElmnt.setAttribute('repaired', '');
+                            elmnt.parentNode.insertBefore(newElmnt, elmnt);
+                            elmnt.remove();
+                        });
+
+                        // fetch all before sending events
+                        let fetchPromises: Promise<Response>[] = [];
+                        fetchPromisesStrings.forEach((string) => fetchPromises.push(demand(string)));
+                        await Promise.all(fetchPromises);
+
+
+                        setTimeout(() => {
+                            appxDoc.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
+
+                            window.dispatchEvent(new Event("load"));
+                            document.dispatchEvent(new Event("DOMContentLoaded"));
+                        }, 50);
+
+                        if (
+                            appxDivs.app
+                            && appxDivs.app.getAttribute('src') != 'about:blank'
+                        ) displayAppx();
                     });
-
-                    // fetch all before sending events
-                    let fetchPromises: Promise<Response>[] = [];
-                    fetchPromisesStrings.forEach((string) => fetchPromises.push(demand(string)));
-                    await Promise.all(fetchPromises);
-
-
-                    setTimeout(() => {
-                        if (appxDivs.app) appxDivs.app.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
-
-                        window.dispatchEvent(new Event("load"));
-                        document.dispatchEvent(new Event("DOMContentLoaded"));
-                    }, 50);
-
-                    if (
-                        appxDivs.app
-                        && appxDivs.app.getAttribute('src') != 'about:blank'
-                    ) {
-                        appxDivs.app.style.display = 'block';
-                        this.previewLoading.kill();
-
-                        // else make the taskbar disappear after a second
-                        if (isOverTaskbar() != true) this.toggleTaskbar(false);
-                    }
-                });
+                }
             }, animationMs);
 
             // set click event on buttons
@@ -401,7 +466,7 @@ export class Appx {
                 this.toggleTaskbar(true);
             });
         } else {
-            const txt = `appx.ts: no 'elmntData' for "${elmntID}"`;
+            const txt = `appx.ts: no 'tile' for "${elmntID}"`;
             alert(txt);
             throw new Error(txt);
         }
