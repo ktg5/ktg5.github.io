@@ -24,7 +24,7 @@
                             <input type="file" id="prof-upload" accept="*">
                         </div>
                     </button>
-                    <button class="menu-btn" btn-action="prof-save">
+                    <button class="menu-btn" btn-action="prof-save" disabled>
                         <div class="display">
                             <span class="title" i18n="sidenav.upload.save"></span>
                         </div>
@@ -105,7 +105,7 @@
 
 
         <div id="content">
-            <tab tabindex="0" active>
+            <tab tabindex="0">
                 <div id="tab-content">
                     <div class="menu-category">
                         <button class="menu-btn" type="toggle">
@@ -146,7 +146,7 @@
                                 <span class="text">Color Input</span>
                             </div>
                             <div class="value">
-                                <input type="color">
+                                <input class="clr-click" value="#50dfec"></input>
                             </div>
                         </button>
                     </div>

@@ -1,1 +1,1 @@
-var e={tabs:{color:`Color`}};export{e as default};
+var e={tabs:{color:`Color`},HitIndicatorColor:`Hit Indicator Color`,HitIndicatorColorKill:`Kill Indicator Color`};export{e as default};
