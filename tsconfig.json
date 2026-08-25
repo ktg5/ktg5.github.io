@@ -21,6 +21,6 @@
   "exclude": [
     "node_modules",
     "html/assets",
-    "html_staging"
+    "stage"
   ],
 }

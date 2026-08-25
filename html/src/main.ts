@@ -781,8 +781,7 @@ window.addEventListener('load', async () => {
     if (!window.slowMf) {
         // ktg5 socials
         // Init YouTube tile
-        type YTTileData = { type: string, title: string, thumbnails: string[], published?: string, views?: string, premiereTime?: number };
-        function initYTTile(data: YTTileData) {
+        function initYTTile(data: any) {
             let tileTitle = "Latest Video";
             let desc2Txt = '';
             switch (data.type) {
@@ -798,14 +797,14 @@ window.addEventListener('load', async () => {
             }
 
             ytDataDiv.innerHTML += `
-                <div class="item-tile" data-scroll-delay="5" data-item-style="text">
-                    <div class="item-data" style="padding-top: 10px">
-                        <h2>${tileTitle}</h2>
-                        <p class="desc1 one-line-text">${data.title}</p>
-                        <p class="desc2">${desc2Txt}</p>
-                    </div>
-                    <div class="item-image"><img src="${data.thumbnails[0]}" style="height: 140%;"></div>
-                </div>
+<div class="item-tile" data-scroll-delay="5" data-item-style="text">
+    <div class="item-data" style="padding-top: 10px">
+        <h2>${tileTitle}</h2>
+        <p class="desc1 one-line-text">${data.title}</p>
+        <p class="desc2">${desc2Txt}</p>
+    </div>
+    <div class="item-image"><img src="${data.thumbnails[0].url}" style="height: 140%;"></div>
+</div>
             `;
         }
 
@@ -819,7 +818,7 @@ window.addEventListener('load', async () => {
             
             if (data.constructor == [].constructor) {
                 ytDataDiv.setAttribute("data-scroll-atend", "copyfirst");
-                data.forEach((subData: YTTileData) => { initYTTile(subData) });
+                data.forEach((subData: any) => { initYTTile(subData) });
             }
             else initYTTile(data);
 
@@ -827,7 +826,7 @@ window.addEventListener('load', async () => {
         });
 
         // Get Twitch Information
-        const twitchStreams = ['ktg5_', 'noclue_x86', 'ktg5_special'];
+        const twitchStreams = ['ktg5_', 'noclue_collective', 'ktg5_special'];
         const mainStream = twitchStreams[0];
         for (const i in twitchStreams) {
             const key = twitchStreams[i];
@@ -864,32 +863,38 @@ window.addEventListener('load', async () => {
 
         // Get Twitter info
         const twitterTile = document.querySelector('[data-item-id="twitter"]') as HTMLAreaElement;
-        await demand("https://api.ktg5.online/latestTwit", {
-            method: "POST"
-        }).then(async (d) => {
-            const json = await d.json();
+        try {
+            await demand("https://api.ktg5.online/latestTwit", {
+                method: "POST"
+            }).then(async (d) => {
+                if (!d.ok) return console.warn(`twitter lookups are not working!!! FUCK TWITTER!!!!!!!!`);
+                
+                const json = await d.json();
 
-            if (json.err) return;
+                if (json.err) return;
 
-            const newTile = document.createElement('div');
-            newTile.classList.add(`item-tile`);
-            newTile.setAttribute('data-scroll-delay', '5');
-            newTile.setAttribute('data-item-style', 'text');
-            newTile.innerHTML = `
-                <div class="item-data" style="padding-top: 10px">
-                    <h3>Latest Tweet</h3>
-                    <p class="desc1 one-line-text">${json.user.name} (${json.user.username})</p>
-                    ${json.text ? `<p class="desc2 one-line-text">${json.text}</p>` : ''}
-                    <p class="desc3 one-line-text">
-                        <span style="margin-right: 8px">💬 ${json.stats.replies}</span>
-                        <span style="margin-right: 8px">🔄 ${json.stats.retweets}</span> 
-                        <span>💙 ${json.stats.likes}</span>
-                    </p>
-                </div>
-                <div class="item-bg" style="background-image: #94e4e8;"></div>
-            `;
-            (twitterTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, twitterTile.querySelectorAll('.item-tile')[1]);
-        });
+                const newTile = document.createElement('div');
+                newTile.classList.add(`item-tile`);
+                newTile.setAttribute('data-scroll-delay', '5');
+                newTile.setAttribute('data-item-style', 'text');
+                newTile.innerHTML = `
+<div class="item-data" style="padding-top: 10px">
+    <h3>Latest Tweet</h3>
+    <p class="desc1 one-line-text">${json.user.name} (${json.user.username})</p>
+    ${json.text ? `<p class="desc2 one-line-text">${json.text}</p>` : ''}
+    <p class="desc3 one-line-text">
+        <span style="margin-right: 8px">💬 ${json.stats.replies}</span>
+        <span style="margin-right: 8px">🔄 ${json.stats.retweets}</span> 
+        <span>💙 ${json.stats.likes}</span>
+    </p>
+</div>
+<div class="item-bg" style="background-image: #94e4e8;"></div>
+                `;
+                (twitterTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, twitterTile.querySelectorAll('.item-tile')[1]);
+            });
+        } catch (error) {
+            console.error((error as any).stack ? (error as any).stack : error);
+        }
 
 
         // Friends socials
@@ -911,12 +916,12 @@ window.addEventListener('load', async () => {
                 newTile.setAttribute('data-scroll-delay', '5');
                 newTile.setAttribute('data-item-style', 'text');
                 newTile.innerHTML = `
-                    <div class="item-data" style="padding-top: 10px">
-                        <h3>They Live!</h3>
-                        <p class="desc1 one-line-text">${twitch.broadcastSettings.title}</p>
-                        <p class="desc2" one-line-text>${twitch.stream.viewersCount} viewers</p>
-                    </div>
-                    <div class="item-image"><img src="${twitch.profileImageURL}" style="height: 140%;"></div>
+<div class="item-data" style="padding-top: 10px">
+    <h3>They Live!</h3>
+    <p class="desc1 one-line-text">${twitch.broadcastSettings.title}</p>
+    <p class="desc2" one-line-text>${twitch.stream.viewersCount} viewers</p>
+</div>
+<div class="item-image"><img src="${twitch.profileImageURL}" style="height: 140%;"></div>
                 `;
                 (friendTile.querySelector('.item-tile-container') as HTMLElement).insertBefore(newTile, friendTile.querySelectorAll('.item-tile')[1]);
             }

@@ -115,9 +115,10 @@ type Tile = {
 export class Appx {
     private elmnt: HTMLElement | undefined;
     data: Tile | undefined;
-    taskbarLock: boolean = false;
-    taskbarTimeout: NodeJS.Timeout | undefined;
-
+    private taskbarTimeout: NodeJS.Timeout | undefined;
+    private taskbarLock: boolean = false;
+    // @ts-ignore
+    private taskbarLockTimeout: NodeJS.Timeout | undefined;
     private previewLoading = new Main.LoadingDiv(appxDivs.preview as HTMLElement, { hidden: true });
 
 
@@ -129,16 +130,21 @@ export class Appx {
         if (this.taskbarLock === false) {
             let toggle = () => {
                 this.taskbarLock = true;
-                this.taskbarTimeout = setTimeout(() => {
+                this.taskbarLockTimeout = setTimeout(() => {
                     this.taskbarLock = false;
                 }, 500);
             }
+
+            if (this.taskbarTimeout !== undefined) clearTimeout(this.taskbarTimeout);
 
             if (stat === true) {
                 if (!appxDivs.taskbar) return;
 
                 toggle();
                 appxDivs.taskbar.setAttribute('data-toggle', '');
+
+                // if appx is a iframe, auto hide after a bit
+                if (this.data?.iframe === true) this.taskbarTimeout = setTimeout(() => this.toggleTaskbar(false), 3000);
 
                 if (Main.mobileMode()) document.querySelector(`[data-notif="titlebar"]`)?.setAttribute('data-hide', '');
 
@@ -442,7 +448,10 @@ height: 100%;
 
 
                         setTimeout(() => {
-                            appxDoc.querySelectorAll('.scroll-wrapper').forEach(elmnt => { Main.makeScrollbar(elmnt as HTMLElement); });
+                            console.log(appxBody);
+                            appxBody.querySelectorAll('.scroll-wrapper').forEach(elmnt => {
+                                console.log(Main.makeScrollbar(elmnt as HTMLElement));
+                            });
 
                             window.dispatchEvent(new Event("load"));
                             document.dispatchEvent(new Event("DOMContentLoaded"));
