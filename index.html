@@ -89,7 +89,7 @@
                                     <div class="item-title" style="opacity: 0">Twitch</div>
 
                                     <div class="item-tile" data-scroll-delay="5" data-item-style="logo" data-item-disabletitle>
-                                        <div class="item-logo" style="width: 75%"><img src="/img/twitch.png" alt="Twitch"></div>
+                                        <div class="item-logo" style="width: 75%"><img src="/img/twitch2.png" alt="Twitch"></div>
                                     </div>
                                     <div class="item-tile" data-scroll-delay="5" data-item-style="text">
                                         <div class="item-data">
@@ -107,7 +107,7 @@
                                         <div class="item-title">Discord</div>
 
                                         <div class="item-tile">
-                                            <div class="item-logo" style="height: 45%"><img src="/img/discord.png" alt="Discord"></div>
+                                            <div class="item-logo" style="height: 45%"><img src="/img/discord2.png" alt="Discord"></div>
                                         </div>
                                     </div>
                                 </a>
@@ -310,43 +310,7 @@
 
         <div id="help-notifs" style="opacity: 0;">
             <div id="help-notif" data-notif="titlebar" data-hide>
-                <style>
-                    [data-notif="titlebar"][data-hide] {
-                        display: none !important;
-                    }
-
-                    [data-notif="titlebar"] {
-                        width: 14em !important;
-                        top: 0;
-                        bottom: unset !important;
-                        right: 0;
-                    }
-
-                    [data-notif="titlebar"] .content {
-                        display: block !important;
-                    }
-
-                    [data-notif="titlebar"] svg {
-                        animation: arrowFly 1s cubic-bezier(.25,0,0,1);
-                    }
-
-
-                    @keyframes arrowFly {
-                        0% {
-                            opacity: 0;
-                        }
-                        50% {
-                            top: 100px;
-                            left: 100px;
-                            opacity: 0;
-                        }
-                        100% {
-                            top: 0;
-                            left: 0;
-                            opacity: 1;
-                        }
-                    }
-                </style>
+                <style>[data-notif=titlebar][data-hide]{display:none!important}[data-notif=titlebar]{top:0;right:0;width:14em!important;bottom:unset!important}[data-notif=titlebar] .content{display:block!important}[data-notif=titlebar] svg{animation:1s cubic-bezier(.25,0,0,1) arrowFly}@keyframes arrowFly{0%{opacity:0}50%{opacity:0;top:100px;left:100px}to{opacity:1;top:0;left:0}}</style>
 
                 <div class="content" data-border>
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd;width: 60%;position: absolute;top: 0;left: 0;rotate: 90deg;" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 520 500">
@@ -357,17 +321,7 @@
             </div>
 
             <div id="help-notif" data-notif="navbar" data-hide>
-                <style>
-                    [data-notif="navbar"][data-hide] {
-                        bottom: -150vh !important;
-                    }
-
-                    [data-notif="navbar"] .right {
-                        width: 350px;
-                        padding-top: 4px;
-                        padding-left: 20px;
-                    }
-                </style>
+                <style>[data-notif=navbar][data-hide]{bottom:-150vh!important}[data-notif=navbar] .right{width:350px;padding-top:4px;padding-left:20px}</style>
 
                 <div class="content">
                     <div class="left">
