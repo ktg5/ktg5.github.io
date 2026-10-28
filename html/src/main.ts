@@ -769,7 +769,7 @@ window.addEventListener('load', async () => {
     const friendsData: Record<string, FriendData> = {
         shobe: { twitch_user: "shobuh" },
         skppy: { twitch_user: "skppy_" },
-        mala: { twitch_user: "malatyp3" },
+        mala: { twitch_user: "malatype" },
         ladd: { twitch_user: "anormalladd" },
         chris: { twitch_user: "chrisovertheree" }
     };
